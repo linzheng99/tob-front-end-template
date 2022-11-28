@@ -1,5 +1,17 @@
 import { createApp } from 'vue'
-import './style.css'
+import '@/styles/css/reset.css'
 import App from './App.vue'
+import { setupStore } from './store';
+import { setupRouter } from './router';
 
-createApp(App).mount('#app')
+async function setUpApp() {
+  const app = createApp(App)
+
+  setupStore(app)
+
+  await setupRouter(app)
+
+  app.mount('#app')
+}
+
+setUpApp()
