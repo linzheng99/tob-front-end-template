@@ -1,7 +1,9 @@
-import type {App} from 'vue';
+import type { App } from 'vue';
 import { createRouter, createWebHashHistory } from 'vue-router';
+import { routes } from './routes';
 
-const basicRoutes:any = []
+const basicRoutes: any = [...routes]
+
 
 export const router = createRouter({
   history: createWebHashHistory(import.meta.env.VITE_PUBLIC_PATH),
@@ -12,4 +14,6 @@ export const router = createRouter({
 
 export async function setupRouter(app: App) {
   app.use(router);
+  console.log(router.getRoutes());
+  
 }
