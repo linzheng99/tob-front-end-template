@@ -1,11 +1,9 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <div id="app">
-    <RouterView />
-  </div>
+  <naive-provider>
+    <router-view />
+  </naive-provider>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
