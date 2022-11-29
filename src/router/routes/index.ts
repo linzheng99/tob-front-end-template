@@ -1,5 +1,5 @@
-import { constantRoutes } from './constant';
+import { ConstantRoutes } from './constant';
 
 export const routes = [
-  ...constantRoutes
+  ...ConstantRoutes
 ]
