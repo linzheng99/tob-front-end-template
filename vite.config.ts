@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
-import { setupVitePlugins } from './build/plugin';
-import * as path from 'path';
+import { setupVitePlugins } from './build/plugin'
+import * as path from 'path'
 
 const getSrcPath = path.resolve(__dirname, 'src')
 
@@ -10,16 +10,16 @@ export default defineConfig((config) => {
     base: '/',
     resolve: {
       alias: {
-        '@': getSrcPath
-      }
+        '@': getSrcPath,
+      },
     },
     plugins: setupVitePlugins(config),
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `@use "./src/styles/scss/variable.scss" as *;`
-        }
-      }
+          additionalData: `@use "./src/styles/scss/variable.scss" as *;`,
+        },
+      },
     },
     server: {
       host: true,

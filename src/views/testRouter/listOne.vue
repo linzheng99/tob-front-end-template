@@ -1,7 +1,11 @@
 <template>
-  <div> listOne </div>
+  <div class="border"> listOne </div>
 </template>
 
 <script setup lang="ts"></script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.border{
+  border: 1px solid $global-border;
+}
+</style>
