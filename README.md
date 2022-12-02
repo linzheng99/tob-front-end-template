@@ -17,18 +17,27 @@
 ## Task List
 
 - [ ] 登录页
-- [x] axios封装
+  - [ ] Form
+  - [ ] UI
+- [x] axios
+  - [x] axios封装
+    - [x] get
+    - [x] post
+    - [x] put
+    - [x] delete
+    - [x] uploadFile
+  - [x] downloadFile
 - [ ] router
-    - [ ] router guard
-    - [ ] basic router
+  - [ ] router guard
+  - [ ] basic router
 - [ ] 基础的Layout
-    - [ ] svgIcon封装
-    - [ ] sidebar
-    - [ ] header
+  - [ ] svgIcon封装
+  - [ ] sidebar
+  - [ ] header
 - [ ] pinia
-    - [ ] userStore
-    - [ ] globalStore
+  - [ ] userStore
+  - [ ] globalStore
 - [x] token封装-cookie
 - [ ] mock
-    - [ ] login
-    - [ ] router
+  - [ ] login
+  - [ ] router
