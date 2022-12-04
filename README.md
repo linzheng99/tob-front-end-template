@@ -17,7 +17,7 @@
 ## Task List
 
 - [ ] 登录页
-  - [ ] Form
+  - [x] Form
   - [ ] UI
 - [x] axios
   - [x] axios封装
