@@ -1,10 +1,10 @@
 import type { Router } from 'vue-router'
-import { PageEnum } from '@/enums/pageEnum';
-import { getCookieToken } from '@/utils/cookie';
+import { PageEnum } from '@/enums/pageEnum'
+import { getCookieToken } from '@/utils/cookie'
 
 const redirectLogin = {
   path: PageEnum.Login_page,
-  replace: true
+  replace: true,
 }
 
 export function createPermissionGuard(router: Router) {
@@ -12,9 +12,7 @@ export function createPermissionGuard(router: Router) {
     const token = getCookieToken()
 
     if (token) {
-
     } else {
-
     }
   })
 }
