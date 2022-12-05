@@ -40,4 +40,6 @@
 - [x] token封装-cookie
 - [ ] mock
   - [ ] login
+    - [x] token
+    - [x] userInfo
   - [ ] router
