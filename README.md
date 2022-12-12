@@ -1,5 +1,5 @@
 # Vue 3 + TypeScript + Vite
-
+----
 ## Include
 * vue3
 * ts
@@ -12,10 +12,8 @@
 * mock
 * eslint
 * prettier
-
-
+----
 ## Task List
-
 - [ ] 登录页
   - [x] Form
   - [ ] UI
@@ -38,6 +36,7 @@
   - [ ] userStore
   - [ ] globalStore
 - [x] token封装-cookie
+----
 - [ ] mock
   - [ ] login
     - [x] token
