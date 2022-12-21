@@ -18,7 +18,8 @@ export const TEST_ROUTER: AppRouteRecordRaw = {
       meta: {
         title: 'listOne',
       },
-    }, {
+    },
+    {
       path: '/testRouter/listTwo',
       name: 'listTwo',
       component: () => import('@/views/testRouter/listTwo.vue'),

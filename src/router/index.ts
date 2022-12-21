@@ -1,9 +1,8 @@
 import type { App } from 'vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { routes } from './routes'
-import { TEST_ROUTER } from './routes/module/testRouter'
 
-const basicRoutes: any = [...routes, TEST_ROUTER]
+const basicRoutes: any = [...routes]
 
 // 白名单
 export const WHITE_PATH_LIST: string[] = []

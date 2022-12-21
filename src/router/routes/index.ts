@@ -1,5 +1,3 @@
-import { ConstantRoutes } from './constant';
+import { ConstantRoutes } from './constant'
 
-export const routes = [
-  ...ConstantRoutes
-]
+export const routes = [...ConstantRoutes]
