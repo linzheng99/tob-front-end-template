@@ -1,34 +1,77 @@
-import { defineStore } from 'pinia';
-import { setCookieToken } from '@/utils/cookie/index';
+import { defineStore } from 'pinia'
+import { setCookieToken, removeCookieToken } from '@/utils/cookie/index'
+import { getUserInfoApi, loginApi } from '@/api/user'
+import { router } from '@/router'
+
+interface UserState {
+  userInfo: any
+  token?: string
+  lastUpdateTime: number
+}
+
+interface UserInfo {
+  userId: string
+  username: string
+  roles?: []
+  id: string
+}
 
 export const useUserStore = defineStore({
   id: 'app-user',
-  state: () => ({
+  state: (): UserState => ({
     userInfo: null,
     token: undefined,
-    lastUpdateTime: 0
+    lastUpdateTime: 0,
   }),
   getters: {
     getToken(): string {
       return this.token || ''
-     },
-    getUserInfo() { },
-    getLastUpdateTime() { },
+    },
+    getUserInfo(): UserInfo {
+      return this.userInfo
+    },
+    getLastUpdateTime(): number {
+      return this.lastUpdateTime
+    },
   },
   actions: {
     setUserInfo(info) {
       this.userInfo = info
       this.lastUpdateTime = new Date().getTime()
     },
-    setToken(token){
+    setToken(token: string) {
       this.token = token
       setCookieToken(token)
     },
+    // 登录
     async login(params) {
-
+      const result: any = await loginApi(params)
+      const { data, code, message } = result
+      if (code === 200) {
+        this.setToken(data.token)
+        return this.afterLoginAction()
+      } else {
+        console.error(message)
+      }
     },
-    async afterLogin() {
-      if(!this.token) return
-    }
-  }
+    // 获取用户信息
+    async afterLoginAction() {
+      if (!this.token) return
+      const info = await this.getUserInfoAction()
+      router.replace('/')
+      return info
+    },
+    async getUserInfoAction() {
+      if (!this.token) return
+      const result: any = await getUserInfoApi({ token: this.token })
+      const { data } = result
+      this.setUserInfo(data)
+      return data
+    },
+    // 登出
+    loginOut() {
+      removeCookieToken()
+      router.replace('/')
+    },
+  },
 })

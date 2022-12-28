@@ -18,6 +18,7 @@ export default [
         userId: '123456',
         username: 'basic_name',
         roles: [],
+        id: '123456789',
       })
     },
   },

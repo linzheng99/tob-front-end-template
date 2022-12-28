@@ -5,19 +5,19 @@
         ref="formRef"
         :label-width="80"
         label-placement="left"
-        :model="formValue"
+        :model="userForm"
         :rules="rules"
         :size="size"
       >
         <n-form-item label="用户名" path="user.username">
           <n-input
-            v-model:value="formValue.user.username"
+            v-model:value="userForm.user.username"
             placeholder="输入用户名"
           />
         </n-form-item>
         <n-form-item label="密码" path="user.password">
           <n-input
-            v-model:value="formValue.user.password"
+            v-model:value="userForm.user.password"
             placeholder="输入密码"
           />
         </n-form-item>
@@ -29,11 +29,14 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { FormInst, useMessage } from 'naive-ui'
+import { FormInst } from 'naive-ui'
+import { useUserStore } from '@/store/modules/user'
+
+const userStore = useUserStore()
+
 const formRef = ref<FormInst | null>(null)
-const message = useMessage()
 const size = 'small'
-const formValue = ref({
+const userForm = ref({
   user: {
     username: '',
     password: '',
@@ -53,14 +56,14 @@ const rules = {
     },
   },
 }
+
 const handleValidateClick = (e: MouseEvent) => {
   e.preventDefault()
-  formRef.value?.validate((errors) => {
+  formRef.value?.validate(async (errors) => {
     if (!errors) {
-      message.success('Valid')
+      await userStore.login(userForm)
     } else {
       console.log(errors)
-      message.error('Invalid')
     }
   })
 }
