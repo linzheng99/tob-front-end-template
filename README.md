@@ -33,12 +33,12 @@
   - [ ] sidebar
   - [ ] header
 - [ ] pinia
-  - [ ] userStore
+  - [x] userStore
   - [ ] globalStore
 - [x] token封装-cookie
 ----
 - [ ] mock
-  - [ ] login
+  - [x] login
     - [x] token
     - [x] userInfo
   - [ ] router
