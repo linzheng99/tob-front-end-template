@@ -28,6 +28,7 @@
 - [ ] router
   - [ ] router guard
   - [ ] basic router
+  - [ ] router component patch
 - [ ] 基础的Layout
   - [ ] svgIcon封装
   - [ ] sidebar
