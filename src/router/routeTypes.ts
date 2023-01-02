@@ -17,3 +17,24 @@ export interface AppRouteRecordRaw {
   props?: Recordable
   fullPath?: string
 }
+
+export interface Menu {
+  name: string
+
+  icon?: string
+
+  path: string
+
+  // path contains param, auto assignment.
+  paramPath?: string
+
+  disabled?: boolean
+
+  children?: Menu[]
+
+  orderNo?: number
+
+  meta?: Partial<RouteMeta>
+
+  hideMenu?: boolean
+}
