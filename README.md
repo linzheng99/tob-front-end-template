@@ -26,7 +26,7 @@
     - [x] uploadFile
   - [x] downloadFile
 - [ ] router
-  - [ ] router guard
+  - [ ] router permission guard
   - [ ] basic router
   - [ ] router component patch
 - [ ] 基础的Layout
@@ -35,6 +35,7 @@
   - [ ] header
 - [ ] pinia
   - [x] userStore
+  - [ ] permission (router)
   - [ ] globalStore
 - [x] token封装-cookie
 ----
