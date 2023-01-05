@@ -7,6 +7,8 @@ interface PermissionState {
   backMenuList: Menu[]
   // 菜单更新时间
   lastBuildMenuTime: number
+  // 动态添加路由
+  isDynamicAddedRoute: boolean
 }
 
 export const usePermissionStore = defineStore({
@@ -14,6 +16,7 @@ export const usePermissionStore = defineStore({
   state: (): PermissionState => ({
     backMenuList: [],
     lastBuildMenuTime: 0,
+    isDynamicAddedRoute: false,
   }),
   getters: {
     getBackMenuList(): Menu[] {
@@ -21,6 +24,9 @@ export const usePermissionStore = defineStore({
     },
     getLastBuildMenuTime(): number {
       return this.lastBuildMenuTime
+    },
+    getIsDynamicAddedRoute(): boolean {
+      return this.isDynamicAddedRoute
     },
   },
   actions: {
@@ -30,6 +36,9 @@ export const usePermissionStore = defineStore({
     },
     setLastBuildMenuTime() {
       this.lastBuildMenuTime = new Date().getTime()
+    },
+    setDynamicAddedRoute(added: boolean) {
+      this.isDynamicAddedRoute = added
     },
     buildRoutesAction() {
       const routes = []

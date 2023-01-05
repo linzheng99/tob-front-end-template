@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { setCookieToken, removeCookieToken } from '@/utils/cookie/index'
 import { getUserInfoApi, loginApi } from '@/api/user'
 import { router } from '@/router'
+import { store } from '../index'
 
 interface UserState {
   userInfo: any
@@ -75,3 +76,7 @@ export const useUserStore = defineStore({
     },
   },
 })
+
+export function useUserStoreWithOut() {
+  return useUserStore(store)
+}
