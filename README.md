@@ -44,8 +44,12 @@
     - [x] token
     - [x] userInfo
   - [ ] router
+    - [ ] test router
 ---
 - [ ] 系统管理页面
   - [ ] 账号管理
   - [ ] 角色管理
   - [ ] 权限配置
+- [ ] 组件页面
+  - [ ] FormGenerate
+  - [ ] TableGenerate
