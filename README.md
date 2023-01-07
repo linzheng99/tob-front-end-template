@@ -26,7 +26,7 @@
     - [x] uploadFile
   - [x] downloadFile
 - [ ] router
-  - [ ] router permission guard
+  - [x] router permission guard
   - [ ] basic router
   - [ ] router component patch
 - [ ] 基础的Layout
