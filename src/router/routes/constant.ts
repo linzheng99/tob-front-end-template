@@ -1,4 +1,4 @@
-import { PageEnum } from '@/enums/pageEnum'
+import { PermissionFirstPage } from '@/enums/pageEnum'
 
 /** 默认布局 */
 export const LAYOUT = () => import('@/layouts/default/index.vue')
@@ -7,7 +7,7 @@ export const LAYOUT = () => import('@/layouts/default/index.vue')
 export const RootRoute = {
   name: 'root',
   path: '/',
-  redirect: PageEnum.First_Page,
+  redirect: PermissionFirstPage.First_Page,
   meta: {
     title: 'Root',
   },

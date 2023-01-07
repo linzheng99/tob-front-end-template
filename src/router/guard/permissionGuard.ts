@@ -7,7 +7,11 @@ import { useUserStoreWithOut } from '@/store/modules/user'
 
 const LOGIN_PATH = PageEnum.Login_page
 
-const redirectLogin = {
+const redirectLogin: {
+  path: string
+  replace: boolean
+  query?: Recordable<string>
+} = {
   path: LOGIN_PATH,
   replace: true,
 }
@@ -32,8 +36,15 @@ export function createPermissionGuard(router: Router) {
     // 判断路由 TODO
 
     // 判断是否是白名单
-    if (WHITE_PATH_LIST.includes(to.path)) {
+    if (WHITE_PATH_LIST.includes(to.path as PageEnum)) {
+      if (to.path === LOGIN_PATH && token) {
+        try {
+          await userStore.afterLoginAction()
+          return
+        } catch {}
+      }
       next()
+      return
     }
 
     // !token

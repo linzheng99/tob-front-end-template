@@ -59,6 +59,7 @@ export const useUserStore = defineStore({
     async afterLoginAction() {
       if (!this.token) return
       const info = await this.getUserInfoAction()
+      // TODO 判断接口登录凭证（cookie）是否过期
       router.replace('/')
       return info
     },
