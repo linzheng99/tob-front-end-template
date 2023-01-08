@@ -1,4 +1,4 @@
-import type { Router } from 'vue-router'
+import type { Router, RouteRecordRaw } from 'vue-router'
 import { PageEnum } from '@/enums/pageEnum'
 import { getCookieToken } from '@/utils/cookie'
 import { WHITE_PATH_LIST } from '../index'
@@ -70,6 +70,13 @@ export function createPermissionGuard(router: Router) {
     }
 
     // 动态添加 TODO
+    const routes = await permissionStore.buildRoutesAction()
+    routes.forEach((route) => {
+      router.addRoute(route as RouteRecordRaw)
+    })
+    permissionStore.setDynamicAddedRoute(true)
+
+    next({ ...to, replace: true })
 
     // 跳转路由
     if (to.path === LOGIN_PATH) {

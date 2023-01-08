@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
-import { Menu } from '@/router/routeTypes'
+import { AppRouteRecordRaw, Menu } from '@/router/routeTypes'
 import { store } from '@/store/index'
+import { TEST_ROUTER } from '../../router/routes/module/testRouter'
 
 interface PermissionState {
   // 后台路由
@@ -40,8 +41,13 @@ export const usePermissionStore = defineStore({
     setDynamicAddedRoute(added: boolean) {
       this.isDynamicAddedRoute = added
     },
-    buildRoutesAction() {
-      const routes = []
+    async buildRoutesAction() {
+      const routes: AppRouteRecordRaw[] = []
+      const routeList: AppRouteRecordRaw[] = [TEST_ROUTER]
+      routeList.forEach((i) => {
+        routes.push(i)
+      })
+      this.setBackMenuList(routes)
       return routes
     },
   },
