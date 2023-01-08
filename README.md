@@ -30,7 +30,7 @@
   - [ ] basic router
   - [ ] router component patch
 - [ ] 基础的Layout
-  - [ ] svgIcon封装
+  - [x] svgIcon封装
   - [ ] sidebar
   - [ ] header
 - [ ] pinia
