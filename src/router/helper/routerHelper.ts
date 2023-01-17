@@ -8,9 +8,7 @@ LayoutMap.set('LAYOUT', LAYOUT)
 /**
  * 权限路由 转换 Vue路由
  */
-export function transformAuthRouteToVueRoutes(
-  routes: AppRouteRecordRaw[] | undefined,
-) {
+export function transformAuthRouteToVueRoutes(routes: AppRouteRecordRaw[] | undefined) {
   const routeList: AppRouteRecordRaw[] = []
 
   routes?.forEach((route) => {
@@ -27,12 +25,13 @@ export function transformAuthRouteToVueRoute(item: AppRouteRecordRaw) {
   const dynamicViewsModules = import.meta.glob('../../views/**/*.{vue,tsx}')
   const { component, children } = item
   const route = { ...item }
-  const LayoutFound = getLayoutComponent(component)
-
-  if (LayoutFound) {
-    extend(route, { component: LayoutFound })
-  } else {
-    extend(route, { component: dynamicImport(dynamicViewsModules, component) })
+  if (component) {
+    const LayoutFound = getLayoutComponent(component)
+    if (LayoutFound) {
+      extend(route, { component: LayoutFound })
+    } else {
+      extend(route, { component: dynamicImport(dynamicViewsModules, component) })
+    }
   }
   // 存在子路由递归转换
   if (hasChildren(item)) {
@@ -55,14 +54,10 @@ function dynamicImport(dynamicViewsModules, component) {
     const matchKey = matchKeys[0]
     return dynamicViewsModules[matchKey]
   } else if (matchKeys.length > 1) {
-    window.console.error(
-      '请不要在同一层级的目录下创建相同文件名的`.vue`和`.tsx`文件,这将导致动态引入失败',
-    )
+    window.console.error('请不要在同一层级的目录下创建相同文件名的`.vue`和`.tsx`文件,这将导致动态引入失败')
     return
   } else {
-    window.console.error(
-      '在src/views/下找不到' + component + '文件, 请自行创建!',
-    )
+    window.console.error('在src/views/下找不到' + component + '文件, 请自行创建!')
     return
   }
 }
