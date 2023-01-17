@@ -1,7 +1,10 @@
 import { defineStore } from 'pinia'
 import { AppRouteRecordRaw, Menu } from '@/router/routeTypes'
 import { store } from '@/store/index'
-import { TEST_ROUTER } from '../../router/routes/module/testRouter'
+import { TEST_ROUTER, testRouter } from '../../router/routes/module/testRouter'
+import { transformAuthRouteToVueRoutes } from '../../router/helper/routerHelper'
+import { getMenuListApi } from '@/api/menu'
+import { getCookieToken } from '../../utils/cookie/index'
 
 interface PermissionState {
   // 后台路由
@@ -10,6 +13,9 @@ interface PermissionState {
   lastBuildMenuTime: number
   // 动态添加路由
   isDynamicAddedRoute: boolean
+}
+type resultType = {
+  data: any
 }
 
 export const usePermissionStore = defineStore({
@@ -43,11 +49,27 @@ export const usePermissionStore = defineStore({
     },
     async buildRoutesAction() {
       const routes: AppRouteRecordRaw[] = []
-      const routeList: AppRouteRecordRaw[] = [TEST_ROUTER]
+      let authMenuList: AppRouteRecordRaw[] = []
+
+      try {
+        const { data } = (await getMenuListApi({
+          token: getCookieToken(),
+        })) as resultType
+        authMenuList = data.menus
+      } catch (error) {
+        console.error(error)
+        return
+      }
+
+      const routeList = transformAuthRouteToVueRoutes(authMenuList)
+      // const routeList = [TEST_ROUTER]
+
       routeList.forEach((i) => {
         routes.push(i)
       })
       this.setBackMenuList(routes)
+      console.log(routes)
+
       return routes
     },
   },

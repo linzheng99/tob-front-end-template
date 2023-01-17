@@ -4,6 +4,7 @@ import { getCookieToken } from '@/utils/cookie'
 import { WHITE_PATH_LIST } from '../index'
 import { usePermissionStoreWithOut } from '@/store/modules/permission'
 import { useUserStoreWithOut } from '@/store/modules/user'
+import { AppRouteRecordRaw } from '../routeTypes'
 
 const LOGIN_PATH = PageEnum.Login_page
 
@@ -69,8 +70,8 @@ export function createPermissionGuard(router: Router) {
       return
     }
 
-    // 动态添加 TODO
-    const routes = await permissionStore.buildRoutesAction()
+    // 动态添加
+    const routes = (await permissionStore.buildRoutesAction()) as AppRouteRecordRaw[]
     routes.forEach((route) => {
       router.addRoute(route as RouteRecordRaw)
     })
