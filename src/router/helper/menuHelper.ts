@@ -6,9 +6,7 @@ import { useIconRender } from '@/hooks/component/useIconRender'
  * @param routes - 路由
  * */
 // TODO
-export function transformAuthRouteToMenu(
-  routes: AppRouteRecordRaw[],
-): BackMenuOption[] {
+export function transformAuthRouteToMenu(routes: AppRouteRecordRaw[]): BackMenuOption[] {
   const Menu: BackMenuOption[] = []
   routes.forEach((route) => {
     const { name, path, meta } = route
@@ -19,8 +17,11 @@ export function transformAuthRouteToMenu(
     }
     const menuItem: BackMenuOption = addPartialProps({
       menu: {
-        label: name,
+        label: meta.title as string,
         key: path,
+        routeName: name,
+        localIcon: meta.localIcon,
+        routePath: path,
       },
       icon: meta.icon,
       children: menuChildren,
@@ -55,10 +56,7 @@ function addPartialProps(config: {
   }
 
   if (icon) {
-    console.log(iconRender({ icon }))
-
     Object.assign(item, { icon: iconRender({ icon }) })
-    console.log(item)
   }
 
   if (children) {
