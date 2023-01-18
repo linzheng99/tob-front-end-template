@@ -4,6 +4,8 @@ import App from './App.vue'
 import { setupStore } from './store'
 import { setupRouter, router } from './router'
 import { setupRouterGuard } from './router/guard'
+// register icon sprite
+import 'virtual:svg-icons-register'
 
 async function setUpApp() {
   const app = createApp(App)
