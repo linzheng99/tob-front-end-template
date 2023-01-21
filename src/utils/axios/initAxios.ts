@@ -21,12 +21,7 @@ export class InitAxios {
   private setupInterceptors() {
     const transform = this.getTransform()
 
-    const {
-      requestInterceptors,
-      requestInterceptorsCatch,
-      responseInterceptors,
-      responseInterceptorsCatch,
-    } = transform
+    const { requestInterceptors, requestInterceptorsCatch, responseInterceptors, responseInterceptorsCatch } = transform
 
     /**
      * @description 请求拦截器配置处理
@@ -48,10 +43,7 @@ export class InitAxios {
      * @description 请求拦截器错误捕获
      */
     if (isFunction(requestInterceptorsCatch)) {
-      this.axiosInstance.interceptors.request.use(
-        undefined,
-        requestInterceptorsCatch,
-      )
+      this.axiosInstance.interceptors.request.use(undefined, requestInterceptorsCatch)
     }
 
     /**
@@ -68,10 +60,7 @@ export class InitAxios {
      * @description 响应结果拦截器错误捕获
      */
     if (isFunction(responseInterceptorsCatch)) {
-      this.axiosInstance.interceptors.response.use(
-        undefined,
-        responseInterceptorsCatch,
-      )
+      this.axiosInstance.interceptors.response.use(undefined, responseInterceptorsCatch)
     }
   }
 
@@ -93,8 +82,7 @@ export class InitAxios {
     const { requestOptions } = this.options
     const opt = Object.assign({}, requestOptions, options)
 
-    const { beforeRequestHook, transformRequestHook, requestCatchHook } =
-      transform
+    const { beforeRequestHook, transformRequestHook, requestCatchHook } = transform
 
     if (isFunction(beforeRequestHook)) {
       conf = beforeRequestHook(conf, opt)

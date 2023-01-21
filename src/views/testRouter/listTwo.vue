@@ -1,5 +1,5 @@
 <template>
-  <div> listTwo </div>
+  <div>listTwo</div>
 </template>
 
 <script setup lang="ts"></script>

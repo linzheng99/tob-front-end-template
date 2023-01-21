@@ -3,9 +3,7 @@ import { isObject } from './is'
 export function deepMerge<T = any>(source: any = {}, target: any = {}): T {
   let key: string
   for (key in target)
-    source[key] = isObject(source[key])
-      ? deepMerge(source[key], target[key])
-      : (source[key] = target[key])
+    source[key] = isObject(source[key]) ? deepMerge(source[key], target[key]) : (source[key] = target[key])
 
   return source
 }
@@ -25,7 +23,7 @@ export function setObjToUrlParams(baseUrl: string, obj: any): string {
   for (const key in obj) parameters += `${key}=${encodeURIComponent(obj[key])}&`
 
   parameters = parameters.replace(/&$/, '')
-  return /\?$/.test(baseUrl)
-    ? baseUrl + parameters
-    : baseUrl.replace(/\/?$/, '?') + parameters
+  return /\?$/.test(baseUrl) ? baseUrl + parameters : baseUrl.replace(/\/?$/, '?') + parameters
 }
+
+export const extend = Object.assign

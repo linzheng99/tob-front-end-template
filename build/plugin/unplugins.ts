@@ -1,11 +1,14 @@
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
-import path from 'path'
+import { getSrcPath } from '../utils'
 
 export default function unplugins(viteEnv: ImportMetaEnv) {
+  const srcPath = getSrcPath()
+  const localIconPath = `${srcPath}/assets/svg-icon`
+
   return [
     createSvgIconsPlugin({
       // 指定需要缓存的图标文件夹
-      iconDirs: [path.resolve(process.cwd(), 'src/assets/svg-icon')],
+      iconDirs: [localIconPath],
       // 指定symbolId格式
       symbolId: 'icon-[dir]-[name]',
     }),

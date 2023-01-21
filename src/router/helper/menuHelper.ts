@@ -1,11 +1,11 @@
 import { AppRouteRecordRaw } from '../routeTypes'
 import { BackMenuOption } from '../menuTypes'
 import { useIconRender } from '@/hooks/component/useIconRender'
+import { extend } from '@/utils'
 /**
  * 路由 转换 菜单
  * @param routes - 路由
  * */
-// TODO
 export function transformAuthRouteToMenu(routes: AppRouteRecordRaw[]): BackMenuOption[] {
   const Menu: BackMenuOption[] = []
   routes.forEach((route) => {
@@ -20,12 +20,13 @@ export function transformAuthRouteToMenu(routes: AppRouteRecordRaw[]): BackMenuO
         label: meta.title as string,
         key: path,
         routeName: name,
-        localIcon: meta.localIcon,
         routePath: path,
       },
-      icon: meta.icon,
+      localIcon: meta.localIcon as string,
+      icon: meta.icon as string,
       children: menuChildren,
     })
+
     if (!hideInMenu(route)) {
       Menu.push(menuItem)
     }
@@ -41,7 +42,7 @@ function hideInMenu(route: AppRouteRecordRaw) {
 /** 给菜单添加可选属性 */
 function addPartialProps(config: {
   menu: BackMenuOption
-  icon?: any
+  icon?: string
   localIcon?: string
   children?: BackMenuOption[]
 }) {
@@ -52,15 +53,15 @@ function addPartialProps(config: {
   const { icon, localIcon, children } = config
 
   if (localIcon) {
-    Object.assign(item, { icon: iconRender({ localIcon }) })
+    extend(item, { icon: iconRender({ localIcon }) })
   }
 
   if (icon) {
-    Object.assign(item, { icon: iconRender({ icon }) })
+    extend(item, { icon: iconRender({ icon }) })
   }
 
   if (children) {
-    Object.assign(item, { children })
+    extend(item, { children })
   }
   return item
 }

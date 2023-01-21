@@ -31,8 +31,7 @@ const transform = {
     // 直接在处理请求数据的时候统一返回字段
     const { code, data, message } = result
     // 判断后端接口是否与前端定义参数统一
-    const hasSuccess =
-      data && Reflect.has(result, 'code') && code === ResultEnum.SUCCESS
+    const hasSuccess = data && Reflect.has(result, 'code') && code === ResultEnum.SUCCESS
     if (hasSuccess) {
       return { code, data, message }
     } else {
@@ -80,11 +79,7 @@ const transform = {
       case RequestEnum.POST:
       case RequestEnum.PUT:
         if (!isString(params)) {
-          if (
-            Reflect.has(config, 'data') &&
-            config.data &&
-            Object.keys(config.data).length > 0
-          ) {
+          if (Reflect.has(config, 'data') && config.data && Object.keys(config.data).length > 0) {
             config.data = data
             config.params = params
           } else {
@@ -93,10 +88,7 @@ const transform = {
             config.params = undefined
           }
           if (joinParamsToUrl) {
-            config.url = setObjToUrlParams(
-              config.url as string,
-              Object.assign({}, config.params, config.data),
-            )
+            config.url = setObjToUrlParams(config.url as string, Object.assign({}, config.params, config.data))
           }
         } else {
           paramsIsString(config, params)

@@ -1,10 +1,9 @@
 import vue from '@vitejs/plugin-vue'
 import ComponentsPlugins from './components'
 import MockServer from './mock'
+import unplugins from './unplugins'
 
-export function setupVitePlugins(config) {
-  console.log(config)
-
-  const plugins = [vue(), ComponentsPlugins(), MockServer(config)]
+export function setupVitePlugins(viteEnv: ImportMetaEnv) {
+  const plugins = [vue(), ComponentsPlugins(), ...unplugins(viteEnv), MockServer()]
   return plugins
 }

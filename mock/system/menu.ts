@@ -35,6 +35,7 @@ const testRouter = {
       component: '/testRouter/listTwo.vue',
       meta: {
         title: 'listTwo',
+        localIcon: 'logo',
       },
     },
     {
@@ -43,6 +44,7 @@ const testRouter = {
       component: '/testRouter/listThree/index.vue',
       meta: {
         title: 'listThree',
+        hide: true,
       },
     },
   ],

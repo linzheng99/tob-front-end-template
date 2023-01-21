@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { AppRouteRecordRaw, Menu } from '@/router/routeTypes'
 import { store } from '@/store/index'
-import { TEST_ROUTER, testRouter } from '../../router/routes/module/testRouter'
 import { transformAuthRouteToVueRoutes } from '../../router/helper/routerHelper'
 import { getMenuListApi } from '@/api/menu'
 import { getCookieToken } from '../../utils/cookie/index'
@@ -62,13 +61,11 @@ export const usePermissionStore = defineStore({
       }
 
       const routeList = transformAuthRouteToVueRoutes(authMenuList)
-      // const routeList = [TEST_ROUTER]
 
       routeList.forEach((i) => {
         routes.push(i)
       })
       this.setBackMenuList(routes)
-      console.log(routes)
 
       return routes
     },

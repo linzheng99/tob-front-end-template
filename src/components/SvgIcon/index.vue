@@ -24,13 +24,11 @@ const bindAttrs = computed<{ class: string; style: string }>(() => ({
   style: (attrs.style as string) || '',
 }))
 const symbolId = computed(() => {
-  const { VITE_ICON_LOCAL_PREFFIX: preffix } = import.meta.env
-
   const defaultLocalIcon = 'no-icon'
 
   const icon = props.localIcon || defaultLocalIcon
 
-  return `#${preffix}-${icon}`
+  return `#icon-${icon}`
 })
 const renderLocalIcon = computed(() => props.localIcon || !props.icon)
 </script>

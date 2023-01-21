@@ -1,11 +1,11 @@
 <template>
-  <div class="border"> listOne </div>
+  <div>listOne</div>
 </template>
 
 <script setup lang="ts"></script>
 
 <style lang="scss" scoped>
-.border{
+.border {
   border: 1px solid $global-border;
 }
 </style>
