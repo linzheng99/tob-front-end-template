@@ -33,7 +33,9 @@
   - [ ] sidebar
     - [X] hooks: useIconHeader
     - [ ] helper: menuHelper(细节: 存在类型定义问题)
+    - [x] collapse
   - [ ] header
+    - [x] collapse
 - [ ] pinia
   - [x] userStore
     - [x] token封装-cookie
