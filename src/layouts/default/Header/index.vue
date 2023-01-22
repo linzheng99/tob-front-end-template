@@ -1,11 +1,20 @@
 <template>
-  <n-layout-header>header</n-layout-header>
+  <div class="layout_header-wrapper">
+    <MenuCollapse />
+  </div>
 </template>
 
 <script setup lang="ts">
-
+import MenuCollapse from './components/MenuCollapse.vue'
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.layout_header {
+  &-wrapper {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+  }
+}
 </style>

@@ -1,24 +1,28 @@
 <template>
-  <n-layout-sider class="layout_sider-wrapper" bordered>
+  <div class="layout_sider-wrapper">
     <div>logo</div>
-    <n-menu :collapsed="collapsed" :collapsed-width="64" :collapsed-icon-size="22" :options="option" />
-  </n-layout-sider>
+    <n-menu
+      :collapsed="collapsed"
+      :collapsed-width="64"
+      :collapsed-icon-size="22"
+      :options="option"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">
 import { usePermissionStoreWithOut } from '@/store/modules/permission'
 import { useAppStoreWithOut } from '@/store/modules/app'
 import { transformAuthRouteToMenu } from '@/router/helper/menuHelper'
-import { AppRouteRecordRaw } from '../../../router/routeTypes'
+import { AppRouteRecordRaw } from '@/router/routeTypes'
+import { computed } from 'vue'
 
 const permissionStore = usePermissionStoreWithOut()
 const backMenuList = permissionStore.getBackMenuList
 
 const appStore = useAppStoreWithOut()
-const collapsed = appStore.getSiderCollapse
+const collapsed = computed(() => appStore.getSiderCollapse)
 const option = transformAuthRouteToMenu(backMenuList as AppRouteRecordRaw[])
-
-console.log(option)
 </script>
 
 <style lang="scss" scoped>

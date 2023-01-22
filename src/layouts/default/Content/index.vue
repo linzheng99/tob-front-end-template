@@ -1,5 +1,5 @@
 <template>
-  <n-layout-content content-style="padding: 24px;">
+  <n-layout-content content-style="padding: 10px;">
     <RouterView>
       <template #default="{ Component, route }">
         <component :is="Component" :key="route.path" />
