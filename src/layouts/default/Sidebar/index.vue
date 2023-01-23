@@ -1,6 +1,6 @@
 <template>
   <div class="layout_sider-wrapper">
-    <div>logo</div>
+    <SiderLogo />
     <n-menu
       :collapsed="collapsed"
       :collapsed-width="64"
@@ -11,11 +11,12 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import { usePermissionStoreWithOut } from '@/store/modules/permission'
 import { useAppStoreWithOut } from '@/store/modules/app'
 import { transformAuthRouteToMenu } from '@/router/helper/menuHelper'
 import { AppRouteRecordRaw } from '@/router/routeTypes'
-import { computed } from 'vue'
+import SiderLogo from './components/SiderLogo.vue'
 
 const permissionStore = usePermissionStoreWithOut()
 const backMenuList = permissionStore.getBackMenuList
