@@ -40,6 +40,7 @@ const props = withDefaults(defineProps<Props>(), {
 const siderStyle = computed(() => {
   return {
     width: !props.siderCollapes ? props.siderWidth : props.siderCollapsedWidth,
+    background: '#18192a',
   }
 })
 const contentStyle = {

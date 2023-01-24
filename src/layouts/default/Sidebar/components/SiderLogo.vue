@@ -25,7 +25,7 @@ const collapsed = computed(() => appStore.getSiderCollapse)
   align-items: center;
   height: 56px;
   font-size: 16px;
-  color: white;
+  color: #dcee62;
   width: 100%;
   &-unfold {
     display: flex;
