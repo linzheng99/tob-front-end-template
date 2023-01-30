@@ -36,10 +36,11 @@
     - [x] collapse
   - [ ] header
     - [x] collapse
+  - [x] content
 - [ ] pinia
   - [x] userStore
     - [x] token封装-cookie
-  - [ ] permission (router)
+  - [x] permission (router)
   - [ ] globalStore
 - [ ] components
   - [x] svgIcon封装
@@ -49,7 +50,7 @@
     - [x] token
     - [x] userInfo
   - [ ] router
-    - [ ] test router
+    - [x] test router
 ---
 - [ ] 系统管理页面
   - [ ] 账号管理
