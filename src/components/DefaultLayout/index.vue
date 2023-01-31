@@ -1,83 +1,117 @@
 <template>
   <div class="default-wrapper">
-    <div class="default-sider" :style="siderStyle">
+    <header class="default-header" :style="headerStyle">
+      <slot name="header"> header </slot>
+    </header>
+    <div class="default-tab" :style="tabStyle">
+      <slot name="tab"> tab </slot>
+    </div>
+    <aside class="default-sider" :style="siderStyle">
       <slot name="sider"> sider </slot>
-    </div>
-    <div class="default-content" :style="contentStyle">
-      <div class="default-header">
-        <slot name="header"> header </slot>
-      </div>
-      <div class="default-tab">
-        <slot name="tab"> tab </slot>
-      </div>
+    </aside>
+    <main class="default-content" :style="contentStyle">
       <slot />
-      <div v-if="footerVisible" class="default-footer">
-        <slot name="footer"> footer </slot>
-      </div>
-    </div>
+    </main>
+    <footer v-if="footerVisible" class="default-footer" :style="footerStyle">
+      <slot name="footer"> footer </slot>
+    </footer>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useThemeStoreWithOut } from '@/store/modules/theme'
 
 interface Props {
-  siderWidth?: string
-  siderCollapsedWidth?: string
   siderCollapes: boolean
   footerVisible?: boolean
 }
+const themeStore = useThemeStoreWithOut()
+
+const siderDefaultWidth = themeStore.getSiderDefaultWidth + 'px'
+const siderMinWidth = themeStore.getSiderMinWidth + 'px'
+const siderWidth = computed(() => {
+  return props.siderCollapes ? siderMinWidth : siderDefaultWidth
+})
+const headerHeight = themeStore.getHeaderHeight + 'px'
+const tabHeight = themeStore.getTabHeight + 'px'
+
 const props = withDefaults(defineProps<Props>(), {
-  siderWidth: '220px',
-  siderCollapsedWidth: '64px',
   footerVisible: false,
 })
-// interface Emits {
-//   (e: 'update:sider-collapse', collapse: boolean): void
-// }
-// const emit = defineEmits<Emits>()
 
 const siderStyle = computed(() => {
   return {
-    width: !props.siderCollapes ? props.siderWidth : props.siderCollapsedWidth,
-    background: '#18192a',
+    width: !props.siderCollapes ? siderDefaultWidth : siderMinWidth,
   }
 })
-const contentStyle = {
-  width: `calc(100% - ${props.siderWidth})`,
-}
+const headerStyle = computed(() => {
+  return {
+    'padding-left': `${siderWidth.value}`,
+    height: headerHeight,
+  }
+})
+const tabStyle = computed(() => {
+  return {
+    'padding-left': `${siderWidth.value}`,
+    top: headerHeight,
+    height: tabHeight,
+  }
+})
+const contentStyle = computed(() => {
+  return {
+    'padding-left': `${siderWidth.value}`,
+    'padding-top': `${themeStore.getHeaderHeight + themeStore.getTabHeight}` + 'px',
+  }
+})
+const footerStyle = computed(() => {
+  return {
+    'padding-left': `${siderWidth.value}`,
+  }
+})
 </script>
 
 <style lang="scss" scoped>
 .default {
   &-wrapper {
-    height: 100vh;
+    height: 100%;
     width: 100%;
     font-size: 12px;
     display: flex;
+    flex-direction: column;
     color: black;
     overflow: hidden;
   }
   &-content {
     height: 100vh;
-    position: relative;
+    // flex-grow: 1;
+    box-sizing: border-box;
+    width: 100%;
+    transition: $theme-padding-left-transition;
   }
   &-sider {
     min-width: 64px;
-    border-right: 1px solid #eee;
-    position: relative;
+    position: fixed;
+    left: 0;
+    top: 0;
     transition: width 0.3s ease-in-out;
+    background-color: $theme-background-color;
   }
   &-header {
     width: 100%;
+    position: fixed;
+    transition: $theme-padding-left-transition;
   }
   &-tab {
     width: 100%;
+    position: fixed;
+    transition: $theme-padding-left-transition;
   }
   &-footer {
     position: fixed;
     bottom: 0;
     width: 100%;
+    transition: $theme-padding-left-transition;
   }
 }
 </style>
