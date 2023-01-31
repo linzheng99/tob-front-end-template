@@ -35,6 +35,7 @@ const themeOverrides: GlobalThemeOverrides = {
     itemIconColorActiveHover: '#dcee62',
     itemIconColorChildActive: '#dcee62',
     itemIconColorChildActiveHover: '#dcee62',
+    itemIconColorCollapsed: '#fff',
     // 文字
     itemTextColor: '#fff',
     itemTextColorHover: '#fff',

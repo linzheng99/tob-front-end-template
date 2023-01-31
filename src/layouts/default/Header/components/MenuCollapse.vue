@@ -24,5 +24,6 @@ const rightFold = 'line-md:menu-fold-right'
 .icon_size {
   font-size: 16px;
   cursor: pointer;
+  color: white;
 }
 </style>

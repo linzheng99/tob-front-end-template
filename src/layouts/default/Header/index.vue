@@ -11,11 +11,11 @@ import MenuCollapse from './components/MenuCollapse.vue'
 <style lang="scss" scoped>
 .layout_header {
   &-wrapper {
-    height: 60px;
+    height: 100%;
     display: flex;
     align-items: center;
     padding: 10px;
-    background-color: #18192a;
+    background-color: $theme-background-color;
   }
 }
 </style>
