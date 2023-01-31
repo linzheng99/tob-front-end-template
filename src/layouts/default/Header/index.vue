@@ -15,6 +15,7 @@ import MenuCollapse from './components/MenuCollapse.vue'
     display: flex;
     align-items: center;
     padding: 10px;
+    background-color: #18192a;
   }
 }
 </style>
