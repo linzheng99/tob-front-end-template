@@ -1,6 +1,5 @@
 import type { Router, RouteRecordRaw } from 'vue-router'
 import { PageEnum } from '@/enums/pageEnum'
-import { getCookieToken } from '@/utils/cookie'
 import { WHITE_PATH_LIST } from '../index'
 import { usePermissionStoreWithOut } from '@/store/modules/permission'
 import { useUserStoreWithOut } from '@/store/modules/user'
@@ -20,7 +19,7 @@ const redirectLogin: {
 export function createPermissionGuard(router: Router) {
   router.beforeEach(async (to, from, next) => {
     const userStore = useUserStoreWithOut()
-    const token = getCookieToken()
+    const token = userStore.getToken
     const permissionStore = usePermissionStoreWithOut()
 
     /**

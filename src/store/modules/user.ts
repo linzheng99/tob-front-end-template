@@ -26,7 +26,7 @@ export const useUserStore = defineStore({
   }),
   getters: {
     getToken(): string {
-      return getCookieToken() || this.token
+      return this.token || getCookieToken()
     },
     getUserInfo(): UserInfo {
       return this.userInfo
