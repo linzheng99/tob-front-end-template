@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { setCookieToken, removeCookieToken } from '@/utils/cookie/index'
+import { setCookieToken, removeCookieToken, getCookieToken } from '@/utils/cookie/index'
 import { getUserInfoApi, loginApi } from '@/api/user'
 import { router } from '@/router'
 import { store } from '../index'
@@ -26,7 +26,7 @@ export const useUserStore = defineStore({
   }),
   getters: {
     getToken(): string {
-      return this.token || ''
+      return getCookieToken() || this.token
     },
     getUserInfo(): UserInfo {
       return this.userInfo
@@ -64,7 +64,7 @@ export const useUserStore = defineStore({
       return info
     },
     async getUserInfoAction() {
-      if (!this.token) return
+      if (!this.getToken) return
       const result: any = await getUserInfoApi({ token: this.token })
       const { data } = result
       this.setUserInfo(data)
