@@ -18,7 +18,7 @@ export function transformAuthRouteToMenu(routes: AppRouteRecordRaw[]): BackMenuO
     const menuItem: BackMenuOption = addPartialProps({
       menu: {
         label: meta.title as string,
-        key: path,
+        key: name,
         routeName: name,
         routePath: path,
       },

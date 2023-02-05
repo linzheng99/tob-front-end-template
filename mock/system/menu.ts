@@ -21,7 +21,7 @@ const testRouter = {
       children: [
         {
           path: '/testRouter/listOne/testOne',
-          name: 'test2',
+          name: 'listOne_item',
           component: '/testRouter/listOne.vue',
           meta: {
             title: 'listOne_item',
