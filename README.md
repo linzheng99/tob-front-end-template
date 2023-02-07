@@ -14,7 +14,7 @@
 * prettier
 ----
 ## Task List
-- [ ] 登录页
+- [x] 登录页
   - [x] Form
   - [ ] UI
 - [x] axios
@@ -28,17 +28,17 @@
 - [ ] router
   - [x] router permission guard
   - [ ] basic router
-  - [ ] router component patch
-- [ ] 基础的Layout
-  - [ ] sidebar
+  - [x] router component patch
+- [x] 基础的Layout
+  - [x] sidebar
     - [X] hooks: useIconHeader
-    - [ ] helper: menuHelper(细节: 存在类型定义问题)
+    - [x] helper: menuHelper
     - [x] collapse
   - [x] header
     - [x] collapse
   - [x] Tab
   - [x] content
-- [ ] pinia
+- [x] pinia
   - [x] userStore
     - [x] token封装-cookie
   - [x] permission (router)
@@ -46,11 +46,11 @@
 - [ ] components
   - [x] svgIcon封装
 ----
-- [ ] mock
+- [x] mock
   - [x] login
     - [x] token
     - [x] userInfo
-  - [ ] router
+  - [x] router
     - [x] test router
 ---
 - [ ] 系统管理页面

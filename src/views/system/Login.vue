@@ -10,16 +10,10 @@
         :size="size"
       >
         <n-form-item label="用户名" path="user.username">
-          <n-input
-            v-model:value="userForm.user.username"
-            placeholder="输入用户名"
-          />
+          <n-input v-model:value="userForm.user.username" placeholder="输入用户名" />
         </n-form-item>
         <n-form-item label="密码" path="user.password">
-          <n-input
-            v-model:value="userForm.user.password"
-            placeholder="输入密码"
-          />
+          <n-input v-model:value="userForm.user.password" placeholder="输入密码" />
         </n-form-item>
       </n-form>
       <n-button type="primary" @click="handleValidateClick"> 登录 </n-button>

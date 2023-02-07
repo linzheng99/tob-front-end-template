@@ -54,7 +54,9 @@ function dynamicImport(dynamicViewsModules, component) {
     const matchKey = matchKeys[0]
     return dynamicViewsModules[matchKey]
   } else if (matchKeys.length > 1) {
-    window.console.error('请不要在同一层级的目录下创建相同文件名的`.vue`和`.tsx`文件,这将导致动态引入失败')
+    window.console.error(
+      '请不要在同一层级的目录下创建相同文件名的`.vue`和`.tsx`文件,这将导致动态引入失败',
+    )
     return
   } else {
     window.console.error('在src/views/下找不到' + component + '文件, 请自行创建!')

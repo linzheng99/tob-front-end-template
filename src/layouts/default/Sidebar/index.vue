@@ -14,6 +14,7 @@ import SiderMenu from './components/SiderMenu.vue'
 .layout_sider {
   &-wrapper {
     height: 100vh;
+    border-right: 1px solid #a1a3ae;
   }
 }
 </style>

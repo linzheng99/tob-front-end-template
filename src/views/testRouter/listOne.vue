@@ -1,11 +1,7 @@
 <template>
-  <div>listOne</div>
+  <div id="app_content">listOne</div>
 </template>
 
 <script setup lang="ts"></script>
 
-<style lang="scss" scoped>
-.border {
-  border: 1px solid $global-border;
-}
-</style>
+<style lang="scss" scoped></style>

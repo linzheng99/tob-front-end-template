@@ -52,7 +52,7 @@ const close = (tab) => {
     cursor: pointer;
     display: flex;
     align-items: center;
-    padding: 8px 12px;
+    padding: 6px 12px;
     font-weight: bold;
     color: white;
     border: 1px solid #a1a3ae;
