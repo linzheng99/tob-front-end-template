@@ -7,7 +7,7 @@
       <Header />
     </template>
     <template #tab>
-      <span>tab</span>
+      <Tabs />
     </template>
     <Content />
   </DefaultLayout>
@@ -16,6 +16,7 @@
 <script setup lang="ts">
 import Content from './Content/index.vue'
 import Header from './Header/index.vue'
+import Tabs from './Tabs/index.vue'
 import Sidebar from './Sidebar/index.vue'
 import DefaultLayout from '@/components/DefaultLayout/index.vue'
 import { useAppStoreWithOut } from '@/store/modules/app'
