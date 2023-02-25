@@ -1,8 +1,12 @@
 import { viteMockServe } from 'vite-plugin-mock'
-export default function MockServer(config) {
-  const { command } = config
+
+export default function MockServer() {
   return viteMockServe({
     mockPath: 'mock',
-    localEnabled: command === 'serve',
+    injectCode: `
+      import { setupProdMockServer } from '../mock/_createProductionServer';
+
+      setupProdMockServer();
+      `,
   })
 }
