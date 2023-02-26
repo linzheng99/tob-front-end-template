@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vueuse/core": "^9.13.0",
     "axios": "^1.2.0",
     "js-cookie": "^3.0.1",
     "lodash-es": "^4.17.21",

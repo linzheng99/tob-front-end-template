@@ -44,7 +44,7 @@ const testRouter = {
       component: '/testRouter/listThree/index.vue',
       meta: {
         title: 'listThree',
-        hide: true,
+        hide: false,
       },
     },
   ],
