@@ -4,8 +4,7 @@ export default function MockServer() {
   return viteMockServe({
     mockPath: 'mock',
     injectCode: `
-      import { setupProdMockServer } from '../mock/_createProductionServer';
-
+      import { setupProdMockServer } from '../mock';
       setupProdMockServer();
       `,
   })
