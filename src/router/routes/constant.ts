@@ -19,7 +19,7 @@ export const ConstantRoutes = [
   {
     name: 'login',
     path: '/login',
-    component: import('@/views/system/Login.vue'),
+    component: import('@/views/system/login/index.vue'),
     meta: {
       title: '登录',
     },
