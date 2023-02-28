@@ -25,7 +25,7 @@
             <n-input v-model:value="userForm.user.password" placeholder="输入密码" />
           </n-form-item>
         </n-form>
-        <n-button type="primary" @click="handleValidateClick"> 登录 </n-button>
+        <n-button tertiary @click="handleValidateClick"> 登录 </n-button>
       </div>
     </div>
   </div>
@@ -92,13 +92,14 @@ const handleValidateClick = (e: MouseEvent) => {
   align-items: center;
   justify-content: space-around;
   flex-direction: column;
-  background-color: #a8b3ac;
+  background-color: #18181c;
+  border: 1px solid #fff;
   border-radius: 24px;
   padding: 20px;
 }
 .login_header {
-  color: #01041e;
   display: flex;
+  color: #fff;
   flex-direction: column;
   align-items: flex-end;
   font-size: 18px;
@@ -106,7 +107,7 @@ const handleValidateClick = (e: MouseEvent) => {
   width: 100%;
 }
 .__login_header_img {
-  border: 1px solid #27292d;
+  border: 1px solid #fff;
   height: 80px;
   width: 80px;
   display: flex;

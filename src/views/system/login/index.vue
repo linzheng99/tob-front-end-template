@@ -13,6 +13,6 @@ import LoginRight from './components/LoginRight.vue'
 <style scoped lang="scss">
 .login {
   display: flex;
-  background-color: #27292d;
+  background-color: #18192a;
 }
 </style>
