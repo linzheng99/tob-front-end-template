@@ -56,7 +56,7 @@ const systemRouter = {
   component: 'LAYOUT',
   meta: {
     title: '系统配置',
-    icon: 'mdi-account',
+    icon: 'material-symbols:grid-view-rounded',
   },
   redirect: '/system/accounts',
   children: [
@@ -66,7 +66,7 @@ const systemRouter = {
       component: '/system/accounts/index.vue',
       meta: {
         title: '账号管理',
-        icon: 'mdi-account',
+        icon: 'mdi:account-group',
       },
     },
     {
@@ -75,7 +75,7 @@ const systemRouter = {
       component: '/system/roles/index.vue',
       meta: {
         title: '角色管理',
-        localIcon: 'logo',
+        icon: 'eos-icons:role-binding',
       },
     },
     {
@@ -84,7 +84,7 @@ const systemRouter = {
       component: '/system/auth/index.vue',
       meta: {
         title: '权限管理',
-        hide: false,
+        icon: 'dashicons:networking',
       },
     },
   ],
