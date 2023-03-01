@@ -36,10 +36,10 @@ export const useTabsStore = defineStore({
 
       const updateTabs = this.tabs.filter((item) => item.fullPath !== tab.fullPath)
       this.tabs = updateTabs
-      const isActive = this.activeTab === tab.name
+      const isActive = this.activeTab === tab.title
       if (isActive) {
         const selectedTab = this.tabs[this.tabs.length - 1]
-        this.setActiveTab(selectedTab.name)
+        this.setActiveTab(selectedTab.title)
         routerPush(selectedTab.fullPath)
       }
     },

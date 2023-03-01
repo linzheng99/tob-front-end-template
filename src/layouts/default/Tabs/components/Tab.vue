@@ -5,7 +5,7 @@
       :class="{ 'tab-active': info.fullPath === activeTab }"
       @click="go(info.fullPath)"
     >
-      <span>{{ info.name }}</span>
+      <span>{{ info.title }}</span>
       <button v-if="showClose" class="close_btn" @click.stop="close(info)">
         <SvgIcon icon="ep:close-bold" />
       </button>

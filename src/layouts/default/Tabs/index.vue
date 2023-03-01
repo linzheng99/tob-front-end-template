@@ -37,8 +37,8 @@ const close = (tab) => {
 watch(
   () => route.fullPath,
   () => {
-    tabsStore.setActiveTab(route.name)
-    tabsStore.addTabs({ fullPath: route.fullPath, name: route.name })
+    tabsStore.setActiveTab(route.meta.title)
+    tabsStore.addTabs({ fullPath: route.fullPath, title: route.meta.title })
   },
   { immediate: true },
 )

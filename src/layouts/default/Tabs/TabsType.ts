@@ -1,5 +1,5 @@
 export interface Tab {
-  name: any
+  title: any
   fullPath: string
 }
 
