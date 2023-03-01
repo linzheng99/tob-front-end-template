@@ -1,49 +1,89 @@
 import { resultSuccess } from '../_util'
 
-const testRouter = {
-  path: '/testRouter',
-  name: 'TestRouter',
+// const testRouter = {
+//   path: '/testRouter',
+//   name: 'TestRouter',
+//   component: 'LAYOUT',
+//   meta: {
+//     title: '测试路由',
+//     icon: 'mdi-account',
+//   },
+//   redirect: '/testRouter/listOne',
+//   children: [
+//     {
+//       path: '/testRouter/listOne',
+//       name: 'listOne',
+//       meta: {
+//         title: 'listOne',
+//         icon: 'mdi-account',
+//       },
+//       redirect: '/testRouter/listOne/testOne',
+//       children: [
+//         {
+//           path: '/testRouter/listOne/testOne',
+//           name: 'listOne_item',
+//           component: '/testRouter/listOne.vue',
+//           meta: {
+//             title: 'listOne_item',
+//           },
+//         },
+//       ],
+//     },
+//     {
+//       path: '/testRouter/listTwo',
+//       name: 'listTwo',
+//       component: '/testRouter/listTwo.vue',
+//       meta: {
+//         title: 'listTwo',
+//         localIcon: 'logo',
+//       },
+//     },
+//     {
+//       path: '/testRouter/listThree',
+//       name: 'listThree',
+//       component: '/testRouter/listThree/index.vue',
+//       meta: {
+//         title: 'listThree',
+//         hide: false,
+//       },
+//     },
+//   ],
+// }
+
+const systemRouter = {
+  path: '/system',
+  name: 'System',
   component: 'LAYOUT',
   meta: {
-    title: '测试路由',
+    title: '系统配置',
     icon: 'mdi-account',
   },
-  redirect: '/testRouter/listOne',
+  redirect: '/system/accounts',
   children: [
     {
-      path: '/testRouter/listOne',
-      name: 'listOne',
+      path: '/system/accounts',
+      name: 'Accounts',
+      component: '/system/accounts/index.vue',
       meta: {
-        title: 'listOne',
+        title: '账号管理',
         icon: 'mdi-account',
       },
-      redirect: '/testRouter/listOne/testOne',
-      children: [
-        {
-          path: '/testRouter/listOne/testOne',
-          name: 'listOne_item',
-          component: '/testRouter/listOne.vue',
-          meta: {
-            title: 'listOne_item',
-          },
-        },
-      ],
     },
     {
-      path: '/testRouter/listTwo',
-      name: 'listTwo',
-      component: '/testRouter/listTwo.vue',
+      path: '/system/roles',
+      name: 'Roles',
+      component: '/system/roles/index.vue',
       meta: {
-        title: 'listTwo',
+        title: '角色管理',
         localIcon: 'logo',
       },
     },
     {
-      path: '/testRouter/listThree',
-      name: 'listThree',
-      component: '/testRouter/listThree/index.vue',
+      path: '/system/auth',
+      name: 'Auth',
+      component: '/system/auth/index.vue',
       meta: {
-        title: 'listThree',
+        title: '权限管理',
         hide: false,
       },
     },
@@ -56,7 +96,7 @@ export default [
     methods: 'get',
     response: () => {
       return resultSuccess({
-        menus: [testRouter],
+        menus: [systemRouter],
       })
     },
   },
