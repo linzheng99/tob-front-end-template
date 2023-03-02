@@ -6,7 +6,6 @@
 </template>
 
 <script setup lang="ts">
-import SvgIcon from '@/components/SvgIcon/index.vue'
 import { useAppStoreWithOut } from '@/store/modules/app'
 import { computed } from 'vue'
 

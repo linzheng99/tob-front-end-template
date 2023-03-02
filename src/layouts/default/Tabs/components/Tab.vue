@@ -14,8 +14,6 @@
 </template>
 
 <script setup lang="ts">
-import SvgIcon from '@/components/SvgIcon/index.vue'
-
 interface Props {
   info: any
   activeTab: string

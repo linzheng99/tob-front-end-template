@@ -8,7 +8,6 @@
 </template>
 
 <script setup lang="ts">
-import SvgIcon from '@/components/SvgIcon/index.vue'
 import { useUserStoreWithOut } from '@/store/modules/user'
 import { useIconRender } from '@/hooks/component/useIconRender'
 const userStore = useUserStoreWithOut()
