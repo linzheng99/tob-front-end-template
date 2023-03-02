@@ -27,7 +27,7 @@
   - [x] downloadFile
 - [ ] router
   - [x] router permission guard
-  - [ ] basic router
+  - [x] basic router
   - [x] router component patch
   - [ ] add sort attribute to meta
 - [x] 基础的Layout

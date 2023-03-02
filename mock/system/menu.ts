@@ -56,7 +56,7 @@ const systemRouter = {
   component: 'LAYOUT',
   meta: {
     title: '系统配置',
-    icon: 'material-symbols:grid-view-rounded',
+    icon: 'material-symbols:settings-rounded',
   },
   redirect: '/system/accounts',
   children: [
@@ -90,13 +90,43 @@ const systemRouter = {
   ],
 }
 
+const componentsRouter = {
+  path: '/components',
+  name: 'Components',
+  component: 'LAYOUT',
+  meta: {
+    title: '组件',
+    icon: 'material-symbols:settings-rounded',
+  },
+  redirect: '/components/table',
+  children: [
+    {
+      path: '/components/table',
+      name: 'Table',
+      component: '/components/table/index.vue',
+      meta: {
+        title: '表格',
+        icon: 'tabler:article',
+      },
+    },
+    {
+      path: '/components/form',
+      name: 'Form',
+      component: '/components/form/index.vue',
+      meta: {
+        title: '表单',
+        icon: 'fluent:form-48-filled',
+      },
+    },
+  ],
+}
 export default [
   {
     url: '/basic-api/getMenuList',
     methods: 'get',
     response: () => {
       return resultSuccess({
-        menus: [systemRouter],
+        menus: [systemRouter, componentsRouter],
       })
     },
   },
