@@ -21,6 +21,7 @@
     "typeRoots": ["./node_modules/@types/", "./types"],
     "noImplicitAny": false,
     "skipLibCheck": true,
+    "noEmit": true,
     "paths": {
       "@": ["src"],
       "@/*": ["src/*"]

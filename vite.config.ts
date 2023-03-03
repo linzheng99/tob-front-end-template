@@ -25,7 +25,6 @@ export default defineConfig((config) => {
       host: true,
       open: true,
       port: 8080,
-      hmr: true,
     },
   }
 })
