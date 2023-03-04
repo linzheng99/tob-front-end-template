@@ -14,9 +14,6 @@
 * prettier
 ----
 ## Task List
-- [x] 登录页
-  - [x] Form
-  - [ ] UI
 - [x] axios
   - [x] axios封装
     - [x] get
@@ -30,7 +27,10 @@
   - [x] basic router
   - [x] router component patch
   - [ ] add sort attribute to meta
-- [x] 基础的Layout
+- [x] base Layout
+  - [x] login page
+    - [x] Form
+    - [x] UI
   - [x] sidebar
     - [ ] 面板（Menu panel）
     - [X] hooks: useIconHeader
@@ -42,11 +42,18 @@
   - [x] content
 - [x] pinia
   - [x] userStore
-    - [x] token封装-cookie
+    - [x] token(cookie)
   - [x] permission (router)
   - [ ] globalStore
 - [ ] components
   - [x] svgIcon封装
+- [ ] vite config
+  - [ ] plugins 
+    - [x] mock
+    - [x] vite-plugin-svg-icons 
+    - [x] unplugin-vue-components
+    - [x] vite-plugin-html
+  - [x] proxy 
 ----
 - [x] mock
   - [x] login
