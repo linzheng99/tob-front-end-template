@@ -1,19 +1,27 @@
 import { defineConfig, loadEnv } from 'vite'
 import { getSrcPath } from './build/utils'
-import { setupVitePlugins } from './build/plugin'
+import { createProxy, setupVitePlugins } from './build'
+import { getServiceEnvConfig } from './.env-config'
 
 // https://vitejs.dev/config/
-export default defineConfig((config) => {
-  const viteEnv = loadEnv(config.mode, process.cwd()) as unknown as ImportMetaEnv
+export default defineConfig(({ command, mode }) => {
+  const root = process.cwd()
+  const viteEnv = loadEnv(mode, root) as unknown as ImportMetaEnv
+
+  const { VITE_BASE_URL, VITE_PORT } = viteEnv
+
+  const isBuild = command === 'build'
+
+  const envConfig = getServiceEnvConfig(viteEnv)
 
   return {
-    base: '/',
+    base: VITE_BASE_URL,
     resolve: {
       alias: {
         '@': getSrcPath(),
       },
     },
-    plugins: setupVitePlugins(viteEnv),
+    plugins: setupVitePlugins(viteEnv, isBuild),
     css: {
       preprocessorOptions: {
         scss: {
@@ -23,8 +31,9 @@ export default defineConfig((config) => {
     },
     server: {
       host: true,
+      port: VITE_PORT,
+      proxy: createProxy(envConfig),
       open: true,
-      port: 8080,
     },
   }
 })
