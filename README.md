@@ -12,6 +12,7 @@
 * mock
 * eslint
 * prettier
+* vueUse
 ----
 ## Task List
 - [x] axios
@@ -47,12 +48,14 @@
   - [ ] globalStore
 - [ ] components
   - [x] svgIcon封装
+  - [ ] echarts
 - [ ] vite config
   - [ ] plugins 
     - [x] mock
     - [x] vite-plugin-svg-icons 
     - [x] unplugin-vue-components
     - [x] vite-plugin-html
+    - [ ] vite-plugin-pwa
   - [x] proxy 
 ----
 - [x] mock
