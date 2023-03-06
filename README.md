@@ -13,6 +13,9 @@
 * eslint
 * prettier
 * vueUse
+---
+## TODO fixhot
+Layout tag css
 ----
 ## Task List
 - [x] axios
@@ -49,12 +52,14 @@
 - [ ] components
   - [x] svgIcon封装
   - [ ] echarts
+  - [ ] messageBox
 - [ ] vite config
   - [ ] plugins 
     - [x] mock
     - [x] vite-plugin-svg-icons 
     - [x] unplugin-vue-components
     - [x] vite-plugin-html
+    - [x] vite-plugin-imagemin
     - [ ] vite-plugin-pwa
   - [x] proxy 
 ----
@@ -63,7 +68,7 @@
     - [x] token
     - [x] userInfo
   - [x] router
-    - [x] test router
+    - [x] ~~test router~~
 ---
 - [ ] 系统管理页面
   - [ ] 账号管理
