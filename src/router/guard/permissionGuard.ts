@@ -17,10 +17,7 @@ const redirectLogin: {
 }
 
 export function createPermissionGuard(router: Router) {
-  router.beforeEach(async (to, from, next) => {
-    // TODO
-    console.log(from)
-
+  router.beforeEach(async (to, _from, next) => {
     const userStore = useUserStoreWithOut()
     const token = userStore.getToken
     const permissionStore = usePermissionStoreWithOut()
