@@ -118,6 +118,15 @@ const componentsRouter = {
         icon: 'fluent:form-48-filled',
       },
     },
+    {
+      path: '/components/echarts',
+      name: 'Echarts',
+      component: '/components/echarts/index.vue',
+      meta: {
+        title: 'echarts',
+        icon: 'simple-icons:apacheecharts',
+      },
+    },
   ],
 }
 export default [
