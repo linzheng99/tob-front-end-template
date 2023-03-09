@@ -12,10 +12,10 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useAppStoreWithOut } from '@/store/modules/app'
+import { useAppLocalConfig } from '@/hooks/setting/useAppLocalConfig'
 import logo from '@/assets/images/logo.png'
-const appStore = useAppStoreWithOut()
-const collapsed = computed(() => appStore.getSiderCollapse)
+const { getSiderCollapse } = useAppLocalConfig()
+const collapsed = computed(() => getSiderCollapse.value)
 </script>
 
 <style scoped lang="scss">

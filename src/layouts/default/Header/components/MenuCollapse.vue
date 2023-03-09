@@ -1,18 +1,20 @@
 <template>
-  <div class="icon_size" @click="setSiderCollapse(!collpase)">
+  <div class="icon_size" @click="setAppLocalConfig({ siderCollapse: !collpase })">
     <SvgIcon v-if="!collpase" :icon="leftFold" />
     <SvgIcon v-else :icon="rightFold" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { useAppStoreWithOut } from '@/store/modules/app'
 import { computed } from 'vue'
+import { useAppStoreWithOut } from '@/store/modules/app'
+import { useAppLocalConfig } from '@/hooks/setting/useAppLocalConfig'
 
 const appStore = useAppStoreWithOut()
-const { setSiderCollapse } = appStore
+const { getSiderCollapse } = useAppLocalConfig()
+const { setAppLocalConfig } = appStore
 
-const collpase = computed(() => appStore.getSiderCollapse)
+const collpase = computed(() => getSiderCollapse.value)
 /** 展开 */
 const leftFold = 'line-md:menu-fold-left'
 /** 收起 */

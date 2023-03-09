@@ -8,3 +8,7 @@ interface Window {
 }
 
 declare type TimeoutHandle = ReturnType<typeof setTimeout>
+declare type Nullable<T> = T | null
+declare type DeepPartial<T> = {
+  [P in keyof T]?: DeepPartial<T[P]>
+}

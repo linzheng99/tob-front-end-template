@@ -15,19 +15,19 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { usePermissionStoreWithOut } from '@/store/modules/permission'
-import { useAppStoreWithOut } from '@/store/modules/app'
 import { transformAuthRouteToMenu } from '@/router/helper/menuHelper'
 import { AppRouteRecordRaw } from '@/router/routeTypes'
 import { GlobalThemeOverrides } from 'naive-ui'
 import { useRouterPush } from '@/hooks/router/useRouterPush'
+import { useAppLocalConfig } from '@/hooks/setting/useAppLocalConfig'
 
 const permissionStore = usePermissionStoreWithOut()
 const backMenuList = permissionStore.getBackMenuList
 const route = useRoute()
 const { routerPush } = useRouterPush()
 
-const appStore = useAppStoreWithOut()
-const collapsed = computed(() => appStore.getSiderCollapse)
+const { getSiderCollapse } = useAppLocalConfig()
+const collapsed = computed(() => getSiderCollapse.value)
 const option = transformAuthRouteToMenu(backMenuList as AppRouteRecordRaw[])
 const themeOverrides: GlobalThemeOverrides = {
   common: {

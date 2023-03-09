@@ -1,5 +1,5 @@
 <template>
-  <DefaultLayout :sider-collapes="appStore.getSiderCollapse">
+  <DefaultLayout :sider-collapes="siderCollapes">
     <template #sider>
       <Sidebar />
     </template>
@@ -19,8 +19,10 @@ import Header from './Header/index.vue'
 import Tabs from './Tabs/index.vue'
 import Sidebar from './Sidebar/index.vue'
 import DefaultLayout from '@/components/DefaultLayout/index.vue'
-import { useAppStoreWithOut } from '@/store/modules/app'
-const appStore = useAppStoreWithOut()
+import { useAppLocalConfig } from '@/hooks/setting/useAppLocalConfig'
+import { computed } from 'vue'
+const { getSiderCollapse } = useAppLocalConfig()
+const siderCollapes = computed(() => getSiderCollapse.value)
 </script>
 
 <style scoped></style>
