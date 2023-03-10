@@ -3,6 +3,7 @@ import { setCookieToken, removeCookieToken, getCookieToken } from '@/utils/cooki
 import { getUserInfoApi, loginApi } from '@/api/user'
 import { router } from '@/router'
 import { store } from '../index'
+import { useAppStoreWithOut } from '@/store/modules/app'
 
 interface UserState {
   userInfo: any
@@ -16,6 +17,8 @@ interface UserInfo {
   roles?: []
   id: string
 }
+
+const appStore = useAppStoreWithOut()
 
 export const useUserStore = defineStore({
   id: 'app-user',
@@ -50,6 +53,7 @@ export const useUserStore = defineStore({
       const { data, code, message } = result
       if (code === 200) {
         this.setToken(data.token)
+        appStore.setAppLocalConfig({ siderCollapse: false })
         return this.afterLoginAction()
       } else {
         console.error(message)
@@ -74,6 +78,7 @@ export const useUserStore = defineStore({
     logout() {
       this.setToken('')
       removeCookieToken()
+      appStore.clearAppLocalConfig()
       router.push('/login')
     },
   },

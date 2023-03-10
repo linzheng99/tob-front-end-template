@@ -5,8 +5,11 @@ import { ContentTypeEnum, ResultEnum } from '@/enums/httpEnum'
 import { globalConfig } from '@/utils/env'
 import { isString } from '../is'
 import { RequestEnum } from '@/enums/httpEnum'
+import { useCreateMessage } from '@/hooks/web/useMessage'
 
 const { apiUrl, urlPrefix } = globalConfig()
+
+const { createMessage } = useCreateMessage()
 
 /** 数据处理 */
 const transform = {
@@ -117,7 +120,7 @@ const transform = {
   },
   /** 请求拦截器错误处理 */
   requestInterceptorsCatch: (error) => {
-    console.error(error)
+    createMessage({ type: 'error', text: error })
     return error
   },
   /** 响应拦截器处理 */
@@ -126,9 +129,8 @@ const transform = {
   },
   /** 响应拦截器错误处理 */
   responseInterceptorsCatch: (error) => {
-    // const { response, code, message, config } = error
-    const { message } = error
-    console.error(message)
+    const { code, message } = error
+    createMessage({ type: 'error', text: `${code}: ${message}` })
     return Promise.reject(error)
   },
 }
