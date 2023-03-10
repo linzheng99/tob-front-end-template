@@ -37,13 +37,11 @@ const themeOverrides: GlobalThemeOverrides = {
 </script>
 
 <template>
-  <naive-provider>
-    <n-config-provider :theme-overrides="themeOverrides" :theme="darkTheme">
-      <n-message-provider>
-        <router-view />
-      </n-message-provider>
-    </n-config-provider>
-  </naive-provider>
+  <n-config-provider :theme-overrides="themeOverrides" :theme="darkTheme">
+    <naive-provider>
+      <router-view />
+    </naive-provider>
+  </n-config-provider>
 </template>
 
 <style scoped></style>
