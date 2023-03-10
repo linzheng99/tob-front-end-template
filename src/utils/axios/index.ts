@@ -9,7 +9,7 @@ import { useCreateMessage } from '@/hooks/web/useMessage'
 
 const { apiUrl, urlPrefix } = globalConfig()
 
-const { createMessage } = useCreateMessage()
+const { createWindowErrorMsg } = useCreateMessage()
 
 /** 数据处理 */
 const transform = {
@@ -28,7 +28,7 @@ const transform = {
     const { data: result } = res
     // 错误的时候返回
     if (!result) {
-      throw new Error('sys.api.apiRequestFailed')
+      throw new Error('apiRequestFailed')
     }
 
     // 直接在处理请求数据的时候统一返回字段
@@ -39,6 +39,7 @@ const transform = {
       return { code, data, message }
     } else {
       // TODO 判断接口登录凭证（cookie）是否过期
+      createWindowErrorMsg(`${code}: ${message}`)
       return { code, message }
     }
   },
@@ -120,8 +121,7 @@ const transform = {
   },
   /** 请求拦截器错误处理 */
   requestInterceptorsCatch: (error) => {
-    createMessage({ type: 'error', text: error })
-    return error
+    throw new Error(error)
   },
   /** 响应拦截器处理 */
   responseInterceptors: (res) => {
@@ -129,8 +129,6 @@ const transform = {
   },
   /** 响应拦截器错误处理 */
   responseInterceptorsCatch: (error) => {
-    const { code, message } = error
-    createMessage({ type: 'error', text: `${code}: ${message}` })
     return Promise.reject(error)
   },
 }

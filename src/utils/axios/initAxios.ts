@@ -21,7 +21,12 @@ export class InitAxios {
   private setupInterceptors() {
     const transform = this.getTransform()
 
-    const { requestInterceptors, requestInterceptorsCatch, responseInterceptors, responseInterceptorsCatch } = transform
+    const {
+      requestInterceptors,
+      requestInterceptorsCatch,
+      responseInterceptors,
+      responseInterceptorsCatch,
+    } = transform
 
     /**
      * @description 请求拦截器配置处理
@@ -34,7 +39,6 @@ export class InitAxios {
         return config
       },
       (error) => {
-        console.log(error)
         return error
       },
     )
