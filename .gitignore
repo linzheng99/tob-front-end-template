@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 
 /src/typings/components.d.ts
+
+# docs
+docs/.vitepress/cache

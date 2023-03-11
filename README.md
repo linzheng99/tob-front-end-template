@@ -52,16 +52,17 @@ Layout tag scroll-x css
 ### components
 - [x] svgIcon封装
 - [x] echarts
+- [ ] map
 - [ ] messageBox
 ### vite config
-- [ ] plugins 
+- [x] proxy 
+#### plugins 
   - [x] mock
   - [x] vite-plugin-svg-icons 
   - [x] unplugin-vue-components
   - [x] vite-plugin-html
   - [x] vite-plugin-imagemin
   - [ ] vite-plugin-pwa
-- [x] proxy 
 ----
 ### mock
 - [x] login
