@@ -13,7 +13,7 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { usePermissionStoreWithOut } from '@/store/modules/permission'
-import { transformAuthRouteToMenu } from '@/router/helper/menuHelper'
+import { transformAuthRouteToMenu } from '@/utils/helper/menuHelper'
 import { AppRouteRecordRaw } from '@/router/routeTypes'
 import { useRouterPush } from '@/hooks/router/useRouterPush'
 import { useAppLocalConfig } from '@/hooks/setting/useAppLocalConfig'

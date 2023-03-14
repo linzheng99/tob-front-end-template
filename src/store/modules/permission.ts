@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { AppRouteRecordRaw, Menu } from '@/router/routeTypes'
 import { store } from '@/store/index'
-import { transformAuthRouteToVueRoutes } from '../../router/helper/routerHelper'
+import { transformAuthRouteToVueRoutes } from '@/utils/helper/routerHelper'
 import { getMenuListApi } from '@/api/menu'
 import { getCookieToken } from '../../utils/cookie/index'
 
