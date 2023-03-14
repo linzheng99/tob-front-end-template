@@ -20,7 +20,7 @@ export const setLocalkey = (key: LocalKeys, value: LocalStore[LocalKeys]) => {
 
 export const getLocalKey = (key: LocalKeys) => {
   try {
-    return JSON.parse(window.localStorage?.getItem(key) as any)
+    return JSON.parse(window.localStorage?.getItem(key) as any) || {}
   } catch {
     console.error('JSON.parse fail')
   }
