@@ -69,7 +69,7 @@ export const useUserStore = defineStore({
     },
     async getUserInfoAction() {
       if (!this.getToken) return
-      const result: any = await getUserInfoApi({ token: this.token })
+      const result: any = await getUserInfoApi({ token: this.getToken })
       const { data } = result
       this.setUserInfo(data)
       return data
