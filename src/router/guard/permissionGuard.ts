@@ -17,11 +17,10 @@ const redirectLogin: {
 }
 
 export function createPermissionGuard(router: Router) {
+  const userStore = useUserStoreWithOut()
   router.beforeEach(async (to, _from, next) => {
-    const userStore = useUserStoreWithOut()
     const token = userStore.getToken
     const permissionStore = usePermissionStoreWithOut()
-
     /**
      * router逻辑顺序
      * 判断路由
@@ -56,6 +55,7 @@ export function createPermissionGuard(router: Router) {
     // 主动刷新页面时 重新获取用户信息
     if (userStore.getLastUpdateTime === 0) {
       try {
+        permissionStore.setDynamicAddedRoute(false)
         await userStore.getUserInfoAction()
       } catch (error) {
         next()
