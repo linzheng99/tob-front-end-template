@@ -1,5 +1,5 @@
-import { AppRouteRecordRaw } from '../routeTypes'
-import { BackMenuOption } from '../menuTypes'
+import { AppRouteRecordRaw } from '@/router/routeTypes'
+import { BackMenuOption } from '@/router/menuTypes'
 import { useIconRender } from '@/hooks/component/useIconRender'
 import { extend } from '@/utils'
 /**

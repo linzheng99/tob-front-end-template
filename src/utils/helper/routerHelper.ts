@@ -1,6 +1,6 @@
 import { extend } from '@/utils'
-import { LAYOUT } from '../routes/constant'
-import { AppRouteRecordRaw } from '../routeTypes'
+import { LAYOUT } from '@/router/routes/constant'
+import { AppRouteRecordRaw } from '@/router/routeTypes'
 
 const LayoutMap = new Map()
 LayoutMap.set('LAYOUT', LAYOUT)
