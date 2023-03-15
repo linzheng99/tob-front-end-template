@@ -1,41 +1,30 @@
 import { defineStore } from 'pinia'
 import { store } from '../index'
-
-interface ThemeState {
-  siderDefaultWidth: number
-  siderMinWidth: number
-  headerHeight: number
-  tabHeight: number
-}
+import { initThemeConfig } from '@/utils/helper/themeHelper'
 
 export const useThemeStore = defineStore({
   id: 'app-theme',
-  state: (): ThemeState => ({
-    siderDefaultWidth: 220,
-    siderMinWidth: 64,
-    headerHeight: 56,
-    tabHeight: 44,
-  }),
+  state: (): Theme.Config => initThemeConfig(),
   getters: {
     getSiderDefaultWidth(): number {
-      return this.siderDefaultWidth
+      return this.sidebar.sidebarDefaultWidth
     },
     getSiderMinWidth(): number {
-      return this.siderMinWidth
+      return this.sidebar.sidebarMinWidth
     },
     getHeaderHeight(): number {
-      return this.headerHeight
+      return this.headers.headerHeight
     },
     getTabHeight(): number {
-      return this.tabHeight
+      return this.tab.tabHeight
     },
   },
   actions: {
     setSiderDefaultWidth(value: number) {
-      this.siderDefaultWidth = value
+      this.sidebar.sidebarDefaultWidth = value
     },
     setSiderMinWidth(value: number) {
-      this.siderMinWidth = value
+      this.sidebar.sidebarMinWidth = value
     },
   },
 })
