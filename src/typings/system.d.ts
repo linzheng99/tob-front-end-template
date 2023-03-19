@@ -13,7 +13,10 @@ declare namespace App {
 declare namespace Theme {
   /** 主题配置 */
   interface Config {
+    /** 主题色 */
     themeColor: string
+    /** 其他颜色 */
+    otherColor: OtherColor
     /** 头部样式 */
     headers: Header
     /** 标签页样式 */
@@ -21,6 +24,17 @@ declare namespace Theme {
     /** 侧边栏样式 */
     sidebar: Sidebar
   }
+}
+
+interface OtherColor {
+  /** 信息 */
+  info: string
+  /** 成功 */
+  success: string
+  /** 警告 */
+  warning: string
+  /** 错误 */
+  error: string
 }
 
 interface Header {
