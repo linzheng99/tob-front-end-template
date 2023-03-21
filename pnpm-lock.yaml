@@ -8,6 +8,7 @@ specifiers:
   '@vitejs/plugin-vue': ^3.2.0
   '@vueuse/core': ^9.13.0
   axios: ^1.2.0
+  colord: ^2.9.3
   echarts: ^5.4.1
   eslint: ^8.28.0
   eslint-config-prettier: ^8.5.0
@@ -35,6 +36,7 @@ specifiers:
 dependencies:
   '@vueuse/core': registry.npmmirror.com/@vueuse/core/9.13.0_vue@3.2.45
   axios: registry.npmmirror.com/axios/1.2.0
+  colord: registry.npmmirror.com/colord/2.9.3
   echarts: registry.npmmirror.com/echarts/5.4.1
   js-cookie: registry.npmmirror.com/js-cookie/3.0.1
   lodash-es: registry.npmmirror.com/lodash-es/4.17.21
@@ -1782,6 +1784,12 @@ packages:
     name: color-name
     version: 1.1.4
     dev: true
+
+  registry.npmmirror.com/colord/2.9.3:
+    resolution: {integrity: sha512-jeC1axXpnb0/2nn/Y1LPuLdgXBLH7aDcHu4KEKfqw3CUhX7ZpfBSlPKyqXE6btIgEzfWtrX3/tyBCaCvXvMkOw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/colord/-/colord-2.9.3.tgz}
+    name: colord
+    version: 2.9.3
+    dev: false
 
   registry.npmmirror.com/colorette/2.0.19:
     resolution: {integrity: sha512-3tlv/dIP7FWvj3BsbHrGLJ6l/oKh1O3TcgBqMn+yyCagOxc23fyzDS6HypQbgxWbkpDnf52p1LuR4eWDQ/K9WQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/colorette/-/colorette-2.0.19.tgz}
