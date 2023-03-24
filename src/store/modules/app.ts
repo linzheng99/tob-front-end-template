@@ -7,16 +7,21 @@ import { deepMerge } from '@/utils/index'
 
 interface AppState {
   appLocalConfig: AppLocalConfig
+  configDrawerVisible: Boolean
 }
 
 export const useAppStore = defineStore({
   id: 'app',
   state: (): AppState => ({
     appLocalConfig: getLocalKey(LOCAL_CONFIG),
+    configDrawerVisible: false,
   }),
   getters: {
     getAppLocalConfig(): AppLocalConfig {
       return this.appLocalConfig
+    },
+    getConfigDrawerVisible(): Boolean {
+      return this.configDrawerVisible
     },
   },
   actions: {
@@ -26,6 +31,12 @@ export const useAppStore = defineStore({
     },
     clearAppLocalConfig() {
       clearLocalKey(LOCAL_CONFIG)
+    },
+    /** 切换主题配置可见状态 */
+    toggleConfigDrawerVisible() {
+      console.log('toggle')
+
+      this.configDrawerVisible = !this.configDrawerVisible
     },
   },
 })

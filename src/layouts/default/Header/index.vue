@@ -14,9 +14,6 @@ import UserActions from './components/UserActions.vue'
 .layout_header {
   &-wrapper {
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     padding: 10px;
     background-color: $theme-background-color;
   }

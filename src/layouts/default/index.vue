@@ -10,6 +10,7 @@
       <Tabs />
     </template>
     <Content />
+    <ConfigDrawer />
   </DefaultLayout>
 </template>
 
@@ -19,6 +20,7 @@ import Header from './Header/index.vue'
 import Tabs from './Tabs/index.vue'
 import Sidebar from './Sidebar/index.vue'
 import DefaultLayout from '@/components/DefaultLayout/index.vue'
+import ConfigDrawer from '@/layouts/common/ConfigDrawer/index.vue'
 import { useAppLocalConfig } from '@/hooks/setting/useAppLocalConfig'
 import { computed } from 'vue'
 const { getSiderCollapse } = useAppLocalConfig()

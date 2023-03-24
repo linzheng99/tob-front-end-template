@@ -1,17 +1,19 @@
 <template>
   <div class="user_actions">
-    <UserIdentity style="100%" />
+    <ConfigButton />
+    <UserIdentity />
   </div>
 </template>
 
 <script setup lang="ts">
 import UserIdentity from './UserIdentity.vue'
+import ConfigButton from './ConfigButton.vue'
 </script>
 
 <style lang="scss" scoped>
 .user_actions {
   height: 100%;
+  float: right;
   display: flex;
-  justify-content: flex-end;
 }
 </style>

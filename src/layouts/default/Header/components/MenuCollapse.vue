@@ -23,6 +23,7 @@ const rightFold = 'line-md:menu-fold-right'
 
 <style lang="scss" scoped>
 .icon_size {
+  float: left;
   font-size: 16px;
   cursor: pointer;
   color: white;
