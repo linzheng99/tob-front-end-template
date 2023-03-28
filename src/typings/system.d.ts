@@ -15,6 +15,8 @@ declare namespace Theme {
   interface Config {
     /** 主题色 */
     themeColor: string
+    /** 主题颜色列表 */
+    themeColorList: string[]
     /** 其他颜色 */
     otherColor: OtherColor
     /** 头部样式 */
