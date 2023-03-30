@@ -1,11 +1,20 @@
 import { defineStore } from 'pinia'
 import { store } from '../index'
-import { initThemeConfig } from '@/utils/helper/themeHelper'
+import { initThemeConfig, getNaiveThemeOverrides } from '@/utils/helper/themeHelper'
+import { setLocalkey } from '@/utils/cache/appLocal'
+import { LOCAL_THEME_CONFIG } from '@/enums/cacheEnum'
+
+type ThemeState = Theme.Config
 
 export const useThemeStore = defineStore({
   id: 'app-theme',
-  state: (): Theme.Config => initThemeConfig(),
+  state: (): ThemeState => initThemeConfig(),
   getters: {
+    /** naiveUI的主题配置 */
+    naiveThemeOverrides(state) {
+      const overrides = getNaiveThemeOverrides({ primary: state.themeColor, ...state.otherColor })
+      return overrides
+    },
     getSiderDefaultWidth(): number {
       return this.sidebar.sidebarDefaultWidth
     },
@@ -20,6 +29,14 @@ export const useThemeStore = defineStore({
     },
   },
   actions: {
+    /** 缓存themeConfig */
+    cacheThemeConfig() {
+      setLocalkey(LOCAL_THEME_CONFIG, this.$state)
+    },
+    /** 设置系统主题颜色 */
+    setThemeColor(themeColor: string) {
+      this.themeColor = themeColor
+    },
     setSiderDefaultWidth(value: number) {
       this.sidebar.sidebarDefaultWidth = value
     },

@@ -1,7 +1,9 @@
-import { LOCAL_CONFIG } from '@/enums/cacheEnum'
+import { LOCAL_CONFIG, LOCAL_THEME_COLOR, LOCAL_THEME_CONFIG } from '@/enums/cacheEnum'
 
 interface BasicStore {
-  [LOCAL_CONFIG]: AppLocalConfig
+  [LOCAL_CONFIG]?: AppLocalConfig
+  [LOCAL_THEME_CONFIG]?: Theme.Config
+  [LOCAL_THEME_COLOR]?: String
 }
 
 type LocalStore = BasicStore

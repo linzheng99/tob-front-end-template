@@ -34,8 +34,6 @@ export const useAppStore = defineStore({
     },
     /** 切换主题配置可见状态 */
     toggleConfigDrawerVisible() {
-      console.log('toggle')
-
       this.configDrawerVisible = !this.configDrawerVisible
     },
   },

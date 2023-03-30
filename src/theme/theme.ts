@@ -19,14 +19,14 @@ const themeColorList = [
   '#d81b60',
   '#f4511e',
   '#fb8c00',
-  '#ffb300',
+  '#dcee62',
   '#fdd835',
   '#6d4c41',
   '#546e7a',
 ]
 
 const defaultThemeConfig: Theme.Config = {
-  themeColor: '#dcee62',
+  themeColor: themeColorList.at(-4) as string,
   themeColorList,
   otherColor: {
     info: '#2080f0',
@@ -34,6 +34,7 @@ const defaultThemeConfig: Theme.Config = {
     warning: '#faad14',
     error: '#f5222d',
   },
+  isCustomizeInfoColor: false,
   headers: {
     headerHeight: 56,
   },

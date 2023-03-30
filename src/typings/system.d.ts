@@ -19,6 +19,8 @@ declare namespace Theme {
     themeColorList: string[]
     /** 其他颜色 */
     otherColor: OtherColor
+    /** 是否自定义info的颜色(默认取比主题色深一级的颜色) */
+    isCustomizeInfoColor: boolean
     /** 头部样式 */
     headers: Header
     /** 标签页样式 */
