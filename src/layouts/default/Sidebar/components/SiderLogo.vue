@@ -1,11 +1,11 @@
 <template>
   <div class="sider_logo">
     <div v-if="!collapsed" class="sider_logo-unfold">
-      <img width="32" :src="logo" />
-      <h2 style="margin-left: 10px">template</h2>
+      <SvgIcon local-icon="logo" :color="themeColor" font-size="28" />
+      <span class="sider_logo-name" :style="{ color: themeColor }">{{ name }}</span>
     </div>
     <div v-else>
-      <img width="32" :src="logo" />
+      <SvgIcon local-icon="logo" :color="themeColor" font-size="28" />
     </div>
   </div>
 </template>
@@ -13,9 +13,14 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useAppLocalConfig } from '@/hooks/setting/useAppLocalConfig'
-import logo from '@/assets/images/logo.png'
+import { useAppInfo } from '@/hooks/app/system'
+import { useThemeStoreWithOut } from '@/store/modules/theme'
+
 const { getSiderCollapse } = useAppLocalConfig()
+const themeStore = useThemeStoreWithOut()
+const { name } = useAppInfo()
 const collapsed = computed(() => getSiderCollapse.value)
+const themeColor = computed(() => themeStore.themeColor)
 </script>
 
 <style scoped lang="scss">
@@ -31,6 +36,9 @@ const collapsed = computed(() => getSiderCollapse.value)
     display: flex;
     align-items: center;
     font-weight: bold;
+  }
+  &-name {
+    margin-left: 10px;
   }
 }
 </style>
