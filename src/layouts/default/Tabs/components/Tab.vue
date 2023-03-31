@@ -1,10 +1,6 @@
 <template>
   <div class="tab-wrapper">
-    <div
-      class="tab-content"
-      :class="{ 'tab-active': info.fullPath === activeTab }"
-      @click="go(info.fullPath)"
-    >
+    <div class="tab-content" :style="tabStyle(info.fullPath, activeTab)" @click="go(info.fullPath)">
       <span>{{ info.title }}</span>
       <button v-if="showClose" class="close_btn" @click.stop="close(info)">
         <SvgIcon icon="ep:close-bold" />
@@ -14,6 +10,8 @@
 </template>
 
 <script setup lang="ts">
+import { useThemeStoreWithOut } from '@/store/modules/theme'
+
 interface Props {
   info: any
   activeTab: string
@@ -23,14 +21,23 @@ interface Emit {
   (e: 'go', tab): void
   (e: 'close', tab): void
 }
+
 defineProps<Props>()
 const emit = defineEmits<Emit>()
+const themeStore = useThemeStoreWithOut()
 
 const go = (path) => {
   emit('go', path)
 }
 const close = (tab) => {
   emit('close', tab)
+}
+const tabStyle = (path, activePath) => {
+  if (path === activePath) {
+    return {
+      border: `1px solid ${themeStore.themeColor}`,
+    }
+  }
 }
 </script>
 

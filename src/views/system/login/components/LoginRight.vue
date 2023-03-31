@@ -3,7 +3,7 @@
     <div class="login_warpper">
       <div class="login_header">
         <div class="__login_header_img">
-          <img :src="logo" alt="" width="50" height="50" />
+          <SvgIcon local-icon="logo" :color="themeStore.themeColor" font-size="50" />
         </div>
         <div>{{ name }}</div>
         <div>{{ title }}</div>
@@ -36,10 +36,11 @@ import { ref } from 'vue'
 import { FormInst } from 'naive-ui'
 import { useUserStore } from '@/store/modules/user'
 import { useAppInfo } from '@/hooks/app/system'
-import logo from '@/assets/images/logo.png'
+import { useThemeStoreWithOut } from '@/store/modules/theme'
 
 const { name, title, desc } = useAppInfo()
 const userStore = useUserStore()
+const themeStore = useThemeStoreWithOut()
 
 const formRef = ref<FormInst | null>(null)
 const size = 'small'

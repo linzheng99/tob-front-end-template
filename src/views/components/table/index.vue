@@ -2,6 +2,8 @@
   <div id="app_content">
     表格
     <button @click="click">message</button>
+    <n-button type="primary"> primary </n-button>
+    <n-button type="primary" ghost> Primary </n-button>
   </div>
 </template>
 

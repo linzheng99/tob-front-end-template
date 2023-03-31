@@ -1,11 +1,11 @@
 <template>
   <div class="login_left">
     <div class="login_left-top">
-      <img :src="logo" alt="" width="50" height="50" style="margin-right: 10px" />
+      <SvgIcon local-icon="logo" :color="themeColor" font-size="50" />
       {{ name }}
     </div>
     <div class="login_left-content">
-      <img :src="logo" alt="" width="250" height="250" style="margin-bottom: 20px" />
+      <SvgIcon local-icon="logo" :color="themeColor" font-size="250" />
       {{ title }}
     </div>
   </div>
@@ -13,8 +13,12 @@
 
 <script setup lang="ts">
 import { useAppInfo } from '@/hooks/app/system'
-import logo from '@/assets/images/logo.png'
+import { useThemeStoreWithOut } from '@/store/modules/theme'
+import { computed } from 'vue'
+
 const { name, title } = useAppInfo()
+const themeStore = useThemeStoreWithOut()
+const themeColor = computed(() => themeStore.themeColor)
 </script>
 
 <style lang="scss" scoped>
