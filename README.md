@@ -45,14 +45,15 @@ Layout tag scroll-x css
 - [x] Tab
 - [x] content
 - [ ] common
-  - [ ] ConfigDrawer
+  - [x] ConfigDrawer
+    - [x] themeColor
 ### theme
-- [ ] sidebar
-  - [ ] logo
+- [x] sidebar
+  - [x] logo
 - [ ] header
-- [ ] tab
-- [ ] naive ui theme
-  - [ ] common
+- [ ] tab -> ( div-> button)
+- [x] naive ui theme
+  - [x] common
 ### Store
 - [x] userStore
   - [x] token(cookie)
