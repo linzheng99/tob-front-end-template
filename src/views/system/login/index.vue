@@ -14,5 +14,7 @@ import LoginRight from './components/LoginRight.vue'
 .login {
   display: flex;
   background-color: #18192a;
+  height: 100vh;
+  overflow: hidden;
 }
 </style>

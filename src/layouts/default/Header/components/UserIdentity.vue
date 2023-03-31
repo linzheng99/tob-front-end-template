@@ -39,12 +39,12 @@ const logout = () => {
   display: flex;
   align-items: center;
   height: 100%;
-  cursor: pointer;
   padding-left: 12px;
   padding-right: 12px;
   border-radius: 4px;
   &:hover {
-    background-color: rgb(121, 116, 164);
+    background-color: #333333;
+    cursor: pointer;
   }
 }
 </style>

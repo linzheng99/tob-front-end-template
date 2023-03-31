@@ -84,8 +84,5 @@ const tabStyle = (path, activePath) => {
   position: relative;
   padding: 0;
   margin-left: 6px;
-  &:hover {
-    color: #dcee62;
-  }
 }
 </style>
