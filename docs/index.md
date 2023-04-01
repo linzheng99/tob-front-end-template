@@ -6,6 +6,9 @@ hero:
   name: "Am Template"
   text: "Document"
   tagline: My great project tagline
+  image:
+    src: /logo.png
+    alt: DocsLogo
   actions:
     - theme: brand
       text: Markdown Examples

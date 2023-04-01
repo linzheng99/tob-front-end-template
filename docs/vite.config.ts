@@ -1,10 +1,10 @@
-import { defineConfig } from "vite";
+import { defineConfig } from 'vite'
 // https://vitejs.dev/config/
 
 export default defineConfig({
-  base: '/notes-blog',
+  base: './',
   plugins: [],
   server: {
-    hmr: true
-  }
-});
+    hmr: true,
+  },
+})

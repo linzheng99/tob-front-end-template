@@ -8,6 +8,7 @@ export default defineConfig({
   description: "Document",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
+    logo: '/logo.png',
     nav: setupNav(),
 
     sidebar: getSidebarItems('./docs/sidebar'),
