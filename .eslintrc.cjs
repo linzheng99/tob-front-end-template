@@ -16,6 +16,13 @@ module.exports = {
     'plugin:prettier/recommended',
   ],
 
+  overrides: [
+    {
+      files: ['*.md'],
+      processor: false,
+    },
+  ],
+
   rules: {
     // override/add rules settings here, such as:
     'vue/multi-word-component-names': 'off',
