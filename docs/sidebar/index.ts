@@ -4,6 +4,7 @@ export function setupSidebar(){
       text: '介绍',
       collapsed: false,
       items: [
+        { text: 'Structure', link: '/sidebar/Introduction/structure' },
         { text: 'Getting Started', link: '/sidebar/Introduction/getting-started' },
       ]
     },
@@ -13,7 +14,7 @@ export function setupSidebar(){
       items: [
         { text: 'api-examples', link: '/sidebar/Examples/api-examples' },
         { text: 'markdown-examples', link: '/sidebar/Examples/markdown-examples' },
-      ] 
+      ]
     }
   ]
 }
