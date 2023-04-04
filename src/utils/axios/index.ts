@@ -6,15 +6,18 @@ import { globalConfig } from '@/utils/env'
 import { isString } from '../is'
 import { RequestEnum } from '@/enums/httpEnum'
 import { useCreateMessage } from '@/hooks/web/useMessage'
+import { AxiosTransform, CreateAxiosOptions } from './axiosTypes'
+import { AxiosRequestConfig, AxiosResponse } from 'axios'
+import { RequestOptions, Result } from '@/typings/axios'
 
 const { apiUrl, urlPrefix } = globalConfig()
 
 const { createWindowErrorMsg } = useCreateMessage()
 
 /** 数据处理 */
-const transform = {
+const transform: AxiosTransform = {
   /** 处理请求数据 */
-  transformRequestHook: (res, options) => {
+  transformRequestHook: (res: AxiosResponse<Result>, options: RequestOptions) => {
     const { isTransformResponse, isReturnNativeResponse } = options
     // 是否返回原生响应头 比如：需要获取响应头时使用该属性
     if (isReturnNativeResponse) {
@@ -43,7 +46,6 @@ const transform = {
       return { code, message }
     }
   },
-  /** 请求之前处理config */
   beforeRequestHook: (config, options) => {
     const { joinPrefix, urlPrefix, joinParamsToUrl } = options
     /**
@@ -111,34 +113,34 @@ const transform = {
   requestInterceptors: (config, options) => {
     const token = getCookieToken()
 
-    if (token && config?.requestOptions?.withToken !== false) {
-      // jwt
-      const auth = options.authenticationScheme
-      config.headers.Authorization = auth ? `${auth} ${token}` : token
+    if (token && (config as Recordable)?.requestOptions?.withToken !== false) {
+      // 认证方式
+      // jwt token
+      (config as Recordable).headers.Authorization = options.authenticationScheme ? `${options.authenticationScheme} ${token}` : token
     }
 
     return config
   },
-  /** 请求拦截器错误处理 */
-  requestInterceptorsCatch: (error) => {
+  /** 请求拦截器错误捕获 */
+  requestInterceptorsCatch: (error:any) => {
     throw new Error(error)
   },
   /** 响应拦截器处理 */
-  responseInterceptors: (res) => {
+  responseInterceptors: (res: AxiosResponse<any>) => {
     return res
   },
   /** 响应拦截器错误处理 */
-  responseInterceptorsCatch: (error) => {
+  responseInterceptorsCatch: (error:any) => {
     return Promise.reject(error)
   },
 }
 
-const paramsIsString = (config, params) => {
+const paramsIsString = (config: AxiosRequestConfig, params: string) => {
   config.url = `${config.url}/${params}`
   config.params = undefined
 }
 
-export const createAxios = (opt?: any) => {
+export const createAxios = (opt?: Partial<CreateAxiosOptions>) => {
   return new InitAxios(
     deepMerge(
       {

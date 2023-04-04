@@ -5,10 +5,10 @@ enum Api {
   GetUserInfo = '/getUserInfo',
 }
 
-export function loginApi(params) {
+export function loginApi(data) {
   return request.post({
     url: Api.Login,
-    params,
+    data,
   })
 }
 

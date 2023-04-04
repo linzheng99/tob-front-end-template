@@ -1,15 +1,17 @@
-import type { AxiosInstance, AxiosRequestConfig } from 'axios'
+import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import axios from 'axios'
 import { cloneDeep } from 'lodash-es'
 import { isFunction } from '../is'
 import { ContentTypeEnum, RequestEnum } from '../../enums/httpEnum'
+import { CreateAxiosOptions } from './axiosTypes'
+import { RequestOptions, Result } from '@/typings/axios'
 
 /** 封装axios请求类 */
 export class InitAxios {
   private axiosInstance: AxiosInstance
-  private readonly options
+  private readonly options: CreateAxiosOptions
 
-  constructor(options: any) {
+  constructor(options: CreateAxiosOptions) {
     this.options = options
     this.axiosInstance = axios.create(options)
     this.setupInterceptors()
@@ -20,6 +22,10 @@ export class InitAxios {
    */
   private setupInterceptors() {
     const transform = this.getTransform()
+
+    if (!transform) {
+      return;
+    }
 
     const {
       requestInterceptors,
@@ -79,14 +85,14 @@ export class InitAxios {
   /**
    * @description 请求方法
    */
-  request(config, options) {
+  request<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
     let conf = cloneDeep(config)
     const transform = this.getTransform()
 
     const { requestOptions } = this.options
     const opt = Object.assign({}, requestOptions, options)
 
-    const { beforeRequestHook, transformRequestHook, requestCatchHook } = transform
+    const { beforeRequestHook, transformRequestHook, requestCatchHook } = transform || {}
 
     if (isFunction(beforeRequestHook)) {
       conf = beforeRequestHook(conf, opt)
@@ -96,8 +102,8 @@ export class InitAxios {
 
     return new Promise((resolve, reject) => {
       this.axiosInstance
-        .request(conf)
-        .then((res) => {
+        .request<any, AxiosResponse<Result>>(conf)
+        .then((res: AxiosResponse<Result>) => {
           // 数据进行转换
           if (isFunction(transformRequestHook)) {
             try {
@@ -106,12 +112,12 @@ export class InitAxios {
             } catch (err) {
               reject(err || new Error('request error'))
             }
-            return resolve(res)
+            return
           }
-          resolve(res)
+          resolve(res as unknown as Promise<T>)
         })
         .catch((e) => {
-          if (isFunction(requestCatchHook)) {
+          if (requestCatchHook && isFunction(requestCatchHook)) {
             return reject(requestCatchHook(e, opt))
           }
           if (axios.isAxiosError(e)) {
@@ -128,7 +134,7 @@ export class InitAxios {
    * @param config - 请求配置
    * @param options - axios配置
    */
-  get(config: AxiosRequestConfig, options?) {
+  get(config: AxiosRequestConfig, options?: RequestOptions) {
     return this.request({ ...config, method: RequestEnum.GET }, options)
   }
 
@@ -137,7 +143,7 @@ export class InitAxios {
    * @param config - 请求配置
    * @param options - axios配置
    */
-  post(config: AxiosRequestConfig, options?) {
+  post(config: AxiosRequestConfig, options?: RequestOptions) {
     return this.request({ ...config, method: RequestEnum.POST }, options)
   }
 
@@ -146,7 +152,7 @@ export class InitAxios {
    * @param config - 请求配置
    * @param options - axios配置
    */
-  put(config: AxiosRequestConfig, options?) {
+  put(config: AxiosRequestConfig, options?: RequestOptions) {
     return this.request({ ...config, method: RequestEnum.PUT }, options)
   }
 
@@ -155,7 +161,7 @@ export class InitAxios {
    * @param config - 请求配置
    * @param options - axios配置
    */
-  delete(config: AxiosRequestConfig, options?) {
+  delete(config: AxiosRequestConfig, options?: RequestOptions) {
     return this.request({ ...config, method: RequestEnum.DELETE }, options)
   }
 
@@ -205,7 +211,7 @@ export class InitAxios {
    * @param config - 请求配置
    * @param options - axios配置
    */
-  downloadFile(config: AxiosRequestConfig, options = { responseType: 'blob' }) {
-    return this.request({ ...config, method: RequestEnum.GET }, options)
-  }
+  // downloadFile(config: AxiosRequestConfig, options = { responseType: 'blob' }) {
+  //   return this.request({ ...config, method: RequestEnum.GET }, options)
+  // }
 }

@@ -69,7 +69,9 @@ const handleValidateClick = (e: MouseEvent) => {
   e.preventDefault()
   formRef.value?.validate(async (errors) => {
     if (!errors) {
-      await userStore.login(userForm)
+      console.log(userForm);
+      
+      await userStore.login(userForm.value.user)
     } else {
       console.log(errors)
     }

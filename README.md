@@ -25,7 +25,7 @@ Layout tag scroll-x css
   - [x] put
   - [x] delete
   - [x] uploadFile
-  - [x] downloadFile
+  - [ ] downloadFile
 ### router
 - [x] router permission guard
 - [x] basic router
