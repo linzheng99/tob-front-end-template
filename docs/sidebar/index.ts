@@ -1,11 +1,24 @@
-export function setupSidebar(){
+export function setupSidebar() {
   return [
     {
-      text: '介绍',
+      text: '项目介绍',
       collapsed: false,
       items: [
         { text: 'Structure', link: '/sidebar/Introduction/structure' },
         { text: 'Getting Started', link: '/sidebar/Introduction/getting-started' },
+      ]
+    },
+    {
+      text: '项目指南',
+      collapsed: false,
+      items: [
+        {
+          text: 'Utils',
+          collapsed: false,
+          items: [
+            { text: 'Axios', link: '/sidebar/Guide/Utils/axios' },
+          ]
+        },
       ]
     },
     {
