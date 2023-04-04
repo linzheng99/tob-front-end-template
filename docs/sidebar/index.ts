@@ -4,8 +4,8 @@ export function setupSidebar() {
       text: '项目介绍',
       collapsed: false,
       items: [
-        { text: 'Structure', link: '/sidebar/Introduction/structure' },
         { text: 'Getting Started', link: '/sidebar/Introduction/getting-started' },
+        { text: 'Structure', link: '/sidebar/Introduction/structure' },
       ]
     },
     {
@@ -13,10 +13,18 @@ export function setupSidebar() {
       collapsed: false,
       items: [
         {
+          text: 'Router',
+          collapsed: false,
+          items: [
+            { text: 'router', link: '/sidebar/Guide/Router/router' },
+            { text: 'guard', link: '/sidebar/Guide/Router/guard' },
+          ]
+        },
+        {
           text: 'Utils',
           collapsed: false,
           items: [
-            { text: 'Axios', link: '/sidebar/Guide/Utils/axios' },
+            { text: 'axios', link: '/sidebar/Guide/Utils/axios' },
           ]
         },
       ]
