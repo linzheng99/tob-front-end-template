@@ -22,17 +22,22 @@ const themeOverrides: GlobalThemeOverrides = {}
   * sidebar的宽
   * tab的高宽
   * ...
-### 主题颜色更改流程`themeColor`
+### 主题颜色更改流程`Color`
   对于 color 存储的初步思想 `设置默认 -> 修改 -> 监听`
+
+  对于 color 其实分2个 1.`themeColor` 2. `Naive UI Color`
   
    1. 设置 default color 并存在本地（localStorage）
    2. 修改 color
    3. 监听 color 更改，替换本地
+   4. 关闭页面时替换修改后的数据（ui样式、布局样式）
    
   使用 pinia 对数据的存储和获取 `/src/store/modules/theme.ts`
   
   主要的方法实现`/src/utils/helper/themeHelper.ts`
 
   通过全局的监听模式对数据`/src/store/subscribe/theme.ts`
+
+  监听页面关闭`/src/utils/cache/events.ts`
   
   
