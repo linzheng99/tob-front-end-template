@@ -8,4 +8,4 @@ export const LOCAL_CONFIG = 'APP_LOCAL_CONFIG'
 export const LOCAL_THEME_CONFIG = 'APP_LOCAL_THEME_CONFIG'
 
 // local themeColor
-export const LOCAL_THEME_COLOR = 'APP_LOCAL_THEME_Color'
+export const LOCAL_THEME_COLOR = 'APP_LOCAL_THEME_COLOR'

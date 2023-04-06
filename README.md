@@ -1,4 +1,14 @@
 # Vue 3 + TypeScript + Vite
+```sh
+# 拉取代码
+git clone git@github.com:linzhengGithub/am-template.git
+# 安装依赖
+pnpm i
+# 启动项目
+pnpm dev
+# 启动文档
+pnpm dev:docs
+```
 ----
 ## Include
 * vue3
@@ -88,3 +98,4 @@ Layout tag scroll-x css
 ### 组件页面
 - [ ] FormGenerate
 - [ ] TableGenerate
+- [ ] 地图组件（高德）
