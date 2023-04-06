@@ -85,6 +85,13 @@ router.beforeEach(async (to,form,next) => {
   next({ ...to, replace: true })
 })
 ```
+::: warning
+需要注意的是`动态路由`是`json格式`需要额外处理
+:::
+```ts
+await permissionStore.buildRoutesAction()
+// 详细查看 /src/utils/helper/routerHelper.ts
+```
 ## step6(用户手动更改路由)
 ```ts
 router.beforeEach(async (to,form,next) => {

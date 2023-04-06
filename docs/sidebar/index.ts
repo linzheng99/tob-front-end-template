@@ -14,17 +14,32 @@ export function setupSidebar() {
       items: [
         {
           text: 'Router',
-          collapsed: false,
+          collapsed: true,
           items: [
             { text: 'router', link: '/sidebar/Guide/Router/router' },
             { text: 'guard', link: '/sidebar/Guide/Router/guard' },
           ]
         },
         {
+          text: 'Layout',
+          collapsed: true,
+          items: [
+            { text: 'sidebar', link: '/sidebar/Guide/Layout/sidebar' },
+          ]
+        },
+        {
+          text: 'Theme',
+          collapsed: true,
+          items: [
+            { text: 'themeConfig', link: '/sidebar/Guide/Theme/themeConfig' },
+          ]
+        },
+        {
           text: 'Utils',
-          collapsed: false,
+          collapsed: true,
           items: [
             { text: 'axios', link: '/sidebar/Guide/Utils/axios' },
+            { text: 'cache', link: '/sidebar/Guide/Utils/cache' },
           ]
         },
       ]
