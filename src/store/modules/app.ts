@@ -13,7 +13,7 @@ interface AppState {
 export const useAppStore = defineStore({
   id: 'app',
   state: (): AppState => ({
-    appLocalConfig: getLocalKey(LOCAL_CONFIG),
+    appLocalConfig: getLocalKey(LOCAL_CONFIG) || {},
     configDrawerVisible: false,
   }),
   getters: {

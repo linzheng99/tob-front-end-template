@@ -29,6 +29,12 @@ export default defineConfig(({ command, mode }) => {
         },
       },
     },
+    optimizeDeps: {
+      include: [
+        'echarts',
+        'lodash-es'
+      ]
+    },
     server: {
       host: true,
       port: VITE_PORT,
