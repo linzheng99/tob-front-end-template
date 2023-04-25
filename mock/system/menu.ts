@@ -105,7 +105,7 @@ const componentsRouter = {
       name: 'Table',
       component: '/components/table/index.vue',
       meta: {
-        title: '表格',
+        title: '表格Table',
         icon: 'tabler:article',
       },
     },
@@ -114,8 +114,17 @@ const componentsRouter = {
       name: 'Form',
       component: '/components/form/index.vue',
       meta: {
-        title: '表单',
+        title: '表单Form',
         icon: 'fluent:form-48-filled',
+      },
+    },
+    {
+      path: '/components/modal',
+      name: 'Modal',
+      component: '/components/modal/index.vue',
+      meta: {
+        title: '模态框Modal',
+        icon: 'vaadin:modal-list',
       },
     },
     {
