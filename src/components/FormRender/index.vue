@@ -9,20 +9,20 @@
       :size="formConfig.size"
       :label-placement="formConfig.labelPlacement"
     >
-      <FormItem :form-items="formItems" :form-value="formValue" />
+      <FormItem
+        :form-items="formItems"
+        :form-value="formValue"
+        :form-item-config="formItemConfig"
+      />
     </n-form>
-    <span>
-      form:
-      {{ formValue }}
-    </span>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, toRefs, reactive } from 'vue'
-import { FormItemType, FormConfig } from './form-types'
+import { defineComponent, PropType, toRefs, reactive, ref } from 'vue'
+import { FormItemType, FormConfig, FormItemConfig } from './form-types'
 import FormItem from './FormItem/index.vue'
-import { FormRules } from 'naive-ui'
+import { FormRules, useMessage, FormInst } from 'naive-ui'
 import { extend, restRefsKey } from '@/utils'
 
 const defaultFormConfig = {
@@ -39,7 +39,7 @@ export default defineComponent({
    * @param formValue - 数据来源
    * @param formItem - 元素结构
    * @param formConfig - form主题配置
-   * @param formRules - 数据规则
+   * @param formRules - 数据校验
    */
   props: {
     // formValue: {
@@ -65,12 +65,18 @@ export default defineComponent({
     formRules: {
       type: Object as PropType<FormRules>,
       default: () => ({})
+    },
+    formItemConfig: {
+      type: Object as PropType<FormItemConfig>,
+      default: () => ({})
     }
   },
   setup(props) {
     const { formConfig, formItems, formRules } = props
     const mergeFormConfig = Object.assign({}, defaultFormConfig, formConfig)
 
+    const message = useMessage()
+    const formRef = ref<FormInst | null>(null)
     let formValue = reactive<Record<string, any>>({})
 
     const setFormKeys = () => {
@@ -86,13 +92,34 @@ export default defineComponent({
     const setForm = (data) => {
       extend(formValue, data)
     }
+    const validateForm = async (e: MouseEvent) => {
+      e.preventDefault()
+      let pass = false
+      await formRef.value?.validate((errors) => {
+        if (!errors) {
+          pass = true
+          message.success('Valid')
+        } else {
+          console.log(errors)
+          message.error('Invalid')
+        }
+      })
+      return pass
+    }
+    const restValidateForm = () => {
+      formRef.value?.restoreValidation()
+    }
+
     return {
       formValue,
       formConfig: mergeFormConfig,
       formItems,
       formRules,
+      formRef,
       restForm,
-      setForm
+      setForm,
+      validateForm,
+      restValidateForm
     }
   }
 })

@@ -27,3 +27,16 @@ export interface FormConfig {
   labelWidth?: number | string | 'auto'
   inline?: boolean
 }
+
+/**
+ * @description formItem主题config
+ * @param xGap - 横向元素相距
+ * @param yGap - 纵向元素相距
+ * @param cols - 一行多少个
+ */
+export interface FormItemConfig {
+  xGap?: string
+  yGap?: string
+  cols?: number
+  requireMarkPlacement?: 'left' | 'right' | 'right-hanging'
+}
