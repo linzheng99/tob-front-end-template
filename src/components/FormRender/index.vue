@@ -18,46 +18,66 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { reactive, ref } from 'vue'
-import { FormItemType, FormConfig } from './form-types';
+<script lang="ts">
+import { defineComponent, PropType } from 'vue'
+import { FormItemType, FormConfig } from './form-types'
 import FormItem from './FormItem/index.vue'
 import { FormRules } from 'naive-ui'
 
-/**
- * @description form表单的配置
- * @param formValue - 数据来源
- * @param formItem - 元素结构
- * @param formConfig - form主题配置
- * @param formRules - 数据规则
- */
-interface FormProps {
-  formValue: Record<string, any>
-  formItems: FormItemType[]
-  formConfig: FormConfig
-  formRules?: FormRules
+const defaultFormConfig = {
+  labelPlacement: 'left',
+  size: 'medium',
+  labelWidth: 80,
+  inline: true
 }
 
-withDefaults(defineProps<FormProps>(), {
-  formValue: () => ref({}),
-  formItems: () => [
-    {
-      label: 'FormItem',
-      path: '',
-      placeholder: '',
-      value: 'name',
-      itemType: 'input'
+export default defineComponent({
+  name: 'FormRender',
+  /**
+   * @description form表单的配置
+   * @param formValue - 数据来源
+   * @param formItem - 元素结构
+   * @param formConfig - form主题配置
+   * @param formRules - 数据规则
+   */
+  props: {
+    formValue: {
+      type: Object as PropType<Record<string, any>>,
+      default: () => ({})
+    },
+    formItems: {
+      type: Array as PropType<FormItemType[]>,
+      default: () => [
+        {
+          label: 'FormItem',
+          path: '',
+          placeholder: '',
+          value: 'name',
+          itemType: 'input'
+        }
+      ]
+    },
+    formConfig: {
+      type: Object as PropType<FormConfig>,
+      default: () => ({})
+    },
+    formRules: {
+      type: Object as PropType<FormRules>,
+      default: () => ({})
     }
-  ],
-  formConfig: () => 
-    reactive({
-      labelPlacement: 'left',
-      size: 'medium',
-      labelWidth: 80,
-      inline: true
-    })
-})
+  },
+  setup(props) {
+    const { formConfig, formItems, formRules, formValue } = props
+    const mergeFormConfig = Object.assign({}, defaultFormConfig, formConfig)
 
+    return {
+      formValue,
+      formConfig: mergeFormConfig,
+      formItems,
+      formRules
+    }
+  }
+})
 </script>
 
 <style scoped></style>

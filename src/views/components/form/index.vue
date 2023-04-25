@@ -1,18 +1,25 @@
 <template>
   <div id="app_content">
-    <FormRender :form-value="formValue" :form-items="formItems" />
+    <FormRender :form-value="formValue" :form-items="formItems" :form-config="formConfig" />
     <n-button @click="clearClick">clear</n-button>
+    {{ formValue }}
   </div>
 </template>
 
 <script setup lang="ts">
+import { reactive, toRefs } from 'vue'
+import { FormConfig, FormItemType } from '@/components/FormRender/form-types'
 import FormRender from '@/components/FormRender/index.vue'
-import { ref } from 'vue';
+import { restRefsKey } from '../../../utils/index'
 
-let formValue = ref<Record<string, unknown>>({
-  name: '1'
+const formConfig: FormConfig = {
+  size: 'small'
+}
+let formValue = reactive<Record<string, any>>({
+  name: '321'
 })
-const formItems = [
+
+const formItems: FormItemType[] = [
   {
     label: 'FormItem',
     path: '',
@@ -22,14 +29,9 @@ const formItems = [
   }
 ]
 const clearClick = () => {
-  // 获取 formValue 对象的所有属性名
-  const keys = Object.keys(formValue.value);
-  // 创建一个新对象，保留原始属性名和值
-  const newFormValue = Object.fromEntries(keys.map(key => [key, '']));
-  // 将 formValue.value 的值设置为新对象
-  formValue.value = newFormValue;
-};
-
+  const refs = toRefs(formValue)
+  restRefsKey(refs)
+}
 </script>
 
 <style lang="scss" scoped></style>

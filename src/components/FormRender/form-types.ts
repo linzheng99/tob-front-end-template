@@ -4,6 +4,7 @@
  * @param path - 对象路径
  * @param placeholder - 占位符
  * @param value - key
+ * @param itemType - 类型
  */
 export interface FormItemType {
   label: string

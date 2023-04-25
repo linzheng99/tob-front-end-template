@@ -29,3 +29,9 @@ export function setObjToUrlParams(baseUrl: string, obj: any): string {
 }
 
 export const extend = Object.assign
+
+export const restRefsKey = (refs) => {
+  for (const [_key, ref] of Object.entries(refs)) {
+    (ref as any).value = ''
+  }
+}

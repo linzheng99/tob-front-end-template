@@ -1,41 +1,47 @@
 <template>
   <n-form-item
-    v-for="(item, index) in props.formItems"
+    v-for="(item, index) in formItems"
     :key="index"
     :label="item.label"
     :path="item.path ? item.path : item.value"
   >
     <n-input
       v-if="item.itemType === 'input'"
-      v-model:value="props.formValue[item.value]"
+      v-model:value="formValue[item.value]"
       :placeholder="item.placeholder"
     />
   </n-form-item>
-  <span>
-  form.item: {{ formValue }}
-  </span>
+  <span> form.item: {{ formValue }} </span>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import { FormItemType } from '../form-types'
-import { ref } from 'vue'
+import { defineComponent, PropType } from 'vue'
 
-interface FormItemProps {
-  formItems: FormItemType[]
-  formValue: Record<string, any>
-}
-
-const props = withDefaults(defineProps<FormItemProps>(), {
-  formItems: () => [
-    {
-      label: 'FormItem',
-      path: '',
-      placeholder: '',
-      value: 'name',
-      itemType: 'input'
+export default defineComponent({
+  name: 'FormItem',
+  props: {
+    formValue: {
+      type: Object as PropType<Record<string, any>>,
+      default: () => ({})
+    },
+    formItems: {
+      type: Array as PropType<FormItemType[]>,
+      default: () => [
+        {
+          label: 'FormItem',
+          path: '',
+          placeholder: '',
+          value: 'name',
+          itemType: 'input'
+        }
+      ]
     }
-  ],
-  formValue: () => ref({})
+  },
+  setup(props) {
+    const { formItems, formValue } = props
+    return { formItems, formValue }
+  }
 })
 </script>
 
