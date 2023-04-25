@@ -19,10 +19,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, PropType, toRefs, reactive } from 'vue'
 import { FormItemType, FormConfig } from './form-types'
 import FormItem from './FormItem/index.vue'
 import { FormRules } from 'naive-ui'
+import { extend, restRefsKey } from '@/utils'
 
 const defaultFormConfig = {
   labelPlacement: 'left',
@@ -41,10 +42,10 @@ export default defineComponent({
    * @param formRules - 数据规则
    */
   props: {
-    formValue: {
-      type: Object as PropType<Record<string, any>>,
-      default: () => ({})
-    },
+    // formValue: {
+    //   type: Object as PropType<Record<string, any>>,
+    //   default: () => ({})
+    // },
     formItems: {
       type: Array as PropType<FormItemType[]>,
       default: () => [
@@ -67,14 +68,31 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const { formConfig, formItems, formRules, formValue } = props
+    const { formConfig, formItems, formRules } = props
     const mergeFormConfig = Object.assign({}, defaultFormConfig, formConfig)
 
+    let formValue = reactive<Record<string, any>>({})
+
+    const setFormKeys = () => {
+      formItems.map((i) => (formValue[i.value] = ''))
+    }
+
+    setFormKeys()
+
+    const restForm = () => {
+      const refs = toRefs(formValue)
+      restRefsKey(refs)
+    }
+    const setForm = (data) => {
+      extend(formValue, data)
+    }
     return {
       formValue,
       formConfig: mergeFormConfig,
       formItems,
-      formRules
+      formRules,
+      restForm,
+      setForm
     }
   }
 })
