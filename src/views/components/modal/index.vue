@@ -1,6 +1,6 @@
 <template>
   <n-button @click="toggleModal"> toggle </n-button>
-  <ModalCard ref="ModalCard_ref" @closed="closed">
+  <ModalCard ref="ModalCard_ref" @closed="closed" :body-style="{height: '700px'}">
     <template #content>
       <FormRender ref="formRender_ref" :form-items="formItems" :form-item-config="formItemConfig" />
     </template>

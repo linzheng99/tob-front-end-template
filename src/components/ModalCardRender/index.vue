@@ -24,70 +24,54 @@
   </n-modal>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, PropType, reactive, defineEmits } from 'vue'
+<script setup lang="ts">
+import { ref, reactive } from 'vue'
 
 type SizeType = 'small' | 'medium' | 'large' | 'huge'
+interface Emit {
+  (e: 'closed', value: boolean)
+}
+interface Props {
+  bodyStyle: Object
+  segmented: Object
+  size: SizeType
+  title: any
+}
 
-export default defineComponent({
-  name: 'modalRender',
-  props: {
-    bodyStyle: {
-      type: Object,
-      default: () => ({
-        width: '600px'
-      })
-    },
-    segmented: {
-      type: Object,
-      default: () => ({
-        content: true,
-        footer: true
-      })
-    },
-    size: {
-      type: String as PropType<SizeType>,
-      default: 'huge'
-    },
-    title: {
-      type: String,
-      default: '模态框title'
-    }
+const props = withDefaults(defineProps<Props>(), {
+  bodyStyle: () => ({}),
+  segmented: () => {
+    return { content: true, footer: true }
   },
-  emits: ['closed'],
-  setup(props, { emit }) {
-    const { bodyStyle, segmented } = props
-
-    let modalState = ref(false)
-
-    const headerStyle = reactive({
-      padding: '10px'
-    })
-    const contentStyle = reactive({
-      padding: '10px'
-    })
-    const footerStyle = reactive({
-      padding: '10px'
-    })
-
-    const toggleModal = () => {
-      modalState.value = true
-    }
-
-    const closedCallback = () => emit('closed', modalState.value)
-
-    return {
-      bodyStyle,
-      headerStyle,
-      contentStyle,
-      footerStyle,
-      segmented,
-      modalState,
-      toggleModal,
-      closedCallback
-    }
-  }
+  size: 'huge',
+  title: 'title'
 })
+
+Object.assign(props.bodyStyle, { width: '1000px' })
+
+const emit = defineEmits<Emit>()
+
+let modalState = ref(false)
+
+const headerStyle = reactive({
+  padding: '10px'
+})
+const contentStyle = reactive({
+  padding: '10px'
+})
+const footerStyle = reactive({
+  padding: '10px'
+})
+
+const toggleModal = () => {
+  modalState.value = true
+}
+
+const closedCallback = () => {
+  emit('closed', modalState.value)
+}
+
+defineExpose({ toggleModal })
 </script>
 
 <style scoped></style>
