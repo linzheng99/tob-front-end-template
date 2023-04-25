@@ -30,12 +30,12 @@ const formRender_ref = ref<any>(null)
 
 const options: selectOption<string>[] = [
   {
-    label: 'boy',
-    value: 'male'
+    wantLabel: 'boy',
+    wantValue: 'male'
   },
   {
-    label: 'girl',
-    value: 'female'
+    wantLabel: 'girl',
+    wantValue: 'female'
   }
 ]
 
@@ -59,13 +59,14 @@ const formItems: FormItemType[] = reactive([
     itemType: 'select',
     selectConfig: {
       toggleFilter: true,
-      options: []
+      options: [],
+      labelField: 'wantLabel',
+      valueField: 'wantValue'
     }
   },
   {
-    label: 'selectItem',
+    label: 'checkbox',
     path: 'boxValue',
-    placeholder: 'checkbox value',
     value: 'boxValue',
     itemType: 'checkboxGroup',
     checkboxList: [

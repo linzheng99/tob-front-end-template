@@ -26,7 +26,9 @@ export type selectOption<T extends any> = {
 
 export interface selectConfig {
   toggleFilter?: boolean
-  options?: selectOption<string>[]
+  options: selectOption<string>[]
+  labelField?: string
+  valueField?: string
 }
 
 /**

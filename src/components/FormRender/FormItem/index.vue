@@ -6,20 +6,25 @@
         :path="item.path ? item.path : item.value"
         :require-mark-placement="formItemConfig.requireMarkPlacement"
       >
+        <!-- input -->
         <n-input
           v-if="item.itemType === 'input'"
           v-model:value="formValue[item.value]"
           :disabled="item.disabled ? item.disabled(formValue, item.value) : false"
           :placeholder="item.placeholder"
         />
+        <!-- select -->
         <n-select
           v-if="item.itemType === 'select'"
           v-model:value="formValue[item.value]"
           :disabled="item.disabled ? item.disabled(formValue, item.value) : false"
           :filterable="item.selectConfig?.toggleFilter"
           :placeholder="item.placeholder"
+          :label-field="item.selectConfig?.labelField"
+          :value-field="item.selectConfig?.valueField"
           :options="item.selectConfig?.options"
         />
+        <!-- checkbox-group -->
         <n-checkbox-group
           v-if="item.itemType === 'checkboxGroup'"
           v-model:value="formValue[item.value]"
