@@ -5,13 +5,28 @@
  * @param placeholder - 占位符
  * @param value - key
  * @param itemType - 类型
+ * @param selectConfig - select类型config
  */
 export interface FormItemType {
   label: string
   path?: string
   placeholder?: string
+  disabled?: TwoAryFunc | null
   value: string
-  itemType: string
+  itemType: string,
+  selectConfig?: selectConfig
+  checkboxList?: selectOption<string>[]
+}
+
+type TwoAryFunc = (a:any,b:any) => boolean
+
+export type selectOption<T extends any> = {
+  [key: string]: T;
+}
+
+export interface selectConfig {
+  toggleFilter?: boolean
+  options?: selectOption<string>[]
 }
 
 /**

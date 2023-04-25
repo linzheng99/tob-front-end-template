@@ -9,8 +9,30 @@
         <n-input
           v-if="item.itemType === 'input'"
           v-model:value="formValue[item.value]"
+          :disabled="item.disabled ? item.disabled(formValue, item.value) : false"
           :placeholder="item.placeholder"
         />
+        <n-select
+          v-if="item.itemType === 'select'"
+          v-model:value="formValue[item.value]"
+          :disabled="item.disabled ? item.disabled(formValue, item.value) : false"
+          :filterable="item.selectConfig?.toggleFilter"
+          :placeholder="item.placeholder"
+          :options="item.selectConfig?.options"
+        />
+        <n-checkbox-group
+          v-if="item.itemType === 'checkboxGroup'"
+          v-model:value="formValue[item.value]"
+        >
+          <n-space item-style="display: flex;">
+            <n-checkbox
+              v-for="checkbox in item.checkboxList"
+              :key="checkbox.value"
+              :value="checkbox.value"
+              :label="checkbox.label"
+            />
+          </n-space>
+        </n-checkbox-group>
       </n-form-item>
     </n-gi>
   </n-grid>

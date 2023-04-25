@@ -22,13 +22,13 @@
 import { defineComponent, PropType, toRefs, reactive, ref } from 'vue'
 import { FormItemType, FormConfig, FormItemConfig } from './form-types'
 import FormItem from './FormItem/index.vue'
-import { FormRules, useMessage, FormInst } from 'naive-ui'
+import { useMessage, FormInst } from 'naive-ui'
 import { extend, restRefsKey } from '@/utils'
 
 const defaultFormConfig = {
   labelPlacement: 'left',
   size: 'medium',
-  labelWidth: 80,
+  labelWidth: 'auto',
   inline: true
 }
 
@@ -63,7 +63,7 @@ export default defineComponent({
       default: () => ({})
     },
     formRules: {
-      type: Object as PropType<FormRules>,
+      type: Object as PropType<{}>,
       default: () => ({})
     },
     formItemConfig: {
@@ -94,17 +94,15 @@ export default defineComponent({
     }
     const validateForm = async (e: MouseEvent) => {
       e.preventDefault()
-      let pass = false
       await formRef.value?.validate((errors) => {
         if (!errors) {
-          pass = true
           message.success('Valid')
+          return true
         } else {
-          console.log(errors)
           message.error('Invalid')
+          return false
         }
       })
-      return pass
     }
     const restValidateForm = () => {
       formRef.value?.restoreValidation()
