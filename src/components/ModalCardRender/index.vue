@@ -26,6 +26,7 @@
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
+import { extend } from '@/utils'
 
 type SizeType = 'small' | 'medium' | 'large' | 'huge'
 interface Emit {
@@ -47,7 +48,7 @@ const props = withDefaults(defineProps<Props>(), {
   title: 'title'
 })
 
-Object.assign(props.bodyStyle, { width: '1000px' })
+extend(props.bodyStyle, { width: '800px' })
 
 const emit = defineEmits<Emit>()
 

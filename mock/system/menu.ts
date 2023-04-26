@@ -128,6 +128,15 @@ const componentsRouter = {
       },
     },
     {
+      path: '/components/descriptions',
+      name: 'Descriptions',
+      component: '/components/descriptions/index.vue',
+      meta: {
+        title: '描述列表Descriptions',
+        icon: 'fa-regular:file-alt',
+      },
+    },
+    {
       path: '/components/echarts',
       name: 'Echarts',
       component: '/components/echarts/index.vue',
