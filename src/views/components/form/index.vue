@@ -20,7 +20,7 @@ import { ref, unref, reactive } from 'vue'
 import { FormConfig, FormItemType } from '@/components/FormRender/form-types'
 import FormRender from '@/components/FormRender/index.vue'
 import { FormItemRule } from 'naive-ui'
-import { selectConfig, selectOption } from '../../../components/FormRender/form-types'
+import { selectConfig, Options } from '@/components/FormRender/form-types'
 
 const formConfig: FormConfig = {
   size: 'small'
@@ -28,7 +28,7 @@ const formConfig: FormConfig = {
 
 const formRender_ref = ref<any>(null)
 
-const options: selectOption<string>[] = [
+const options: Options<string>[] = [
   {
     wantLabel: 'boy',
     wantValue: 'male'
@@ -46,7 +46,7 @@ const formItems: FormItemType[] = reactive([
     placeholder: 'name input',
     value: 'name',
     disabled: (value, param) => {
-      if(value[param] === '321') return true
+      if (value[param] === '321') return true
       return false
     },
     itemType: 'input'
@@ -65,15 +65,12 @@ const formItems: FormItemType[] = reactive([
     }
   },
   {
-    label: 'checkbox',
+    label: 'checkboxGroup',
     path: 'boxValue',
     value: 'boxValue',
     itemType: 'checkboxGroup',
     checkboxList: [
-      {
-        value: 'beijing',
-        label: '北京'
-      },
+      { value: 'beijing', label: '北京' },
       {
         value: 'shanghai',
         label: '上海'
@@ -99,7 +96,7 @@ const formRules = {
     type: 'array',
     required: true,
     message: '至少选择一个',
-    trigger: ['blur'],
+    trigger: ['blur']
   }
 }
 
@@ -109,7 +106,7 @@ const clearClick = () => {
 }
 const setClick = () => {
   const formDom = unref(formRender_ref)
-  formDom?.setForm({ name: '321', gender: 'male' })
+  formDom?.setForm({ name: '321', gender: 'male', boxValue: ['beijing'] })
 }
 const checkClick = async (e: MouseEvent) => {
   const formDom = unref(formRender_ref)

@@ -7,6 +7,7 @@
       :model="formValue"
       :rules="formRules"
       :size="formConfig.size"
+      :label-align="formConfig.labelAlign"
       :label-placement="formConfig.labelPlacement"
     >
       <FormItem
@@ -29,7 +30,8 @@ const defaultFormConfig = {
   labelPlacement: 'left',
   size: 'medium',
   labelWidth: 'auto',
-  inline: true
+  inline: true,
+  labelAlign: 'left'
 }
 
 export default defineComponent({
