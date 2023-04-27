@@ -22,6 +22,7 @@
           :placeholder="item.placeholder"
           :label-field="item.selectConfig?.labelField"
           :value-field="item.selectConfig?.valueField"
+          :children-field="item.selectConfig?.childrenField"
           :options="item.selectConfig?.options"
         />
         <!-- checkbox-group -->
@@ -38,6 +39,19 @@
             />
           </n-space>
         </n-checkbox-group>
+        <!-- cascader -->
+        <n-cascader
+          v-if="item.itemType === 'cascader'"
+          :options="item.cascaderConfig?.options"
+          v-model:value="formValue[item.value]"
+          :label-field="item.cascaderConfig?.labelField"
+          :value-field="item.cascaderConfig?.valueField"
+          :children-field="item.cascaderConfig?.childrenField"
+          check-strategy="all"
+          filterable
+          clearable
+          clear-filter-after-select
+        />
       </n-form-item>
     </n-gi>
   </n-grid>

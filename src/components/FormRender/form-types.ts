@@ -15,20 +15,29 @@ export interface FormItemType {
   value: string
   itemType: string,
   selectConfig?: selectConfig
-  checkboxList?: selectOption<string>[]
+  checkboxList?: Options<string>[]
+  cascaderConfig?: cascaderConfig
 }
 
 type TwoAryFunc = (a:any,b:any) => boolean
 
-export type selectOption<T extends any> = {
+export type Options<T extends any> = {
   [key: string]: T;
 }
 
 export interface selectConfig {
   toggleFilter?: boolean
-  options: selectOption<string>[]
+  options: Options<string>[]
   labelField?: string
   valueField?: string
+  childrenField?: string
+}
+
+export interface cascaderConfig {
+  options: Options<string>[]
+  labelField?: string
+  valueField?: string
+  childrenField?: string
 }
 
 /**
@@ -43,6 +52,7 @@ export interface FormConfig {
   labelPlacement?: 'left' | 'top'
   labelWidth?: number | string | 'auto'
   inline?: boolean
+  labelAlign?: 'left' | 'right'
 }
 
 /**
