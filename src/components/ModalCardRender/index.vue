@@ -19,7 +19,20 @@
     </template>
     <slot name="content"> 内容 </slot>
     <template #footer>
-      <slot name="footer"> 底部 </slot>
+      <slot name="footer">
+        <div class="default_btns">
+          <n-button
+            @click="cancelCallback"
+            strong
+            secondary
+            type="tertiary"
+            style="margin-right: 20px"
+          >
+            取消
+          </n-button>
+          <n-button @click="confirmCallback" type="primary">确认</n-button>
+        </div>
+      </slot>
     </template>
   </n-modal>
 </template>
@@ -31,6 +44,8 @@ import { extend } from '@/utils'
 type SizeType = 'small' | 'medium' | 'large' | 'huge'
 interface Emit {
   (e: 'closed', value: boolean)
+  (e: 'cancel')
+  (e: 'confirm')
 }
 interface Props {
   bodyStyle: Object
@@ -41,9 +56,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   bodyStyle: () => ({}),
-  segmented: () => {
-    return { content: true, footer: true }
-  },
+  segmented: () => ({}),
   size: 'huge',
   title: 'title'
 })
@@ -72,7 +85,21 @@ const closedCallback = () => {
   emit('closed', modalState.value)
 }
 
+const cancelCallback = () => {
+  toggleModal()
+  emit('cancel')
+}
+const confirmCallback = () => {
+  emit('confirm')
+}
+
 defineExpose({ toggleModal })
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.default_btns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>
