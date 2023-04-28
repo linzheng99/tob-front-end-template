@@ -1,20 +1,23 @@
 <template>
-  <DescriptionsRender :describe-list="descripeList" />
+  <DescriptionsRender :describe-list="descripeList" :data="data" />
 </template>
 
 <script setup lang="ts">
 import DescriptionsRender from '@/components/DescriptionsRender/index.vue'
-import { h } from 'vue'
 
+const data = {
+  x: '吃饭',
+  y: '喝酒'
+}
 const descripeList = [
   {
     label: '晚上',
     renderContent: true,
-    content: h('span', { style: { color: 'red' } }, ['123456789'])
+    param: 'x'
   },
   {
-    label: '晚上',
-    content: '喝酒'
+    label: '今天',
+    param: 'y'
   }
 ]
 </script>
