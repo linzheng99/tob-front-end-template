@@ -1,75 +1,35 @@
 <template>
-  <n-button @click="toggleModal"> toggle </n-button>
-  <ModalCard ref="ModalCard_ref" @closed="closed" :body-style="{height: '700px'}">
-    <template #content>
-      <FormRender ref="formRender_ref" :form-items="formItems" :form-item-config="formItemConfig" />
-    </template>
-    <template #footer>
-      <n-button>取消</n-button>
-      <n-button>确认</n-button>
-    </template>
-  </ModalCard>
+  <n-button @click="toggleAddModal"> toggle addModal </n-button>
+  <n-button @click="toggleCheckModal"> toggle checkModal </n-button>
+  <AddModal ref="addModal_ref" />
+  <CheckModal ref="checkModal_ref" :data="checkData" />
 </template>
 
 <script setup lang="ts">
-import { ref, unref, reactive } from 'vue'
-import ModalCard from '@/components/ModalCardRender/index.vue'
-import FormRender from '@/components/FormRender/index.vue'
-import { FormItemType, FormItemConfig } from '../../../components/FormRender/form-types'
+import { unref, ref, reactive } from 'vue';
+import AddModal from './testModal/AddModal.vue'
+import CheckModal from './testModal/CheckModal.vue'
 
-const ModalCard_ref = ref(null)
-const toggleModal = (): void => {
-  const domRef: any = unref(ModalCard_ref)
+const addModal_ref = ref(null)
+const checkModal_ref = ref(null)
+
+const checkData = reactive({
+  name: 'linzheng',
+  idCard: '330382xxxxxxxxxxxx',
+  nation: '汉族',
+  address: '浙江省xx市'
+})
+
+const toggleAddModal = (): void => {
+  const domRef: any = unref(addModal_ref)
   domRef?.toggleModal()
 }
 
-const formItemConfig: FormItemConfig = {
-  cols: 2
+const toggleCheckModal = (): void => {
+  const domRef: any = unref(checkModal_ref)
+  domRef?.toggleModal()
 }
 
-const formItems: FormItemType[] = reactive([
-  {
-    label: 'inputItem',
-    path: 'name',
-    placeholder: 'name input',
-    value: 'name',
-    itemType: 'input'
-  },
-  {
-    label: 'selectItem',
-    path: 'gender',
-    placeholder: 'gender select',
-    value: 'gender',
-    itemType: 'select',
-    selectConfig: {
-      toggleFilter: true,
-      options: [],
-      labelField: 'wantLabel',
-      valueField: 'wantValue'
-    }
-  },
-  {
-    label: 'checkbox',
-    path: 'boxValue',
-    value: 'boxValue',
-    itemType: 'checkboxGroup',
-    checkboxList: [
-      {
-        value: 'beijing',
-        label: '北京'
-      },
-      {
-        value: 'shanghai',
-        label: '上海'
-      }
-    ]
-  }
-])
-
-const closed = (toggle) => {
-  console.log('closed', toggle);
-  
-}
 </script>
 
 <style scoped></style>
