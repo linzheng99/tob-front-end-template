@@ -1,10 +1,10 @@
 <template>
-  <ModalCard ref="ModalCard_ref">
+  <ModalCard ref="ModalCard_ref" :title="title">
     <template #content>
       <DescriptionsRender :describe-list="descripeList" :data="data" :column="2" />
     </template>
     <template #footer>
-      <n-button @click="toggleModal">取消</n-button>
+      <n-button @click="cancelBtnFn">取消</n-button>
     </template>
   </ModalCard>
 </template>
@@ -16,6 +16,7 @@ import { reactive, ref, unref } from 'vue'
 
 interface Props {
   data: Object
+  title: String
 }
 
 defineProps<Props>()
@@ -41,12 +42,13 @@ const descripeList = reactive([
   }
 ])
 
-const toggleModal = () => {
+const cancelBtnFn = () => {
   const domRef: any = unref(ModalCard_ref)
   domRef?.toggleModal()
 }
 
-defineExpose({ toggleModal })
+defineExpose({ cancelBtnFn })
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>

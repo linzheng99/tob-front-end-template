@@ -78,7 +78,7 @@ const footerStyle = reactive({
 })
 
 const toggleModal = () => {
-  modalState.value = true
+  modalState.value = !modalState.value 
 }
 
 const closedCallback = () => {
