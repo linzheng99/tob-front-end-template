@@ -41,6 +41,7 @@ Layout tag scroll-x css
 - [x] basic router
 - [x] router component patch
 - [ ] add sort attribute to meta(尝试增加排序)
+- [ ] add keep-alive to meta
 ### base Layout
 - [x] login page
   - [x] Form
