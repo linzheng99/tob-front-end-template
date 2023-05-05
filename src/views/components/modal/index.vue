@@ -1,8 +1,8 @@
 <template>
   <n-button @click="toggleAddModal"> toggle addModal </n-button>
   <n-button @click="toggleCheckModal"> toggle checkModal </n-button>
-  <AddModal ref="addModal_ref" :title="addTitle" />
-  <CheckModal ref="checkModal_ref" :data="checkData" :title="checkTitle" />
+  <AddModal ref="addModal_ref" :title="title" />
+  <CheckModal ref="checkModal_ref" :data="checkData" :title="title" />
 </template>
 
 <script setup lang="ts">
@@ -12,8 +12,7 @@ import CheckModal from './testModal/CheckModal.vue'
 
 const addModal_ref = ref(null)
 const checkModal_ref = ref(null)
-const checkTitle = ref('')
-const addTitle = ref('')
+const title = ref('')
 
 const checkData = reactive({
   name: 'linzheng',
@@ -24,13 +23,13 @@ const checkData = reactive({
 
 const toggleAddModal = (): void => {
   const domRef: any = unref(addModal_ref)
-  addTitle.value = '这是一个新增/编辑弹窗'
+  title.value = '这是一个新增/编辑弹窗'
   domRef?.toggleModal()
 }
 
 const toggleCheckModal = (): void => {
   const domRef: any = unref(checkModal_ref)
-  checkTitle.value = '这是一个查看弹窗'
+  title.value = '这是一个查看弹窗'
   domRef?.cancelBtnFn()
 }
 </script>

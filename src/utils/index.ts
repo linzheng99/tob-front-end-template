@@ -32,6 +32,6 @@ export const extend = Object.assign
 
 export const restRefsKey = (refs) => {
   for (const [_key, ref] of Object.entries(refs)) {
-    (ref as any).value = ''
+    (ref as any).value = null
   }
 }

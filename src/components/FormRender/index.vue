@@ -82,7 +82,7 @@ export default defineComponent({
     let formValue = reactive<Record<string, any>>({})
 
     const setFormKeys = () => {
-      formItems.map((i) => (formValue[i.value] = ''))
+      formItems.map((i) => (formValue[i.value] = null))
     }
 
     setFormKeys()

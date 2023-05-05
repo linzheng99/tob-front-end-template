@@ -1,5 +1,5 @@
 <template>
-  <ModalCard ref="ModalCard_ref" @closed="closed">
+  <ModalCard ref="ModalCard_ref" @closed="closed" :title="title">
     <template #content>
       <FormRender ref="formRender_ref" :form-items="formItems" :form-item-config="formItemConfig" />
     </template>
@@ -17,6 +17,11 @@ const toggleModal = (): void => {
   const domRef: any = unref(ModalCard_ref)
   domRef?.toggleModal()
 }
+
+interface Props{
+  title: any
+}
+defineProps<Props>()
 
 const formItemConfig: FormItemConfig = {
   cols: 2
