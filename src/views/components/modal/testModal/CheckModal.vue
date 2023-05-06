@@ -1,5 +1,5 @@
 <template>
-  <ModalCard ref="ModalCard_ref" :title="title">
+  <ModalCard ref="ModalCard_ref" :title="title" :body-style="bodyStyle">
     <template #content>
       <DescriptionsRender :describe-list="descripeList" :data="data" :column="2" />
     </template>
@@ -12,14 +12,29 @@
 <script setup lang="ts">
 import ModalCard from '@/components/ModalCardRender/index.vue'
 import DescriptionsRender from '@/components/DescriptionsRender/index.vue'
-import { reactive, ref, unref } from 'vue'
+import { reactive, ref, unref, computed } from 'vue';
 
 interface Props {
   data: Object
   title: String
+  type?: String
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
+
+const setBodyStyle = () => {
+  if(props.type === 'add') {
+    return {
+      width: '400px',
+      height: '500px'
+    }
+  }
+}
+
+const bodyStyle = computed(() => {
+  return setBodyStyle()
+})
+
 
 const ModalCard_ref = ref(null)
 
