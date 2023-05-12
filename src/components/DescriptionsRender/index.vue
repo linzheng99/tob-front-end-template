@@ -3,7 +3,9 @@
     <n-descriptions-item v-for="(item, index) in describeList" :key="index" :span="item.span">
       <template #label> {{ item.label }} </template>
       <template #default>
-        <span v-if="item.renderContent" v-html="renderVNodeToHTML(data[item.param])" />
+        <span v-if="item.render">
+          <renderVNode :createVNode="item.render(data, item.param)" />
+        </span>
         <span v-else>{{ data[item.param] }}</span>
       </template>
     </n-descriptions-item>
@@ -11,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { createApp, h } from 'vue';
+import renderVNode from './renderVNode'
 
 interface listType {
   label: string | number
@@ -19,6 +21,7 @@ interface listType {
   type?: any
   span?: number
   renderContent?: boolean
+  render?: (a,b) => {}
 }
 
 interface Props {
@@ -33,17 +36,7 @@ withDefaults(defineProps<Props>(), {
   title: '',
   describeList: () => []
 })
-// 渲染函数
-function renderVNodeToHTML(content = '321') {
-  const app = createApp({
-    render() {
-      return h('span', {}, content)
-    }
-  })
-  const container = document.createElement('span')
-  app.mount(container)
-  return container.innerHTML
-}
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>
