@@ -1,10 +1,13 @@
 <template>
   <DescriptionsRender :describe-list="descripeList" :data="data" :column="3" />
+  <RenderVNode :create-render="renderDiv" />
 </template>
 
 <script setup lang="ts">
 import DescriptionsRender from '@/components/DescriptionsRender/index.vue'
-import { h } from 'vue'
+import RenderVNode from '@/components/common/RenderVNode.vue'
+import { NButton } from 'naive-ui'
+import { h} from 'vue';
 
 const data = {
   x: '吃饭',
@@ -28,11 +31,11 @@ const descripeList = [
     label: '大晚上',
     param: 'y',
     render(data, param) {
-      return () => h('div', {style: {color: 'red'}}, data[param])
+      return () => h('div', { style: { color: 'red' } }, data[param])
     }
-  },
+  }
 ]
+const renderDiv = () => h(NButton, { type: 'primary', style: { color: 'red' } }, {default: () => '123'})
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

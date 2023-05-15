@@ -18,6 +18,12 @@
 <script>
 import { defineComponent, ref, reactive, onMounted } from 'vue'
 
+/**
+ * reactive和ref的区别
+ * ref返回的是一个包装过的响应式引用，它可以追踪到新数组的变化，并在变化时触发相应的更新。
+ * reactive只能对原始数据进行监听,如果你合并两个reactive,不采用修改原始数据的值,然后合并2个值再进行赋值,那么这种行为将无法被监听
+ */
+
 const column1 = {
   title: 'column1',
   key: 'column1',
