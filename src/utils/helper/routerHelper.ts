@@ -23,14 +23,21 @@ export function transformAuthRouteToVueRoutes(routes: AppRouteRecordRaw[] | unde
  */
 export function transformAuthRouteToVueRoute(item: AppRouteRecordRaw) {
   const dynamicViewsModules = import.meta.glob('../../views/**/*.{vue,tsx}')
-  const { component, children } = item
+  const { component, children, name } = item
   const route = { ...item }
   if (component) {
     const LayoutFound = getLayoutComponent(component)
     if (LayoutFound) {
       extend(route, { component: LayoutFound })
     } else {
-      extend(route, { component: dynamicImport(dynamicViewsModules, component) })
+      const importComponent = dynamicImport(dynamicViewsModules, component)
+      extend(route, { component: importComponent })
+      // 给组件增加 组件名字
+      if (importComponent) {
+        importComponent().then((result: any) => {
+          Object.assign(result.default, { name });
+        })
+      }
     }
   }
   // 存在子路由递归转换
