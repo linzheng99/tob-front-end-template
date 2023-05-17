@@ -17,10 +17,12 @@ import { watch, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useTabsStoreWithOut } from '@/store/modules/tabs'
 import { useRouterPush } from '@/hooks/router/useRouterPush'
+import { useRouteStoreWithout } from '@/store/modules/route';
 import Tab from './components/Tab.vue'
 
 const route = useRoute()
 const tabsStore = useTabsStoreWithOut()
+const routeStore = useRouteStoreWithout()
 const { routerPush } = useRouterPush()
 
 const tabs = computed(() => tabsStore.getTabs)
@@ -32,13 +34,15 @@ const go = (fullPath: string) => {
 }
 const close = (tab) => {
   tabsStore.deleteTab(tab)
+  routeStore.removeCacheRoute(tab.name)
 }
 
 watch(
   () => route.fullPath,
   () => {
     tabsStore.setActiveTab(route.meta.title)
-    tabsStore.addTabs({ fullPath: route.fullPath, title: route.meta.title })
+    tabsStore.addTabs({ fullPath: route.fullPath, title: route.meta.title, name: route.name as string })
+    routeStore.addCacheRoute(route.name as string)
   },
   { immediate: true },
 )
