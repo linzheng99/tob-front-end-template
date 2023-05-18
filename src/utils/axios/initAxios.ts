@@ -38,7 +38,7 @@ export class InitAxios {
      * @description 请求拦截器配置处理
      */
     this.axiosInstance.interceptors.request.use(
-      (config) => {
+      (config: any) => {
         if (isFunction(requestInterceptors)) {
           config = requestInterceptors(config, this.options)
         }

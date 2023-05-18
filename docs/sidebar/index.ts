@@ -21,6 +21,14 @@ export function setupSidebar() {
           ]
         },
         {
+          text: 'Helper',
+          collapsed: true,
+          items: [
+            { text: 'routerHelper', link: '/sidebar/Guide/Helpers/routerHelper' },
+            { text: 'menuHelper', link: '/sidebar/Guide/Helpers/menuHelper' },
+          ]
+        },
+        {
           text: 'Layout',
           collapsed: true,
           items: [
