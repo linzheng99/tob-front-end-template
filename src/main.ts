@@ -1,12 +1,16 @@
-import { createApp } from 'vue'
+// setup assets 静态资源
 import '@/styles/css/reset.css'
 import '@/styles/scss/global.scss'
+import 'virtual:uno.css'
+import 'uno.css';
+// register icon sprite
+import 'virtual:svg-icons-register'
+import { createApp } from 'vue'
 import App from './App.vue'
 import { setupStore } from './store'
 import { setupRouter, router } from './router'
 import { setupRouterGuard } from './router/guard'
-// register icon sprite
-import 'virtual:svg-icons-register'
+
 
 async function setUpApp() {
   const app = createApp(App)

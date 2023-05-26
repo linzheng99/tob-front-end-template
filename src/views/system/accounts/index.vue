@@ -1,5 +1,8 @@
 <template>
-  <div id="app_content">账号<n-input v-model:value="accountsValue"></n-input> </div>
+  <div id="app_content">
+    账号
+    <n-input v-model:value="accountsValue" />
+  </div>
 </template>
 
 <script setup lang="ts">

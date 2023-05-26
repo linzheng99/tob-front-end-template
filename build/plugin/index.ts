@@ -1,4 +1,5 @@
 import vue from '@vitejs/plugin-vue'
+import UnoCSS from 'unocss/vite'
 import ComponentsPlugins from './components'
 import MockServer from './mock'
 import html from './html'
@@ -8,7 +9,7 @@ import imageMin from './imageMin'
 export function setupVitePlugins(viteEnv: ImportMetaEnv, isBuild: boolean) {
   const { VITE_USE_MOCK } = viteEnv
 
-  const plugins = [vue(), ComponentsPlugins(), svgIconsPlugin(), html(viteEnv), imageMin()]
+  const plugins = [vue(), ComponentsPlugins(), svgIconsPlugin(), html(viteEnv), UnoCSS(), imageMin()]
 
   // mock 模式
   VITE_USE_MOCK && plugins.push(MockServer(isBuild))

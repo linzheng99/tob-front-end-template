@@ -11,10 +11,10 @@
 
 <script setup lang="ts">
 import { computed, useAttrs } from 'vue'
-import { Icon } from '@iconify/vue'
+import type { Icon, IconifyIcon } from '@iconify/vue'
 
 interface Props {
-  icon?: string
+  icon?: string | IconifyIcon
   localIcon?: string
 }
 const props = defineProps<Props>()
