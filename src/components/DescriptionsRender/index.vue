@@ -1,6 +1,8 @@
 <template>
-  <n-descriptions :label-placement="labelPlacement" :title="title" bordered :column="column">
-    <n-descriptions-item v-for="(item, index) in describeList" :key="index" :span="item.span">
+  <n-descriptions :label-placement="labelPlacement" :title="title" bordered :column="column" :label-align="labelAlign">
+    <n-descriptions-item v-for="(item, index) in describeList" :key="index" :span="item.span"
+      :label-style="itemLabelStyle || { width: '130px', padding: '11px 10px' }"
+      :content-style="itemContentStyle || { padding: '11px 10px' }">
       <template #label> {{ item.label }} </template>
       <template #default>
         <span v-if="item.render">
@@ -21,7 +23,7 @@ interface listType {
   type?: any
   span?: number
   renderContent?: boolean
-  render?: (a,b) => {}
+  render?: (a, b) => {}
 }
 
 interface Props {
@@ -30,11 +32,15 @@ interface Props {
   describeList: listType[]
   column?: number
   data: any
+  itemLabelStyle?: any
+  itemContentStyle?: any
+  labelAlign?: 'left' | 'right'
 }
 withDefaults(defineProps<Props>(), {
   labelPlacement: 'left',
   title: '',
-  describeList: () => []
+  describeList: () => [],
+  labelAlign: 'right'
 })
 </script>
 

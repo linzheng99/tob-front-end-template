@@ -11,10 +11,10 @@
 
 <script setup lang="ts">
 import { computed, useAttrs } from 'vue'
-import type { Icon, IconifyIcon } from '@iconify/vue'
+import { Icon } from '@iconify/vue';
 
 interface Props {
-  icon?: string | IconifyIcon
+  icon?: any
   localIcon?: string
 }
 const props = defineProps<Props>()
@@ -33,4 +33,5 @@ const symbolId = computed(() => {
 const renderLocalIcon = computed(() => props.localIcon || !props.icon)
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+</style>
