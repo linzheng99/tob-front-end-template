@@ -95,7 +95,6 @@ const formRules = {
   boxValue: {
     type: 'array',
     required: true,
-    message: '至少选择一个',
     trigger: ['blur']
   }
 }
