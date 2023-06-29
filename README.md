@@ -23,6 +23,7 @@ pnpm dev:docs
 * eslint
 * prettier
 * vueUse
+- [ ] vitest
 ---
 ## TODO fixhot
 Layout tag scroll-x css
@@ -77,6 +78,8 @@ Layout tag scroll-x css
 - [ ] messageBox
 ### vite config
 - [x] proxy 
+### Vitest
+- [ ] add test case
 #### plugins 
   - [x] mock
   - [x] vite-plugin-svg-icons 
