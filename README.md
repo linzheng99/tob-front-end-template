@@ -23,7 +23,7 @@ pnpm dev:docs
 * eslint
 * prettier
 * vueUse
-- [ ] vitest
+* vitest
 ---
 ## TODO fixhot
 Layout tag scroll-x css
