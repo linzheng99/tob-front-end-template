@@ -20,6 +20,10 @@ export function isArray(val: any): val is Array<any> {
   return val && Array.isArray(val)
 }
 
+export function isNumber(val: any) {
+  return is(val, 'Number');
+}
+
 export function isEmpty<T = unknown>(val: T): val is T {
   if (isArray(val) || isString(val)) {
     return val.length === 0
