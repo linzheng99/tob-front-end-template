@@ -1,8 +1,7 @@
 <template>
   <n-descriptions :label-placement="labelPlacement" :title="title" bordered :column="column" :label-align="labelAlign">
     <n-descriptions-item v-for="(item, index) in describeList" :key="index" :span="item.span"
-      :label-style="itemLabelStyle || { width: '130px', padding: '11px 10px' }"
-      :content-style="itemContentStyle || { padding: '11px 10px' }">
+      :label-style="finallyItemLabelStyle" :content-style="finallyItemContentStyle">
       <template #label> {{ item.label }} </template>
       <template #default>
         <span v-if="item.render">
@@ -15,6 +14,8 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue';
+import { extend } from '@/utils/share';
 import renderVNode from './renderVNode'
 
 interface listType {
@@ -36,12 +37,22 @@ interface Props {
   itemContentStyle?: any
   labelAlign?: 'left' | 'right'
 }
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   labelPlacement: 'left',
   title: '',
   describeList: () => [],
-  labelAlign: 'right'
+  labelAlign: 'right',
+  itemContentStyle: () => { },
+  itemLabelStyle: () => { }
 })
+
+const finallyItemContentStyle = ref({ padding: '11px 10px', verticalAlign: 'middle' })
+const finallyItemLabelStyle = ref({ width: '130px', padding: '11px 10px' })
+onMounted(() => {
+  extend(finallyItemContentStyle.value, props.itemContentStyle)
+  extend(finallyItemLabelStyle.value, props.itemLabelStyle)
+})
+
 </script>
 
 <style scoped>
