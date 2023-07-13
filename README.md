@@ -1,7 +1,5 @@
 # Vue 3 + TypeScript + Vite
 ```sh
-# 拉取代码
-git clone git@github.com:linzhengGithub/am-template.git
 # 安装依赖
 pnpm i
 # 启动项目
