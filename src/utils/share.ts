@@ -35,3 +35,65 @@ export const restRefsKey = (refs) => {
     (ref as any).value = null
   }
 }
+// 
+/** 针对 区域结构的树 进行对它的一个转换变成一个对象数组
+ * Example usage:
+    const data:NodeType[] = [
+      {
+        name: '温州市',
+        areaId: '1',
+        id: '01',
+        children: [
+          {
+            name: '乐清市',
+            areaId: '02',
+            pid: '01',
+            id: '002',
+            children: [
+              {
+                name: '北白象镇',
+                areaId: '003',
+                pid: '002',
+                id: '0003',
+              },
+            ],
+          },
+        ],
+      },
+    ];
+    constructFullName(data); 
+ */
+interface NodeType {
+  [key: string]: any
+}
+interface NodeConfigType {
+  nameAttr: string
+  areaIdAttr: string
+  idAttr: string
+  childrenAttr: string
+}
+export function constructFullName(data: NodeType[], config: NodeConfigType = {
+  nameAttr: 'name',
+  areaIdAttr: 'areaId',
+  idAttr: 'id',
+  childrenAttr: 'children',
+}, parentNames = '') {
+  const { nameAttr, areaIdAttr, idAttr, childrenAttr } = config;
+  const result: NodeType[] = [];
+
+  for (const node of data) {
+    const name: string = node[nameAttr];
+    const areaId: string = node[areaIdAttr];
+    const id: string = node[idAttr];
+    const children: NodeType[] = node[childrenAttr];
+
+    const currentFullName = parentNames ? `${parentNames}-${name}` : name;
+    result.push({ [areaIdAttr]: areaId, [nameAttr]: currentFullName, [idAttr]: id });
+
+    if (children && children.length > 0) {
+      result.push(...constructFullName(children, config, currentFullName));
+    }
+  }
+
+  return result;
+}
