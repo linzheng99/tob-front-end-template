@@ -10,12 +10,19 @@ import App from './App.vue'
 import { setupStore } from './store'
 import { setupRouter, router } from './router'
 import { setupRouterGuard } from './router/guard'
+import { setupNaive, setupNaiveDiscreteApi } from './plugin';
 
 
 async function setUpApp() {
   const app = createApp(App)
 
   setupStore(app)
+
+  // 注册全局常用的 naive-ui 组件
+  setupNaive(app);
+
+  // 挂载 naive-ui 脱离上下文的 Api
+  setupNaiveDiscreteApi();
 
   await setupRouter(app)
 
