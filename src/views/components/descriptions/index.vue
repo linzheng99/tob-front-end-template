@@ -7,14 +7,15 @@
 import DescriptionsRender from '@/components/DescriptionsRender/index.vue'
 import RenderVNode from '@/components/common/RenderVNode.vue'
 import { NButton } from 'naive-ui'
-import { h} from 'vue';
+import { h } from 'vue'
+import { ListType } from '@/components/DescriptionsRender/types'
 
 const data = {
   x: '吃饭',
   y: '喝酒',
   z: '睡觉'
 }
-const descripeList = [
+const descripeList: ListType[] = [
   {
     label: '晚上',
     renderContent: true,
@@ -31,11 +32,12 @@ const descripeList = [
     label: '大晚上',
     param: 'y',
     render(data, param) {
-      return () => h('div', { style: { color: 'red' } }, data[param])
+      return h('div', { style: { color: 'red' } }, {default: () => data[param]})
     }
   }
 ]
-const renderDiv = () => h(NButton, { type: 'primary', style: { color: 'red' } }, {default: () => '123'})
+const renderDiv = () =>
+  h(NButton, { type: 'primary', style: { color: 'red' } }, { default: () => '123' })
 </script>
 
 <style scoped></style>
