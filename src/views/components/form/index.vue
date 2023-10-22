@@ -1,128 +1,88 @@
 <template>
   <div id="app_content">
-    <FormRender
-      ref="formRender_ref"
-      :form-items="formItems"
-      :form-config="formConfig"
-      :form-rules="formRules"
-    />
-    {{ unref(formRender_ref) }}
-    <n-button @click="clearClick">clear</n-button>
-    <n-button @click="setClick">set</n-button>
-    <n-button @click="checkClick">check</n-button>
-    <n-button @click="restValidate">restCheck</n-button>
-    <n-button @click="resultAdd">根据接口返回添加数据</n-button>
+    <FormRender @register="register">
+      <template #statusSlot>
+        <div> 占位符 </div>
+      </template>
+    </FormRender>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, unref, reactive } from 'vue'
-import { FormConfig, FormItemType } from '@/components/FormRender/form-types'
-import FormRender from '@/components/FormRender/index.vue'
-import { FormItemRule } from 'naive-ui'
-import { selectConfig, Options } from '@/components/FormRender/form-types'
-
-const formConfig: FormConfig = {
-  size: 'small'
-}
-
-const formRender_ref = ref<any>(null)
-
-const options: Options<string>[] = [
-  {
-    wantLabel: 'boy',
-    wantValue: 'male'
-  },
-  {
-    wantLabel: 'girl',
-    wantValue: 'female'
-  }
-]
-
-const formItems: FormItemType[] = reactive([
-  {
-    label: 'inputItem',
-    path: 'name',
-    placeholder: 'name input',
-    value: 'name',
-    disabled: (value, param) => {
-      if (value[param] === '321') return true
-      return false
+import { FormRender, useForm, FormSchema } from '@/components/FormRender/index'
+const [register] = useForm({
+  schemas: initSchemas(),
+})
+function initSchemas(): FormSchema[] {
+  return [
+    {
+      field: 'name',
+      component: 'NInput',
+      label: '姓名',
+      componentProps: {
+        placeholder: '请输入姓名',
+        onInput: (e: any) => {
+          console.log(e)
+        }
+      },
+      giProps: {
+        span: 1
+      },
+      rules: [{ required: true, message: '请输入姓名', trigger: ['blur'] }]
     },
-    itemType: 'input'
-  },
-  {
-    label: 'selectItem',
-    path: 'gender',
-    placeholder: 'gender select',
-    value: 'gender',
-    itemType: 'select',
-    selectConfig: {
-      toggleFilter: true,
-      options: [],
-      labelField: 'wantLabel',
-      valueField: 'wantValue'
-    }
-  },
-  {
-    label: 'checkboxGroup',
-    path: 'boxValue',
-    value: 'boxValue',
-    itemType: 'checkboxGroup',
-    checkboxList: [
-      { value: 'beijing', label: '北京' },
-      {
-        value: 'shanghai',
-        label: '上海'
+    {
+      field: '',
+      label: '',
+      //插槽
+      slot: 'statusSlot',
+      showLabel: false,
+      giProps: {
+        span: 2
       }
-    ]
-  }
-])
-
-const formRules = {
-  name: {
-    required: true,
-    trigger: ['input'],
-    validator(_rule: FormItemRule, value: string) {
-      if (!value) {
-        return new Error('请输入名字')
-      } else if (!/^[a-zA-Z0-9]+$/.test(value)) {
-        return new Error('不能输入中文')
+    },
+    {
+      field: 'age',
+      component: 'NInput',
+      label: '年龄',
+      componentProps: {
+        placeholder: '请输入姓名',
+        onInput: (e: any) => {
+          console.log(e)
+        }
       }
-      return true
+    },
+    {
+      field: 'address',
+      component: 'NInput',
+      label: '地址',
+      componentProps: {
+        placeholder: '请输入姓名',
+        onInput: (e: any) => {
+          console.log(e)
+        }
+      }
+    },
+    {
+      field: 'makeSource',
+      component: 'NRadioGroup',
+      label: '来源',
+      componentProps: {
+        options: [
+          {
+            label: '网上',
+            value: 1
+          },
+          {
+            label: '门店',
+            value: 2
+          }
+        ],
+        onUpdateChecked: (e: any) => {
+          console.log(e)
+        }
+      }
     }
-  },
-  boxValue: {
-    type: 'array',
-    required: true,
-    trigger: ['blur']
-  }
-}
-
-const clearClick = () => {
-  const formDom = unref(formRender_ref)
-  formDom?.restForm()
-}
-const setClick = () => {
-  const formDom = unref(formRender_ref)
-  formDom?.setForm({ name: '321', gender: 'male', boxValue: ['beijing'] })
-}
-const checkClick = async (e: MouseEvent) => {
-  const formDom = unref(formRender_ref)
-  try {
-    await formDom?.validateForm(e)
-  } catch (error) {
-    console.log('error')
-  }
-}
-const restValidate = () => {
-  const formDom = unref(formRender_ref)
-  formDom?.restValidateForm()
-}
-
-const resultAdd = () => {
-  const selectConfig: selectConfig = formItems.filter((i) => i.value === 'gender')[0].selectConfig!
-  selectConfig.options = options
+  ]
 }
 </script>
 

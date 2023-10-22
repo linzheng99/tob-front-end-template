@@ -59,7 +59,7 @@
 
 <script lang="ts">
 import { extend } from '@/utils'
-import { FormItemType, FormItemConfig } from '../form-types'
+import { FormItemType, FormItemConfig } from '../../types'
 import { defineComponent, PropType } from 'vue'
 
 const defaultFormItemConfig = {
