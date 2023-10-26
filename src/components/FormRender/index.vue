@@ -64,6 +64,9 @@ export default defineComponent({
   emits: ['reset', 'submit', 'register'],
   setup(props, { emit }) {
     const formElRef = ref<Nullable<FormActionType>>(null)
+    /**
+     * @description 默认值的数据源
+     */
     const defaultFormModel = ref<Recordable>({})
     const formModel = reactive<Recordable>({})
     const propsRef = ref<Partial<FormProps>>({})
@@ -71,6 +74,9 @@ export default defineComponent({
     const loadingSub = ref(false)
     const isUpdateDefaultRef = ref(false)
 
+    /**
+     * @description 组件上面的 props 和 FormSchema 上面的 props
+     */
     const getProps = computed(
       (): FormProps => {
         const formProps = { ...props, ...unref(propsRef) } as FormProps
@@ -89,6 +95,9 @@ export default defineComponent({
       }
     )
 
+    /**
+     * @description grid 的配置
+     */
     const getGrid = computed(
       (): GridProps => {
         const { gridProps } = unref(getProps)
@@ -98,11 +107,17 @@ export default defineComponent({
       }
     )
 
+    /**
+     * @description schema 的数据
+     */
     const getSchema = computed((): FormSchema[] => {
       const schemas: FormSchema[] = unref(schemaRef) || (unref(getProps).schemas as any)
       return schemas as FormSchema[]
     })
 
+    /**
+     * @description submit btn 的配置
+     */
     const getSubmitBtnOptions = computed(() => {
       return Object.assign(
         {
@@ -113,6 +128,9 @@ export default defineComponent({
       )
     })
 
+    /**
+     * @description reset btn 的配置
+     */
     const getResetBtnOptions = computed(() => {
       return Object.assign(
         {
@@ -123,12 +141,18 @@ export default defineComponent({
       )
     })
 
+    /**
+     * @description
+     */
     const { handleFormValues, initDefault } = useFormValues({
       defaultFormModel,
       getSchema,
       formModel
     })
 
+    /**
+     * @description
+     */
     const { handleSubmit, validate, clearValidate, resetFields } = useFormEvents({
       emit,
       getProps,
@@ -144,6 +168,9 @@ export default defineComponent({
       propsRef.value = deepMerge(unref(propsRef) || {}, formProps)
     }
 
+    /**
+     * @description 匹配组件并赋值对应组件的所有配置
+     */
     function getComponentProps(schema) {
       const compProps = schema.componentProps ?? {}
       const component = schema.component
@@ -154,7 +181,9 @@ export default defineComponent({
       }
     }
 
-    // form 表单emit自定义方法
+    /**
+     * @description form 表单的二次封装自定义方法
+     */
     const formActionType: Partial<FormActionType> = {
       validate,
       clearValidate,
@@ -177,6 +206,7 @@ export default defineComponent({
     )
 
     onMounted(() => {
+      // 挂载时初始化数据
       initDefault()
       // 挂载时触发 register 注册
       emit('register', formActionType)

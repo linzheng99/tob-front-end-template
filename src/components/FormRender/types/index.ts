@@ -80,59 +80,69 @@ export interface FormItemConfig {
  * @param gridProps grid 配置
  * @param giProps gi 配置
  * @param isFull 组件 width 是否100%
+ * @param showActionButtonGroup 是否展示操作按钮
+ * @param showSubmitButton 是否展示提交按钮
+ * @param submitButtonOptions 提交按钮配置
+ * @param submitButtonText 提交按钮文字
+ * @param showResetButton 是否展示重置按钮
+ * @param resetButtonOptions 重置按钮配置
+ * @param resetButtonText 重置按钮文字
+ * @param resetButtonOptions 重置按钮配置
  * @param resetFunc 重置函数
  * @param submitFunc 提交函数
  */
 export interface FormProps {
-  // 行内表单
   inline: boolean;
-  // 表单大小
   size: string;
   schemas?: FormSchema[];
   gridProps?: GridProps;
   giProps?: GridItemProps;
   isFull?: boolean
-  loading?: boolean
-  // 操作按钮
   showActionButtonGroup?: boolean;
-  // 提交按钮
   showSubmitButton?: boolean;
-  // 提交按钮配置
   submitButtonOptions?: Partial<ButtonProps>;
-  // 提交按扭文字
   submitButtonText?: string;
-  // 重置按钮
   showResetButton?: boolean;
-  // 重置按钮配置
   resetButtonOptions?: Partial<ButtonProps>;
-  // 重置按扭文字
   resetButtonText?: string;
   resetFunc?: () => Promise<void>;
   submitFunc?: () => Promise<void>;
 }
 
+/**
+ * @description 表单内组件配置
+ * @param field 唯一key
+ * @param label 标签
+ * @param component 组件名
+ * @param componentProps 组件属性
+ * @param defaultValue 默认值
+ * @param isFull 组件样式 width 是否100%
+ * @param slot 插槽名字
+ * @param showLabel 标签是否隐藏
+ * @param gridProps grid gi 的配置
+ * @param rules 表单校验
+ */
 export interface FormSchema {
-  // 唯一 key
   field: string;
-  // 标签名
   label: string;
-  // 组件名
   component?: ComponentType;
-  // 组件属性
   componentProps?: object;
-  // 默认值
   defaultValue?: any;
-  // 组件样式 width 是否100%
   isFull?: boolean;
-  // 插槽名字
   slot?: string
-  // 标签是否隐藏
   showLabel?: boolean
-  // grid gi 的配置
   giProps?: GridItemProps
   rules?: object | object[];
 }
 
+/**
+ * @description 表单的方法
+ * @param submit 提交
+ * @param validate 校验
+ * @param clearValidate 清空校验
+ * @param setProps
+ * @param resetFields 重置form表单数据
+ */
 export interface FormActionType {
   submit: () => Promise<any>;
   validate: (nameList?: any[]) => Promise<any>;

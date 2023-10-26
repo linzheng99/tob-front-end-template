@@ -22,6 +22,9 @@ export function useForm(props?: Props): UseFormReturnType {
   const formRef = ref<Nullable<FormActionType>>(null);
   const loadedRef = ref<Nullable<boolean>>(false);
 
+  /** 
+   * @description 获取form表单上面的方法
+   */
   async function getForm() {
     const form = unref(formRef);
 
@@ -32,6 +35,9 @@ export function useForm(props?: Props): UseFormReturnType {
     return form as FormActionType;
   }
 
+  /**
+   * @description 给表单注册的方法
+   */
   function register(instance: FormActionType) {
     onUnmounted(() => {
       formRef.value = null;

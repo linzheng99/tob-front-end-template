@@ -1,6 +1,6 @@
 <template>
   <div id="app_content">
-    <FormRender @register="register">
+    <FormRender ref="baseForm" @register="register">
       <template #statusSlot>
         <div> 占位符 </div>
       </template>
@@ -11,7 +11,7 @@
 <script setup lang="ts">
 import { FormRender, useForm, FormSchema } from '@/components/FormRender/index'
 const [register] = useForm({
-  schemas: initSchemas(),
+  schemas: initSchemas()
 })
 function initSchemas(): FormSchema[] {
   return [

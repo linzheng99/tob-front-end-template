@@ -5,7 +5,7 @@ import { isFunction } from '@/utils/is';
 
 declare type EmitType = (event: string, ...args: any[]) => void;
 
-interface UseFormActionContext {
+export interface UseFormActionContext {
   emit: EmitType;
   getProps: ComputedRef<FormProps>;
   getSchema: ComputedRef<FormSchema[]>;
