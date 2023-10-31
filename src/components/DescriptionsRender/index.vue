@@ -28,7 +28,7 @@
 import { ref, onMounted } from 'vue'
 import { extend } from '@/utils/share'
 import { ListType } from './types'
-import RenderVNode from './renderVNode.tsx'
+import RenderVNode from './renderVNode'
 
 interface Props {
   labelPlacement?: 'center' | 'left' | 'right'

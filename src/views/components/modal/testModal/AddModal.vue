@@ -10,7 +10,7 @@
 import { ref, unref, reactive } from 'vue'
 import ModalCard from '@/components/ModalCardRender/index.vue'
 import FormRender from '@/components/FormRender/index.vue'
-import { FormItemType, FormItemConfig } from '@/components/FormRender/form-types'
+import { FormItemType, FormItemConfig } from '@/components/FormRender/types'
 
 const ModalCard_ref = ref(null)
 const toggleModal = (): void => {

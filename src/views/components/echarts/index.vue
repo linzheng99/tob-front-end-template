@@ -31,6 +31,7 @@
 import { useECharts } from '@/hooks/web/useECharts'
 import DescriptionsRender from '@/components/DescriptionsRender/index.vue';
 import { h, ref } from 'vue'
+import { ListType } from '@/components/DescriptionsRender/types';
 const barChart = ref()
 const { setOptions } = useECharts(barChart)
 setOptions({
@@ -57,7 +58,7 @@ const data = {
   y: '喝酒',
   z: '睡觉'
 }
-const descripeList = [
+const descripeList: ListType[] = [
   {
     label: '晚上',
     renderContent: true,
@@ -74,7 +75,7 @@ const descripeList = [
     label: '大晚上',
     param: 'y',
     render(data, param) {
-      return () => h('div', { style: { color: 'red' } }, data[param])
+      return h('div', { style: { color: 'red' } }, data[param])
     }
   }
 ]

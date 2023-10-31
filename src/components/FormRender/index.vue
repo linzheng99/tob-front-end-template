@@ -14,7 +14,7 @@
           </template>
           <!--动态渲染表单组件-->
           <component
-            v-else
+            v-else-if="schema.component"
             v-bind="getComponentProps(schema)"
             :is="schema.component"
             v-model:value="formModel[schema.field]"
@@ -173,7 +173,7 @@ export default defineComponent({
      */
     function getComponentProps(schema) {
       const compProps = schema.componentProps ?? {}
-      const component = schema.component
+      let component = schema.component
       return {
         clearable: true,
         placeholder: createPlaceholderMessage(unref(component)),
