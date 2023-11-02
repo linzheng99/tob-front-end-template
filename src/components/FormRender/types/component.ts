@@ -1,4 +1,6 @@
 export type ComponentType =
+  | 'RadioGroupComp'
+  | 'CheckboxGroupComp'
   | 'NInput'
   | 'NInputGroup'
   | 'NInputPassword'
