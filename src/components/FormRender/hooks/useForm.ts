@@ -67,6 +67,15 @@ export function useForm(props?: Props): UseFormReturnType {
       await form.setProps(formProps);
     },
 
+    getFieldsValue: <T>() => {
+      return unref(formRef)?.getFieldsValue() as T;
+    },
+
+    setFieldsValue: async (values: Recordable) => {
+      const form = await getForm();
+      await form.setFieldsValue(values);
+    },
+    
     resetFields: async () => {
       const form = await getForm();
       await form.resetFields();
@@ -87,6 +96,10 @@ export function useForm(props?: Props): UseFormReturnType {
       return form.validate(nameList);
     },
 
+    setSchema: async (values) => {
+      const form = await getForm();
+      form.setSchema(values);
+    },
   };
 
   return [register, methods];

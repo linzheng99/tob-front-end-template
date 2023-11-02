@@ -116,7 +116,7 @@ export default defineComponent({
     })
 
     /**
-     * @description submit btn 的配置
+     * @description 提交submit btn 的配置
      */
     const getSubmitBtnOptions = computed(() => {
       return Object.assign(
@@ -129,7 +129,7 @@ export default defineComponent({
     })
 
     /**
-     * @description reset btn 的配置
+     * @description 重置reset btn 的配置
      */
     const getResetBtnOptions = computed(() => {
       return Object.assign(
@@ -142,7 +142,7 @@ export default defineComponent({
     })
 
     /**
-     * @description
+     * @description 处理 form model 的值
      */
     const { handleFormValues, initDefault } = useFormValues({
       defaultFormModel,
@@ -151,9 +151,16 @@ export default defineComponent({
     })
 
     /**
-     * @description
+     * @description 获得form定义的方法
      */
-    const { handleSubmit, validate, clearValidate, resetFields } = useFormEvents({
+    const {
+      handleSubmit,
+      validate,
+      clearValidate,
+      resetFields,
+      getFieldsValue,
+      setFieldsValue,
+    } = useFormEvents({
       emit,
       getProps,
       formModel,
@@ -189,6 +196,8 @@ export default defineComponent({
       clearValidate,
       setProps,
       resetFields,
+      getFieldsValue,
+      setFieldsValue,
       submit: handleSubmit
     }
 

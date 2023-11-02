@@ -140,7 +140,9 @@ export interface FormSchema {
  * @param submit 提交
  * @param validate 校验
  * @param clearValidate 清空校验
- * @param setProps
+ * @param setProps 设置form的props
+ * @param setFieldsValue 设置form model 的值
+ * @param getFieldsValue 获取form model 的值
  * @param resetFields 重置form表单数据
  */
 export interface FormActionType {
@@ -148,9 +150,9 @@ export interface FormActionType {
   validate: (nameList?: any[]) => Promise<any>;
   clearValidate: (name?: string | string[]) => Promise<void>;
   setProps: (formProps: Partial<FormProps>) => Promise<void>;
-  // setSchema: (schemaProps: Partial<FormSchema[]>) => Promise<void>;
-  // setFieldsValue: (values: Recordable) => void;
-  // getFieldsValue: () => Recordable;
+  setSchema: (schemaProps: Partial<FormSchema[]>) => Promise<void>;
+  setFieldsValue: (values: Recordable) => Promise<void>;
+  getFieldsValue: () => Recordable;
   resetFields: () => Promise<void>;
   // setLoading: (status: boolean) => void;
 }
