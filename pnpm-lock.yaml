@@ -46,6 +46,9 @@ devDependencies:
   '@iconify/vue':
     specifier: ^4.0.2
     version: registry.npmmirror.com/@iconify/vue@4.1.1(vue@3.3.4)
+  '@types/lodash-es':
+    specifier: ^4.17.10
+    version: registry.npmmirror.com/@types/lodash-es@4.17.10
   '@types/node':
     specifier: ^18.11.9
     version: registry.npmmirror.com/@types/node@18.16.15
@@ -1002,18 +1005,18 @@ packages:
       '@types/node': registry.npmmirror.com/@types/node@18.16.15
     dev: true
 
-  registry.npmmirror.com/@types/lodash-es@4.17.7:
-    resolution: {integrity: sha512-z0ptr6UI10VlU6l5MYhGwS4mC8DZyYer2mCoyysZtSF7p26zOX8UpbrV0YpNYLGS8K4PUFIyEr62IMFFjveSiQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/lodash-es/-/lodash-es-4.17.7.tgz}
+  registry.npmmirror.com/@types/lodash-es@4.17.10:
+    resolution: {integrity: sha512-YJP+w/2khSBwbUSFdGsSqmDvmnN3cCKoPOL7Zjle6s30ZtemkkqhjVfFqGwPN7ASil5VyjE2GtyU/yqYY6mC0A==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/lodash-es/-/lodash-es-4.17.10.tgz}
     name: '@types/lodash-es'
-    version: 4.17.7
+    version: 4.17.10
     dependencies:
-      '@types/lodash': registry.npmmirror.com/@types/lodash@4.14.195
+      '@types/lodash': registry.npmmirror.com/@types/lodash@4.14.200
     dev: true
 
-  registry.npmmirror.com/@types/lodash@4.14.195:
-    resolution: {integrity: sha512-Hwx9EUgdwf2GLarOjQp5ZH8ZmblzcbTBC2wtQWNKARBSxM9ezRIAUpeDTgoQRAFB0+8CNWXVA9+MaSOzOF3nPg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/lodash/-/lodash-4.14.195.tgz}
+  registry.npmmirror.com/@types/lodash@4.14.200:
+    resolution: {integrity: sha512-YI/M/4HRImtNf3pJgbF+W6FrXovqj+T+/HpENLTooK9PnkacBsDpeP3IpHab40CClUfhNmdM2WTNP2sa2dni5Q==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/lodash/-/lodash-4.14.200.tgz}
     name: '@types/lodash'
-    version: 4.14.195
+    version: 4.14.200
     dev: true
 
   registry.npmmirror.com/@types/minimatch@5.1.2:
@@ -5652,8 +5655,8 @@ packages:
       '@css-render/plugin-bem': registry.npmmirror.com/@css-render/plugin-bem@0.15.12(css-render@0.15.12)
       '@css-render/vue3-ssr': registry.npmmirror.com/@css-render/vue3-ssr@0.15.12(vue@3.3.4)
       '@types/katex': registry.npmmirror.com/@types/katex@0.14.0
-      '@types/lodash': registry.npmmirror.com/@types/lodash@4.14.195
-      '@types/lodash-es': registry.npmmirror.com/@types/lodash-es@4.17.7
+      '@types/lodash': registry.npmmirror.com/@types/lodash@4.14.200
+      '@types/lodash-es': registry.npmmirror.com/@types/lodash-es@4.17.10
       async-validator: registry.npmmirror.com/async-validator@4.2.5
       css-render: registry.npmmirror.com/css-render@0.15.12
       date-fns: registry.npmmirror.com/date-fns@2.30.0

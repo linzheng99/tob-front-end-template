@@ -3,7 +3,7 @@
     <n-space>
       <n-radio
         v-for="item in getOptions"
-        :key="item.value"
+        :key="`${item.value}`"
         :value="item.value"
         :disabled="item.disabled"
       >
@@ -22,7 +22,7 @@ export default defineComponent({
   name: 'RadioGroupComp',
   props: {
     value: [String, Number, Boolean] as PropType<String | Number | Boolean>,
-    options: Array as PropType<{ label: string; value: string | number }[]>,
+    options: Array as PropType<OptionsItem[]>,
     labelField: {
       type: String,
       default: 'label'

@@ -45,9 +45,8 @@
 
 <script lang="ts">
 import { computed, defineComponent, reactive, ref, unref, onMounted, Ref, watch } from 'vue'
-import { FormProps, FormSchema } from './types'
+import { FormProps, FormSchema, FormActionType } from './types'
 import { useFormValues } from './hooks/useFormValues'
-import { FormActionType } from './types/index'
 import { deepMerge } from '@/utils'
 import { createPlaceholderMessage } from './helper'
 import { basicProps } from './props'
@@ -75,7 +74,7 @@ export default defineComponent({
     const isUpdateDefaultRef = ref(false)
 
     /**
-     * @description 组件上面的 props 和 FormSchema 上面的 props
+     * @description 组件上面的 props
      */
     const getProps = computed(
       (): FormProps => {

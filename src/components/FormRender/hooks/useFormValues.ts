@@ -17,7 +17,7 @@ export function useFormValues({ defaultFormModel, getSchema, formModel }: UseFor
     }
     const res: Recordable = {};
     for (const item of Object.entries(values)) {
-      let [, value] = item;
+      const [, value] = item;
       const [key] = item;
       if (
         !key ||

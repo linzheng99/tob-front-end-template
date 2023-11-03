@@ -21,8 +21,8 @@ type OptionsItem = { label: string; value: string | number; disabled?: boolean }
 export default defineComponent({
   name: 'ApiCheckboxGroup',
   props: {
-    value: [String, Number, Boolean] as PropType<String | Number>,
-    options: Array as PropType<{ label: string; value: string | number }[]>,
+    value: [] as PropType<string | number | (string | number)[]>,
+    options: Array as PropType<OptionsItem[]>,
     labelField: {
       type: String,
       default: 'label'
