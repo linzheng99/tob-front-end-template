@@ -72,6 +72,7 @@ Layout tag scroll-x css
 ### components
 - [x] svgIcon封装
 - [x] echarts
+- [x] Form
 - [ ] map
 - [ ] messageBox
 ### vite config
