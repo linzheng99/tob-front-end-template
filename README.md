@@ -53,6 +53,9 @@ Layout tag scroll-x css
 - [x] header
   - [x] collapse
 - [x] Tab
+  - [x] Tab Context Menu
+   - [x] reload page
+   - [ ] close page
 - [x] content
 - [ ] common
   - [x] ConfigDrawer
