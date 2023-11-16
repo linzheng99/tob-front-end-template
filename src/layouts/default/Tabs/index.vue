@@ -8,7 +8,7 @@
       :show-close="showClose"
       @go="go"
       @close="close"
-      @contextmenu="handleContextMenu($event, item.fullPath)"
+      @contextmenu="handleContextMenu($event, item.name)"
     />
     <TabContextMenu
       :visible="dropdownConfig.visible"
