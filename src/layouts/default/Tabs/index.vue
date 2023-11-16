@@ -8,17 +8,34 @@
       :show-close="showClose"
       @go="go"
       @close="close"
+      @contextmenu="handleContextMenu($event, item.fullPath)"
+    />
+    <TabContextMenu
+      :visible="dropdownConfig.visible"
+      :x="dropdownConfig.x"
+      :y="dropdownConfig.y"
+      :current-path="dropdownConfig.currentPath"
+      @update:visible="updateVisible"
     />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { watch, computed } from 'vue'
+import { watch, computed, reactive, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import { useTabsStoreWithOut } from '@/store/modules/tabs'
 import { useRouterPush } from '@/hooks/router/useRouterPush'
-import { useRouteStoreWithout } from '@/store/modules/route';
+import { useRouteStoreWithout } from '@/store/modules/route'
 import Tab from './components/Tab.vue'
+import TabContextMenu from './components/TabContextMenu.vue'
+import { extend } from '../../../utils/share'
+
+interface DropdownConfig {
+  visible: boolean
+  x: number
+  y: number
+  currentPath: string
+}
 
 const route = useRoute()
 const tabsStore = useTabsStoreWithOut()
@@ -28,6 +45,29 @@ const { routerPush } = useRouterPush()
 const tabs = computed(() => tabsStore.getTabs)
 const activeTab = computed(() => route.fullPath)
 const showClose = computed(() => tabsStore.getTabs.length > 1)
+const dropdownConfig: DropdownConfig = reactive({
+  visible: false,
+  x: 0,
+  y: 0,
+  currentPath: ''
+})
+
+const handleContextMenu = (e: MouseEvent, currentPath: string) => {
+  e.preventDefault()
+  updateVisible(false)
+  dropdownConfig.currentPath = currentPath
+  nextTick().then(() => {
+    extend(dropdownConfig, {
+      visible: true,
+      x: e.clientX,
+      y: e.clientY
+    })
+  })
+}
+
+const updateVisible = (visible: boolean) => {
+  extend(dropdownConfig, { visible })
+}
 
 const go = (fullPath: string) => {
   routerPush(fullPath)
@@ -41,10 +81,14 @@ watch(
   () => route.fullPath,
   () => {
     tabsStore.setActiveTab(route.meta.title)
-    tabsStore.addTabs({ fullPath: route.fullPath, title: route.meta.title, name: route.name as string })
+    tabsStore.addTabs({
+      fullPath: route.fullPath,
+      title: route.meta.title,
+      name: route.name as string
+    })
     routeStore.addCacheRoute(route.name as string)
   },
-  { immediate: true },
+  { immediate: true }
 )
 </script>
 
