@@ -24,7 +24,7 @@ pnpm dev:docs
 * vitest
 ---
 ## TODO fixhot
-Layout tag scroll-x css
+- [ ] Layout tag scroll-x css
 ----
 ## Task List
 ### axios
@@ -46,7 +46,7 @@ Layout tag scroll-x css
   - [x] Form
   - [x] UI
 - [x] sidebar
-  - [ ] 面板（Menu panel）
+  - [ ] 白板（Menu panel）
   - [X] hooks: useIconHeader
   - [x] helper: menuHelper
   - [x] collapse
@@ -76,12 +76,15 @@ Layout tag scroll-x css
 - [x] svgIcon封装
 - [x] echarts
 - [x] Form
-- [ ] map
-- [ ] messageBox
+- [ ] Table
+- [x] Descriptions (感觉缺少类型提示;形式也不够优雅)
+- [ ] 高德的地图
+- [ ] MessageBox
+- [ ] Upload (可写)
 ### vite config
 - [x] proxy 
 ### Vitest
-- [ ] add test case
+- [x] ~~add test case~~
 #### plugins 
   - [x] mock
   - [x] vite-plugin-svg-icons 
@@ -104,4 +107,5 @@ Layout tag scroll-x css
 ### 组件页面
 - [ ] FormGenerate
 - [ ] TableGenerate
+- [ ] Descriptions
 - [ ] 地图组件（高德）

@@ -153,7 +153,7 @@ export default [
     methods: 'get',
     response: () => {
       return resultSuccess({
-        menus: [systemRouter, componentsRouter],
+        menus: [componentsRouter, systemRouter],
       })
     },
   },
