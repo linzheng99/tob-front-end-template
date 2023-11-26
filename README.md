@@ -41,6 +41,7 @@ pnpm dev:docs
 - [x] router component patch
 - [ ] add sort attribute to meta(尝试增加排序)
 - [x] add keep-alive
+- [ ] 404 page
 ### base Layout
 - [x] login page
   - [x] Form
