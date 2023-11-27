@@ -13,7 +13,6 @@ import { FormRender, useForm, FormSchema } from '@/components/FormRender/index'
 const [register] = useForm({
   schemas: initSchemas()
 })
-console.log(321);
 function initSchemas(): FormSchema[] {
   return [
     {

@@ -29,14 +29,16 @@
             v-bind="getSubmitBtnOptions"
             @click="handleSubmit"
             :loading="loadingSub"
-            >{{ getProps.submitButtonText }}</n-button
           >
+            {{ getProps.submitButtonText }}
+          </n-button>
           <n-button
             v-if="getProps.showResetButton"
             v-bind="getResetBtnOptions"
             @click="resetFields"
-            >{{ getProps.resetButtonText }}</n-button
           >
+            {{ getProps.resetButtonText }}
+          </n-button>
         </n-space>
       </n-gi>
     </n-grid>
@@ -158,7 +160,7 @@ export default defineComponent({
       clearValidate,
       resetFields,
       getFieldsValue,
-      setFieldsValue,
+      setFieldsValue
     } = useFormEvents({
       emit,
       getProps,
