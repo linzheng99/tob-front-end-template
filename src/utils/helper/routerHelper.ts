@@ -1,9 +1,10 @@
 import { extend } from '@/utils'
-import { LAYOUT } from '@/router/routes/constant'
+import { CUSTOMLAYOUT, LAYOUT } from '@/router/routes/constant'
 import { AppRouteRecordRaw } from '@/router/routeTypes'
 
 const LayoutMap = new Map()
 LayoutMap.set('LAYOUT', LAYOUT)
+LayoutMap.set('CUSTOMLAYOUT', CUSTOMLAYOUT)
 
 /**
  * 权限路由 转换 Vue路由

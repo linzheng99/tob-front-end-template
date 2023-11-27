@@ -2,6 +2,8 @@ import { PermissionFirstPage } from '@/enums/pageEnum'
 
 /** 默认布局 */
 export const LAYOUT = () => import('@/layouts/default/index.vue')
+/** 自定义布局 */
+export const CUSTOMLAYOUT = () => import('@/layouts/custom/index.vue')
 
 /** 根路由 */
 export const RootRoute = {

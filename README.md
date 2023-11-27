@@ -44,12 +44,15 @@ pnpm dev:docs
 - [ ] add sort attribute to meta(尝试增加排序)
 - [x] add keep-alive
 - [ ] 404 page
-### base Layout
+### Layout
+common
+- [x] ConfigDrawer
+- [x] GlobalContent
+#### base Layout
 - [x] login page
   - [x] Form
   - [x] UI
 - [x] sidebar
-  - [ ] 白板（Menu panel）
   - [X] hooks: useIconHeader
   - [x] helper: menuHelper
   - [x] collapse
@@ -60,9 +63,8 @@ pnpm dev:docs
    - [x] reload page
    - [ ] close page
 - [x] content
-- [ ] common
-  - [x] ConfigDrawer
-    - [x] themeColor
+#### component layout
+- [x] 自定义布局白板 (大屏 / 自定义路由菜单展示方式)
 ### theme
 - [x] sidebar
   - [x] logo

@@ -1,55 +1,5 @@
 import { resultSuccess } from '../_util'
 
-// const testRouter = {
-//   path: '/testRouter',
-//   name: 'TestRouter',
-//   component: 'LAYOUT',
-//   meta: {
-//     title: '测试路由',
-//     icon: 'mdi-account',
-//   },
-//   redirect: '/testRouter/listOne',
-//   children: [
-//     {
-//       path: '/testRouter/listOne',
-//       name: 'listOne',
-//       meta: {
-//         title: 'listOne',
-//         icon: 'mdi-account',
-//       },
-//       redirect: '/testRouter/listOne/testOne',
-//       children: [
-//         {
-//           path: '/testRouter/listOne/testOne',
-//           name: 'listOne_item',
-//           component: '/testRouter/listOne.vue',
-//           meta: {
-//             title: 'listOne_item',
-//           },
-//         },
-//       ],
-//     },
-//     {
-//       path: '/testRouter/listTwo',
-//       name: 'listTwo',
-//       component: '/testRouter/listTwo.vue',
-//       meta: {
-//         title: 'listTwo',
-//         localIcon: 'logo',
-//       },
-//     },
-//     {
-//       path: '/testRouter/listThree',
-//       name: 'listThree',
-//       component: '/testRouter/listThree/index.vue',
-//       meta: {
-//         title: 'listThree',
-//         hide: false,
-//       },
-//     },
-//   ],
-// }
-
 const systemRouter = {
   path: '/system',
   name: 'System',
@@ -147,14 +97,49 @@ const componentsRouter = {
     },
   ],
 }
+
+const customLayout = {
+  path: '/bigScreen',
+  name: 'CustomLayout',
+  component: 'CUSTOMLAYOUT',
+  meta: {
+    title: '大屏',
+    icon: 'gg:screen',
+  },
+  redirect: '/bigScreen/whitePage',
+  children: [
+    {
+      path: '/bigScreen/whitePage',
+      name: 'WhitePage',
+      component: '/bigScreen/whitePage/index.vue',
+      meta: {
+        title: 'Custom布局',
+        icon: 'ph:layout-bold',
+      },
+    },
+  ]
+}
+
 export default [
   {
     url: '/basic-api/getMenuList',
     methods: 'get',
     response: () => {
       return resultSuccess({
-        menus: [componentsRouter, systemRouter],
+        menus: [componentsRouter, systemRouter, customLayout],
       })
     },
   },
 ]
+
+/**
+ * 单个路由
+ */
+// const customLayout = {
+//   path: '/bigScreen/whitePage',
+//   name: 'WhitePage',
+//   component: '/bigScreen/whitePage/index.vue',
+//   meta: {
+//     title: '自定义路由布局',
+//   },
+// }
