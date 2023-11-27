@@ -1,20 +1,11 @@
 <template>
   <div class="layout_content">
-    <RouterView>
-      <template #default="{ Component, route }">
-        <keep-alive :include="routeStore.cacheRoutes">
-          <component :is="Component" :key="route.path" v-if="routeStore.reloadFlag" />
-        </keep-alive>
-      </template>
-    </RouterView>
+    <GlobalContent />
   </div>
 </template>
 
 <script setup lang="ts">
-import { useRouteStoreWithout } from '@/store/modules/route';
-
-const routeStore = useRouteStoreWithout()
-
+import GlobalContent from '@/layouts/common/GlobalContent/index.vue'
 </script>
 
 <style lang="scss" scoped>
