@@ -4,6 +4,7 @@ import { WHITE_PATH_LIST } from '../index'
 import { usePermissionStoreWithOut } from '@/store/modules/permission'
 import { useUserStoreWithOut } from '@/store/modules/user'
 import { AppRouteRecordRaw } from '../routeTypes'
+import { searchRoute } from '@/utils/helper/routerHelper'
 
 const LOGIN_PATH = PageEnum.Login_page
 
@@ -23,16 +24,14 @@ export function createPermissionGuard(router: Router) {
     const permissionStore = usePermissionStoreWithOut()
     /**
      * router逻辑顺序
-     * 判断路由
      * 判断是否是白名单
      * 判断token
      * !token 做什么 return
      * token ->
      * 用户信息需不需要更换 ->
      * 有没有动态添加路由 [true next()] [false addRoutes]
+     * 添加玩动态路由 -> 判断路由是否存在 / 是否有权限
      */
-
-    // 判断路由 TODO
 
     // 判断是否是白名单
     if (WHITE_PATH_LIST.includes(to.path as PageEnum)) {
@@ -40,7 +39,7 @@ export function createPermissionGuard(router: Router) {
         try {
           await userStore.afterLoginAction()
           return
-        } catch {}
+        } catch { }
       }
       next()
       return
@@ -65,13 +64,19 @@ export function createPermissionGuard(router: Router) {
 
     // 已添加动态路由
     if (permissionStore.getIsDynamicAddedRoute) {
-      next()
+      // 判断路由是否存在 / 是否有权限
+      const isExist = searchRoute(permissionStore.backMenuList, to.path)
+      if (!isExist) {
+        next('/404')
+      } else {
+        next()
+      }
       return
     }
 
     // 动态添加
-    const routes = (await permissionStore.buildRoutesAction()) as AppRouteRecordRaw[]
-    routes.forEach((route) => {
+    const routes = await permissionStore.buildRoutesAction()
+    routes?.forEach((route) => {
       router.addRoute(route as RouteRecordRaw)
     })
     permissionStore.setDynamicAddedRoute(true)

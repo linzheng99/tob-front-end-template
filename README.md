@@ -72,6 +72,7 @@ common
 - [ ] tab -> ( div-> button)
 - [x] naive ui theme
   - [x] common
+- [ ] light / dark
 ### Store
 - [x] userStore
   - [x] token(cookie)

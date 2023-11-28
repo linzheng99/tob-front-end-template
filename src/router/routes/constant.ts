@@ -26,4 +26,12 @@ export const ConstantRoutes = [
       title: '登录',
     },
   },
+  {
+    name: '404',
+    path: '/404',
+    component: () => import('@/views/errorPage/404/index.vue'),
+    meta: {
+      title: 'Not Found',
+    },
+  },
 ]

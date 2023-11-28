@@ -1,6 +1,6 @@
 import { extend } from '@/utils'
 import { CUSTOMLAYOUT, LAYOUT } from '@/router/routes/constant'
-import { AppRouteRecordRaw } from '@/router/routeTypes'
+import { AppRouteRecordRaw, Menu } from '@/router/routeTypes'
 
 const LayoutMap = new Map()
 LayoutMap.set('LAYOUT', LAYOUT)
@@ -34,7 +34,7 @@ export function transformAuthRouteToVueRoute(item: AppRouteRecordRaw) {
     } else {
       const importComponent = dynamicImport(dynamicViewsModules, component)
       extend(route, { component: importComponent })
-      // 给组件增加 组件名字
+      // 给相应的路由增加 当前匹配的路由名字
       if (importComponent) {
         importComponent().then((result: any) => {
           Object.assign(result.default, { name });
@@ -101,4 +101,27 @@ function getLayoutComponent(component: string) {
  */
 function hasChildren(item: AppRouteRecordRaw) {
   return Boolean(item.children && item.children.length)
+}
+
+/**
+ * 当前用户菜单是否存在此路由
+ */
+export function searchRoute(routes: Menu[], path: string): boolean {
+  if (!routes.length) return false
+
+  for (let route of routes) {
+    if (route.children?.length) {
+      const resultInChildren = searchRoute(route.children, path);
+      if (resultInChildren) {
+        return true // 如果子路由中找到了匹配的路径，立即返回true
+      }
+    }
+
+    const result = route.path === path;
+    if (result) {
+      return true // 如果当前路由匹配，立即返回true
+    }
+  }
+
+  return false;
 }
