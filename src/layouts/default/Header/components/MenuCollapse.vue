@@ -1,7 +1,9 @@
 <template>
-  <div class="icon_size" @click="setAppLocalConfig({ siderCollapse: !collpase })">
-    <SvgIcon v-if="!collpase" :icon="leftFold" />
-    <SvgIcon v-else :icon="rightFold" />
+  <div class="collpase-wrapper" @click="setAppLocalConfig({ siderCollapse: !collpase })">
+    <div class="flex-center py-12px text-16px c-white">
+      <SvgIcon v-if="!collpase" :icon="leftFold" />
+      <SvgIcon v-else :icon="rightFold" />
+    </div>
   </div>
 </template>
 
@@ -22,10 +24,8 @@ const rightFold = 'line-md:menu-fold-right'
 </script>
 
 <style lang="scss" scoped>
-.icon_size {
+.collpase-wrapper {
   float: left;
-  font-size: 16px;
   cursor: pointer;
-  color: white;
 }
 </style>

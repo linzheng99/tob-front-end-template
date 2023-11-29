@@ -5,13 +5,13 @@
     </svg>
   </template>
   <template v-else>
-    <Icon v-if="icon" :icon="icon" v-bind="bindAttrs" />
+    <Icon v-if="icon" :icon="icon" class="c-base" v-bind="bindAttrs" />
   </template>
 </template>
 
 <script setup lang="ts">
 import { computed, useAttrs } from 'vue'
-import { Icon } from '@iconify/vue';
+import { Icon } from '@iconify/vue'
 
 interface Props {
   icon?: string

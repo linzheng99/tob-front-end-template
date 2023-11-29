@@ -1,5 +1,5 @@
 <template>
-  <div class="layout_header-wrapper">
+  <div class="layout_header-wrapper bg-base">
     <MenuCollapse />
     <UserActions />
   </div>
@@ -15,7 +15,7 @@ import UserActions from './components/UserActions.vue'
   &-wrapper {
     height: 100%;
     padding: 10px;
-    background-color: $theme-background-color;
+    // background-color: $theme-background-color;
   }
 }
 </style>

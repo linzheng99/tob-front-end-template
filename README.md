@@ -43,7 +43,7 @@ pnpm dev:docs
 - [x] router component patch
 - [ ] add sort attribute to meta(尝试增加排序)
 - [x] add keep-alive
-- [ ] 404 page
+- [x] 404 page
 ### Layout
 common
 - [x] ConfigDrawer
@@ -72,7 +72,7 @@ common
 - [ ] tab -> ( div-> button)
 - [x] naive ui theme
   - [x] common
-- [ ] light / dark
+- [x] colorMode: ( light / dark )
 ### Store
 - [x] userStore
   - [x] token(cookie)

@@ -18,14 +18,13 @@ const appStore = useAppStoreWithOut()
 <style lang="scss" scoped>
 .setting_button {
   height: 100%;
-  color: #ffffff;
   font-size: 18px;
   display: flex;
   align-items: center;
   padding: 12px;
   border-radius: 4px;
   &:hover {
-    background-color: #333333;
+    @apply bg-active
     cursor: pointer;
   }
 }

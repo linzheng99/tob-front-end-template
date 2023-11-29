@@ -95,9 +95,7 @@ watch(
 <style lang="scss" scoped>
 .layout_tab {
   &-wrapper {
-    background-color: #181929;
-    border-top: 1px solid #a1a3ae;
-    border-bottom: 1px solid #a1a3ae;
+    @apply border-base bg-base border-y-1px;
     height: 100%;
     width: 100%;
     display: flex;

@@ -25,7 +25,7 @@
             <n-input v-model:value="userForm.user.password" placeholder="输入密码" />
           </n-form-item>
         </n-form>
-        <n-button tertiary @click="handleValidateClick"> 登录 </n-button>
+        <n-button type="primary" @click="handleValidateClick"> 登录 </n-button>
       </div>
     </div>
   </div>

@@ -96,6 +96,7 @@ const footerStyle = computed(() => {
     top: 0;
     transition: width 0.3s ease-in-out;
     background-color: $theme-background-color;
+    @apply border-base bg-base border-r-1px;
   }
   &-header {
     width: 100%;

@@ -17,10 +17,9 @@ const options = [
     label: '退出登录',
     key: 'logout',
     icon: iconRender({
-      icon: 'humbleicons:logout',
-      color: 'white',
-    }),
-  },
+      icon: 'humbleicons:logout'
+    })
+  }
 ]
 const handleSelect = (key: string) => {
   if (key === 'logout') {
@@ -35,7 +34,7 @@ const logout = () => {
 
 <style lang="scss" scoped>
 .identity {
-  color: white;
+  @apply c-base;
   display: flex;
   align-items: center;
   height: 100%;
@@ -43,7 +42,7 @@ const logout = () => {
   padding-right: 12px;
   border-radius: 4px;
   &:hover {
-    background-color: #333333;
+    @apply bg-active;
     cursor: pointer;
   }
 }

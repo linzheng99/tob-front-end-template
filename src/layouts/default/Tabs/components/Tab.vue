@@ -1,5 +1,5 @@
 <template>
-  <div class="tab-wrapper">
+  <div class="tab-wrapper c-base">
     <div class="tab-content" :style="tabStyle(info.fullPath, activeTab)" @click="go(info.fullPath)">
       <span>{{ info.title }}</span>
       <button v-if="showClose" class="close_btn" @click.stop="close(info)">
@@ -35,7 +35,7 @@ const close = (tab) => {
 const tabStyle = (path, activePath) => {
   if (path === activePath) {
     return {
-      border: `1px solid ${themeStore.themeColor}`,
+      border: `1px solid ${themeStore.themeColor}`
     }
   }
 }
@@ -59,8 +59,8 @@ const tabStyle = (path, activePath) => {
     align-items: center;
     padding: 6px 12px;
     font-weight: bold;
-    color: white;
     border: 1px solid #a1a3ae;
+    @apply border-base bg-base border-1px;
     border-radius: 4px;
     position: relative;
   }
@@ -73,8 +73,7 @@ const tabStyle = (path, activePath) => {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  background-color: transparent;
-  color: white;
+  @apply border-base bg-base border-1px;
   border-radius: 3px;
   height: 18px;
   width: 18px;
