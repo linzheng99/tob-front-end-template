@@ -1,6 +1,6 @@
 <template>
   <div
-    @click="colorMode.toggleMode"
+    @click="colorMode.toggleDark"
     class="cursor-pointer px-12px border-rd-4px flex-center hover:bg-active"
   >
     <SvgIcon
