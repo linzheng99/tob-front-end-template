@@ -25,9 +25,6 @@ pnpm dev:docs
 * vueUse
 * vitest
 ---
-## TODO fixhot
-- [ ] Layout tag scroll-x css
-----
 ## Task List
 ### axios
 - [x] axios封装
@@ -68,8 +65,8 @@ common
 ### theme
 - [x] sidebar
   - [x] logo
-- [ ] header
-- [ ] tab -> ( div-> button)
+- [x] header
+- [x] tab -> ( div-> button)
 - [x] naive ui theme
   - [x] common
 - [x] colorMode: ( light / dark )

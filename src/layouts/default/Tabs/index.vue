@@ -10,14 +10,14 @@
       @close="close"
       @contextmenu="handleContextMenu($event, item.name)"
     />
-    <TabContextMenu
-      :visible="dropdownConfig.visible"
-      :x="dropdownConfig.x"
-      :y="dropdownConfig.y"
-      :current-path="dropdownConfig.currentPath"
-      @update:visible="updateVisible"
-    />
   </div>
+  <TabContextMenu
+    :visible="dropdownConfig.visible"
+    :x="dropdownConfig.x"
+    :y="dropdownConfig.y"
+    :current-path="dropdownConfig.currentPath"
+    @update:visible="updateVisible"
+  />
 </template>
 
 <script lang="ts" setup>
@@ -104,6 +104,7 @@ watch(
     padding-right: 10px;
     padding-top: 5px;
     padding-bottom: 5px;
+    overflow-x: auto;
   }
 }
 </style>
