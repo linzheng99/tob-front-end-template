@@ -10,26 +10,27 @@
 </template>
 
 <script setup lang="ts">
+import { Tab } from '../TabsType'
 import { useThemeStoreWithOut } from '@/store/modules/theme'
 
 interface Props {
-  info: any
+  info: Tab
   activeTab: string
   showClose: boolean
 }
 interface Emit {
-  (e: 'go', tab): void
-  (e: 'close', tab): void
+  (e: 'go', tab: string): void
+  (e: 'close', tab: Tab): void
 }
 
 defineProps<Props>()
 const emit = defineEmits<Emit>()
 const themeStore = useThemeStoreWithOut()
 
-const go = (path) => {
+const go = (path: string) => {
   emit('go', path)
 }
-const close = (tab) => {
+const close = (tab: Tab) => {
   emit('close', tab)
 }
 const tabStyle = (path, activePath) => {

@@ -43,9 +43,9 @@ import { extend } from '@/utils'
 
 type SizeType = 'small' | 'medium' | 'large' | 'huge'
 interface Emit {
-  (e: 'closed', value: boolean)
-  (e: 'cancel')
-  (e: 'confirm')
+  (e: 'closed', value: boolean): void
+  (e: 'cancel'): void
+  (e: 'confirm'): void
 }
 interface Props {
   bodyStyle: Object

@@ -6,5 +6,5 @@ export interface ListType {
   type?: any
   span?: number
   renderContent?: boolean
-  render?: (data: any, param: string) => VNodeChild
+  render?: (data: Recordable, param: string) => VNodeChild
 }
