@@ -1,4 +1,4 @@
-import type { FormProps, FormActionType, UseFormReturnType } from '../types/index';
+import type { FormProps, FormActionType, UseFormReturnType, FormSchema } from '../types/index';
 
 import { ref, onUnmounted, unref, nextTick, watch, Ref, ComputedRef } from 'vue';
 
@@ -75,7 +75,7 @@ export function useForm(props?: Props): UseFormReturnType {
       const form = await getForm();
       await form.setFieldsValue(values);
     },
-    
+
     resetFields: async () => {
       const form = await getForm();
       await form.resetFields();
@@ -96,10 +96,10 @@ export function useForm(props?: Props): UseFormReturnType {
       return form.validate(nameList);
     },
 
-    setSchema: async (values) => {
+    getFormSchema: async (): Promise<FormSchema[]> => {
       const form = await getForm();
-      form.setSchema(values);
-    },
+      return form.getFormSchema()
+    }
   };
 
   return [register, methods];

@@ -150,7 +150,7 @@ export interface FormActionType {
   validate: (nameList?: any[]) => Promise<any>;
   clearValidate: (name?: string | string[]) => Promise<void>;
   setProps: (formProps: Partial<FormProps>) => Promise<void>;
-  setSchema: (schemaProps: Partial<FormSchema[]>) => Promise<void>;
+  getFormSchema: () => Promise<FormSchema[]>;
   setFieldsValue: (values: Recordable) => Promise<void>;
   getFieldsValue: () => Recordable;
   resetFields: () => Promise<void>;

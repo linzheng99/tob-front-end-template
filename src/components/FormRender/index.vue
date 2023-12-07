@@ -84,7 +84,7 @@ export default defineComponent({
         const rulesObj: any = {
           rules: {}
         }
-        const schemas: any = formProps.schemas || []
+        const schemas: FormSchema[] = formProps.schemas || []
 
         schemas.forEach((item) => {
           if (item.rules && isArray(item.rules)) {
@@ -160,7 +160,8 @@ export default defineComponent({
       clearValidate,
       resetFields,
       getFieldsValue,
-      setFieldsValue
+      setFieldsValue,
+      getFormSchema
     } = useFormEvents({
       emit,
       getProps,
@@ -179,7 +180,7 @@ export default defineComponent({
     /**
      * @description 匹配组件并赋值对应组件的所有配置
      */
-    function getComponentProps(schema) {
+    function getComponentProps(schema: FormSchema) {
       const compProps = schema.componentProps ?? {}
       let component = schema.component
       return {
@@ -199,6 +200,7 @@ export default defineComponent({
       resetFields,
       getFieldsValue,
       setFieldsValue,
+      getFormSchema,
       submit: handleSubmit
     }
 
@@ -212,6 +214,9 @@ export default defineComponent({
           initDefault()
           isUpdateDefaultRef.value = true
         }
+      },
+      {
+        deep: true
       }
     )
 

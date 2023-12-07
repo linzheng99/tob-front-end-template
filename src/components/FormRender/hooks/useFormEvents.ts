@@ -104,6 +104,11 @@ export function useFormEvents({
     });
   }
 
+  // 获取表单配置项schema
+  async function getFormSchema(): Promise<FormSchema[]> {
+    return unref(getSchema)
+  }
+
   // 设置按扭的loading状态
   function setLoading(value: boolean): void {
     loadingSub.value = value;
@@ -116,6 +121,7 @@ export function useFormEvents({
     getFieldsValue,
     clearValidate,
     setFieldsValue,
+    getFormSchema,
     setLoading,
   };
 }
