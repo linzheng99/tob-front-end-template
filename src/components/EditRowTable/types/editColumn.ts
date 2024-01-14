@@ -2,7 +2,7 @@ import { Ref } from 'vue';
 import { InternalRowData, TableBaseColumn } from 'naive-ui/es/data-table/src/interface';
 import { ComponentType } from './componentType';
 
-type EmitType = ReturnType<typeof defineEmits>;
+export type EmitType = ReturnType<typeof defineEmits>;
 
 export interface EditBasicColumn<T = InternalRowData> extends TableBaseColumn<T> {
   //编辑表格
