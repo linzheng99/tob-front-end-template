@@ -3,7 +3,7 @@ import { transformEditCell } from '../helper';
 
 export const useColumns = () => {
   function getColumns(columns: EditBasicColumn[]) {
-    columns.map(column => {
+    columns?.map(column => {
       if (column.children && column.children.length) {
         getColumns(column.children)
       } else if (column.editable) {
