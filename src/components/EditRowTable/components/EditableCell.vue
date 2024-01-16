@@ -1,6 +1,9 @@
 <template>
   <template v-if="!isEdit">
-    <div> {{ value }} </div>
+    <!-- 内容过长以及不需要增加 ellipsis: { tooltip: true } -->
+    <n-ellipsis :class="`${column.width ? `max-w: ${column.width}` : ''}`">
+      {{ value }}
+    </n-ellipsis>
   </template>
   <template v-else>
     <component
