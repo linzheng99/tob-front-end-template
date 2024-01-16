@@ -13,10 +13,6 @@ export default defineComponent({
         // 如果 createVNode、data 或 param 任何一个未定义，返回一个默认的 VNode
         return h('span', { depth: 3 }, { default: () => '' });
       }
-      if (!data[param]) {
-        // 如果 data[param] 未定义，返回另一个默认的 VNode
-        return h('span', { depth: 3 }, { default: () => '' });
-      }
       // 如果所有条件都满足，调用 createVNode 函数并返回结果
       return createVNode(data, param);
     }
