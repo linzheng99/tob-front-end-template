@@ -86,7 +86,7 @@ export class InitAxios {
    * @description 请求方法
    */
   request<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
-    let conf = cloneDeep(config)
+    let conf: CreateAxiosOptions = cloneDeep(config)
     const transform = this.getTransform()
 
     const { requestOptions } = this.options

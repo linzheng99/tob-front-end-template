@@ -78,8 +78,17 @@ common
 ### components
 - [x] svgIcon封装
 - [x] echarts
-- [x] Form (是否存在优化: schema 配置项中的 component 改成组件导入的形式而不是 string, 可以配合 unplugin-auto-import 插件自动导入;)
+- [x] Form 
+  - [ ] (是否存在优化: schema 配置项中的 component 改成组件导入的形式而不是 string, 可以配合 unplugin-auto-import 插件自动导入;)
 - [ ] Table
+  - [x] v-bind values
+  - [x] pagination
+  - [ ] data
+    - [ ] 是否内置query & loading
+    - [ ] try catch
+  - [ ] emit
+  - [ ] change columns
+    - [ ] edit columns
 - [x] Descriptions (缺少类型提示;形式也不够优雅)
 - [ ] 高德的地图
 - [ ] MessageBox
