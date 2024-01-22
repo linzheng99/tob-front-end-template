@@ -9,7 +9,7 @@ export const usePagination = (props: TableBasicProps) => {
   const currentConfig = ref<Object>({})
 
   watch(() => props.pagination, (pagination) => {
-    if(!pagination) return
+    if (!pagination) return
     setPagination(pagination)
   })
 
@@ -21,6 +21,7 @@ export const usePagination = (props: TableBasicProps) => {
       page: 1,
       pageSize: TABLEDEFAULTPAGESIZE,
       pageSizes: TABLEDEFAULTPAGESIZES,
+      itemCount: 0,
       showQuickJumper: true,
       showSizePicker: true,
       displayOrder: ['size-picker', 'pages', 'quick-jumper'],

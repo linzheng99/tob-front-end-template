@@ -83,9 +83,9 @@ common
 - [ ] Table
   - [x] v-bind values
   - [x] pagination
-  - [ ] data
-    - [ ] 是否内置query & loading
-    - [ ] try catch
+  - [x] data
+    - [x] 是否内置query & loading
+    - [x] try catch
   - [ ] emit
   - [ ] change columns
     - [ ] edit columns

@@ -3,7 +3,6 @@
     ref="tableElRef"
     class="flex-1"
     v-bind="getBindValues"
-    :data="data"
     :columns="columns"
     @update:page="updatePage"
     @update:page-size="updatePageSize"
@@ -11,9 +10,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed, unref } from 'vue'
+import { computed, unref, ref, reactive } from 'vue'
 import { TableBasicColumn, TableBasicProps } from './types'
 import { usePagination } from './hooks/usePagination'
+import { useLoading } from './hooks/useLoading'
+import { useDataSource } from './hooks/useDataSource'
 
 const props = withDefaults(defineProps<TableBasicProps>(), {
   remote: false,
@@ -27,8 +28,11 @@ const props = withDefaults(defineProps<TableBasicProps>(), {
 const getProps = computed(() => {
   return { ...props }
 })
+const tableData = ref<Recordable[]>([])
 
 const { getPagination, setPagination } = usePagination(unref(getProps))
+const { getLoading, setLoading } = useLoading()
+const { requestData } = useDataSource({ setLoading, requestApi: props.requestApi, setPagination })
 
 // 横向滚动宽度
 const scrollX = computed(() => {
@@ -38,16 +42,33 @@ const scrollX = computed(() => {
 })
 
 const getBindValues = computed(() => {
-  const { columns } = unref(getProps)
+  const { columns, remote } = unref(getProps)
+  const configProps = reactive<Recordable>({})
+
+  // 是否异步
+  if (remote) {
+    configProps.data = unref(tableData)
+  }
 
   return {
     ...unref(getProps),
     columns,
     scrollX: unref(scrollX),
-    pagination: getPagination()
+    pagination: getPagination(),
+    loading: unref(getLoading),
+    ...configProps
   }
 })
-console.log(getBindValues.value)
+
+async function reloadData(params?: any) {
+  try {
+    const data = await requestData(params)
+    tableData.value = data || []
+  } catch (error) {
+    tableData.value = []
+    throw new Error(`${error}`)
+  }
+}
 
 //页码切换
 function updatePage(page: number) {
@@ -59,7 +80,12 @@ function updatePageSize(size: number) {
   setPagination({ page: 1, pageSize: size })
 }
 
-defineExpose({ setPagination })
+const tableAction = {
+  setPagination,
+  reloadData
+}
+
+defineExpose(tableAction)
 </script>
 
 <style scoped></style>
