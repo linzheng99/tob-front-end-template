@@ -1,8 +1,9 @@
 <template>
   <div class="h-full w-full flex flex-col">
     <div flex mb-2 space-x-2>
-      <n-button @click="changeProps" type="primary">chang click</n-button>
+      <n-button @click="changePage" type="primary">chang page</n-button>
       <n-button @click="fetchApi" type="primary">fetch</n-button>
+      <n-button @click="changeColumn" type="primary">column</n-button>
     </div>
     <TableRender
       ref="tableRef"
@@ -23,20 +24,20 @@ import { TableActionType } from '@/components/TableRender/types'
 const tableRef = ref<TableActionType>()
 const pagination = ref({ pageSize: 10 })
 
-const columns = [
+const columns = ref([
   {
     title: 'Name',
     key: 'name'
   },
   {
     title: 'Age',
-    key: 'age'
+    key: 'age',
   },
   {
     title: 'Address',
     key: 'address'
   }
-]
+])
 
 const data = Array.from({ length: 46 }).map((_, index) => ({
   key: index,
@@ -45,17 +46,20 @@ const data = Array.from({ length: 46 }).map((_, index) => ({
   address: `London, Park Lane no. ${index}`
 }))
 
-function changeProps() {
+function changePage() {
   pagination.value.pageSize = 20
 }
 
 async function fetchApi() {
-  // TODO
   try {
-    tableRef.value?.reloadData()
+    await tableRef.value?.reloadData()
   } catch (error) {
     console.log(error)
   }
+}
+
+function changeColumn() {
+  columns.value.push({title: 'newTitle', key: 'newTitle'})
 }
 
 function promiseApiWithException() {

@@ -86,9 +86,9 @@ common
   - [x] data
     - [x] 是否内置query & loading
     - [x] try catch
-  - [ ] emit
   - [ ] change columns
     - [ ] edit columns
+  - [ ] emit
 - [x] Descriptions (缺少类型提示;形式也不够优雅)
 - [ ] 高德的地图
 - [ ] MessageBox

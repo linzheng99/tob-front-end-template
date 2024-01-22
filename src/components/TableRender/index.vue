@@ -3,7 +3,6 @@
     ref="tableElRef"
     class="flex-1"
     v-bind="getBindValues"
-    :columns="columns"
     @update:page="updatePage"
     @update:page-size="updatePageSize"
   />
@@ -15,6 +14,7 @@ import { TableBasicColumn, TableBasicProps } from './types'
 import { usePagination } from './hooks/usePagination'
 import { useLoading } from './hooks/useLoading'
 import { useDataSource } from './hooks/useDataSource'
+import { useColumns } from './hooks/useColumns'
 
 const props = withDefaults(defineProps<TableBasicProps>(), {
   remote: false,
@@ -32,7 +32,8 @@ const tableData = ref<Recordable[]>([])
 
 const { getPagination, setPagination } = usePagination(unref(getProps))
 const { getLoading, setLoading } = useLoading()
-const { requestData } = useDataSource({ setLoading, requestApi: props.requestApi, setPagination })
+const { requestData } = useDataSource({ setLoading, requestApi: props.requestApi, setPagination, getPagination })
+const { getColumns } = useColumns(unref(getProps))
 
 // 横向滚动宽度
 const scrollX = computed(() => {
@@ -42,7 +43,7 @@ const scrollX = computed(() => {
 })
 
 const getBindValues = computed(() => {
-  const { columns, remote } = unref(getProps)
+  const { remote } = unref(getProps)
   const configProps = reactive<Recordable>({})
 
   // 是否异步
@@ -52,13 +53,16 @@ const getBindValues = computed(() => {
 
   return {
     ...unref(getProps),
-    columns,
+    columns: getColumns.value,
     scrollX: unref(scrollX),
     pagination: getPagination(),
     loading: unref(getLoading),
     ...configProps
   }
 })
+
+console.log(getBindValues.value);
+
 
 async function reloadData(params?: any) {
   try {

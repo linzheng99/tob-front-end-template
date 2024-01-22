@@ -13,7 +13,7 @@ export const usePagination = (props: TableBasicProps) => {
     setPagination(pagination)
   })
 
-  const getPaginationInfo = computed((): Object | false => {
+  const getPaginationInfo = computed((): PaginationProps | false => {
     if (!showPagination) return false
     const { pagination } = props
 
