@@ -11,6 +11,8 @@
       :columns="columns"
       :pagination="pagination"
       :request-api="promiseApiWithException"
+      :action-column="actionColumn"
+      @handle-action="handleAction"
     />
   </div>
 </template>
@@ -18,11 +20,42 @@
 <script setup lang="ts">
 import TableRender from '@/components/TableRender/index.vue'
 import { ResponseApi } from '@/components/TableRender/types'
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 import { TableActionType } from '@/components/TableRender/types'
+import { TableBasicActionColumn } from '@/components/TableRender/types/column'
+import { ActionValues } from '../../../components/TableRender/types/column'
 
 const tableRef = ref<TableActionType>()
 const pagination = ref({ pageSize: 10 })
+const isDisable = ref(false)
+
+const actionColumn: TableBasicActionColumn = reactive({
+  key: 'action',
+  title: '操作',
+  width: 200,
+  actions: () => {
+    return [
+      {
+        iconConfig: { icon: 'ep-search' },
+        title: '查看',
+        componentProps: {
+          type: 'primary',
+          disabled:  isDisable.value
+        }
+      },
+      {
+        iconConfig: { icon: 'ep-search' },
+        title: '查看2',
+        componentProps: {
+          type: 'primary'
+        }
+      }
+    ]
+  }
+})
+function handleAction(item: ActionValues) {
+  console.log('page', item)
+}
 
 const columns = ref([
   {
@@ -31,7 +64,7 @@ const columns = ref([
   },
   {
     title: 'Age',
-    key: 'age',
+    key: 'age'
   },
   {
     title: 'Address',
@@ -59,7 +92,7 @@ async function fetchApi() {
 }
 
 function changeColumn() {
-  columns.value.push({title: 'newTitle', key: 'newTitle'})
+  isDisable.value = !isDisable.value
 }
 
 function promiseApiWithException() {

@@ -1,7 +1,7 @@
 <template>
   <n-tooltip trigger="hover">
     <template #trigger>
-      <div class="setting_button" @click="appStore.toggleConfigDrawerVisible">
+      <div class="setting_button c-base cursor-pointer" @click="appStore.toggleConfigDrawerVisible">
         <SvgIcon icon="material-symbols:settings-rounded" />
       </div>
     </template>

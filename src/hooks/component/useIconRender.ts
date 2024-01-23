@@ -9,7 +9,7 @@ import SvgIcon from '@/components/SvgIcon/index.vue'
  * @property color - 图标颜色
  * @property fontSize - 图标大小
  */
-interface IconConfig {
+export interface IconConfig {
   icon?: string
   localIcon?: string
   color?: string

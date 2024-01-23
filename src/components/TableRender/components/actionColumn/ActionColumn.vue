@@ -1,0 +1,60 @@
+<template>
+  <div class="flex-center space-x-2">
+    <template v-if="!isDropdown">
+      <ActionButton
+        :actions="actions(record)"
+        :record="record"
+        @handleClick="handleAction"
+        class="flex space-x-2"
+      />
+    </template>
+    <template v-else>
+      <n-popover trigger="click" placement="bottom">
+        <template #trigger>
+          <n-button
+            type="primary"
+            :renderIcon="iconRender({ icon: 'ep:arrow-down-bold' })"
+            icon-placement="right"
+          >
+            更多
+          </n-button>
+        </template>
+        <ActionButton
+          :actions="actions(record)"
+          :record="record"
+          class="flex flex-col space-y-2"
+          @handleClick="handleAction"
+        />
+      </n-popover>
+    </template>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { computed } from 'vue'
+import ActionButton from './ActionButton.vue'
+import { useIconRender } from '@/hooks/component/useIconRender'
+import { ActionColumnProps } from './types'
+import { ActionValues } from '../../types'
+
+interface Emit {
+  (e: 'handle-click', item: ActionValues): void
+}
+
+const props = withDefaults(defineProps<ActionColumnProps>(), {
+  showDropdown: true
+})
+const emit = defineEmits<Emit>()
+const { iconRender } = useIconRender()
+
+const isDropdown = computed(() => {
+  if (!props.actions) return false
+  return props.showDropdown && props.actions?.length > 2
+})
+
+function handleAction(title: string) {
+  emit('handle-click', { title, record: props.record })
+}
+</script>
+
+<style scoped></style>

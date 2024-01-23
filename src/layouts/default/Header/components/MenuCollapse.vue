@@ -1,6 +1,6 @@
 <template>
   <div class="collpase-wrapper" @click="setAppLocalConfig({ siderCollapse: !collpase })">
-    <div class="flex-center py-12px text-16px c-white">
+    <div class="flex-center py-12px text-16px c-base">
       <SvgIcon v-if="!collpase" :icon="leftFold" />
       <SvgIcon v-else :icon="rightFold" />
     </div>

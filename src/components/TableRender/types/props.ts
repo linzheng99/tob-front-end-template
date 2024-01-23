@@ -1,8 +1,9 @@
-import { TableBasicColumn } from "./column"
+import { TableBasicActionColumn, TableBasicColumn } from "./column"
 
 export interface TableBasicProps {
   data: Recordable[]
   columns: TableBasicColumn[],
+  actionColumn?: TableBasicActionColumn
   remote?: boolean
   striped?: boolean
   singleLine?: boolean

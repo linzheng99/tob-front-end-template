@@ -15,6 +15,7 @@ import { usePagination } from './hooks/usePagination'
 import { useLoading } from './hooks/useLoading'
 import { useDataSource } from './hooks/useDataSource'
 import { useColumns } from './hooks/useColumns'
+import { ActionValues } from './types/column';
 
 const props = withDefaults(defineProps<TableBasicProps>(), {
   remote: false,
@@ -25,6 +26,12 @@ const props = withDefaults(defineProps<TableBasicProps>(), {
   showPagination: true
 })
 
+interface Emit {
+  (e: 'handle-action', values: ActionValues): void
+}
+
+const emit = defineEmits<Emit>()
+
 const getProps = computed(() => {
   return { ...props }
 })
@@ -32,8 +39,13 @@ const tableData = ref<Recordable[]>([])
 
 const { getPagination, setPagination } = usePagination(unref(getProps))
 const { getLoading, setLoading } = useLoading()
-const { requestData } = useDataSource({ setLoading, requestApi: props.requestApi, setPagination, getPagination })
-const { getColumns } = useColumns(unref(getProps))
+const { getColumns } = useColumns(unref(getProps), emit)
+const { requestData } = useDataSource({
+  setLoading,
+  requestApi: props.requestApi,
+  setPagination,
+  getPagination
+})
 
 // 横向滚动宽度
 const scrollX = computed(() => {
@@ -44,6 +56,7 @@ const scrollX = computed(() => {
 
 const getBindValues = computed(() => {
   const { remote } = unref(getProps)
+
   const configProps = reactive<Recordable>({})
 
   // 是否异步
@@ -53,16 +66,13 @@ const getBindValues = computed(() => {
 
   return {
     ...unref(getProps),
-    columns: getColumns.value,
+    columns: unref(getColumns),
     scrollX: unref(scrollX),
     pagination: getPagination(),
     loading: unref(getLoading),
     ...configProps
   }
 })
-
-console.log(getBindValues.value);
-
 
 async function reloadData(params?: any) {
   try {

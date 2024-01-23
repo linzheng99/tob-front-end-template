@@ -1,11 +1,10 @@
 <template>
   <div
     @click="colorMode.toggleDark"
-    class="cursor-pointer px-12px border-rd-4px flex-center hover:bg-active"
+    class="cursor-pointer px-12px border-rd-4px flex-center hover:bg-active c-base text-18px"
   >
     <SvgIcon
       :icon="colorMode.themeColorMode === 'light' ? 'ph-sun-dim-duotone' : 'ph:moon-duotone'"
-      class="text-2xl"
     />
   </div>
 </template>

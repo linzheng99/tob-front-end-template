@@ -86,8 +86,9 @@ common
   - [x] data
     - [x] 是否内置query & loading
     - [x] try catch
-  - [ ] change columns
-    - [ ] edit columns
+  - [ ] columns
+    - [x] action column
+    - [ ] edit column
   - [ ] emit
 - [x] Descriptions (缺少类型提示;形式也不够优雅)
 - [ ] 高德的地图
