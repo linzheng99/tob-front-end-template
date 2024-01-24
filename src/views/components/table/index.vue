@@ -25,6 +25,7 @@ import { ref, reactive } from 'vue'
 import { TableActionType } from '@/components/TableRender/types'
 import { TableBasicActionColumn } from '@/components/TableRender/types/column'
 import { ActionValues, TableBasicColumn } from '@/components/TableRender/types/column'
+import { Actions } from '@/components/TableRender/components/actionColumn/types'
 
 const tableRef = ref<TableActionType>()
 const pagination = ref({ pageSize: 10 })
@@ -35,25 +36,7 @@ const actionColumn: TableBasicActionColumn = reactive({
   key: 'action',
   title: '操作',
   width: 200,
-  actions: (record) => {
-    return [
-      {
-        iconConfig: { icon: 'ep-search' },
-        title: !record.editable ? '编辑' : '保存',
-        componentProps: {
-          type: 'primary',
-          disabled: isDisable.value
-        }
-      },
-      {
-        iconConfig: { icon: 'ep-search' },
-        title: '取消',
-        componentProps: {
-          type: 'primary'
-        }
-      }
-    ]
-  }
+  actions: (record) => actionBtns(record)
 })
 async function handleAction(item: ActionValues) {
   console.log('page', item)
@@ -93,7 +76,16 @@ const columns = reactive<TableBasicColumn[]>([
     key: 'address',
     editable: true,
     editComponent: 'NInput'
-  }
+  },
+  {
+    title: 'sex',
+    key: 'sex',
+    editable: true,
+    editComponent: 'NSelect',
+    editComponentProps: {
+      options: []
+    }
+  },
 ])
 
 const data = ref(
@@ -119,6 +111,28 @@ async function fetchApi() {
 
 function changeColumn() {
   isDisable.value = !isDisable.value
+}
+
+function actionBtns(record): Actions[] {
+  const isShow = record.editable
+  return [
+    {
+      iconConfig: { icon: 'ep-search' },
+      title: !record.editable ? '编辑' : '保存',
+      componentProps: {
+        type: 'primary',
+        disabled: isDisable.value
+      }
+    },
+    {
+      show: !!isShow,
+      iconConfig: { icon: 'ep-search' },
+      title: '取消',
+      componentProps: {
+        type: 'primary'
+      }
+    }
+  ]
 }
 
 function promiseApiWithException() {

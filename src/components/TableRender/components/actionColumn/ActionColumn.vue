@@ -2,7 +2,7 @@
   <div class="flex-center space-x-2">
     <template v-if="!isDropdown">
       <ActionButton
-        :actions="actions(record)"
+        :actions="getActions"
         :record="record"
         @handleClick="handleAction"
         class="flex space-x-2"
@@ -20,7 +20,7 @@
           </n-button>
         </template>
         <ActionButton
-          :actions="actions(record)"
+          :actions="getActions"
           :record="record"
           class="flex flex-col space-y-2"
           @handleClick="handleAction"
@@ -34,8 +34,9 @@
 import { computed } from 'vue'
 import ActionButton from './ActionButton.vue'
 import { useIconRender } from '@/hooks/component/useIconRender'
-import { ActionColumnProps } from './types'
+import { ActionColumnProps, Actions } from './types'
 import { ActionValues } from '../../types'
+import { isBoolean } from '../../../../utils/is'
 
 interface Emit {
   (e: 'handle-click', item: ActionValues): void
@@ -44,6 +45,17 @@ interface Emit {
 const props = withDefaults(defineProps<ActionColumnProps>(), {
   showDropdown: true
 })
+
+const getActions = computed<Actions[] | []>(() => {
+  const { actions, record } = props
+
+  return actions(record).filter((action) => {
+    const shouldInclude = isBoolean(action.show) ? action.show : !action.show
+
+    return shouldInclude
+  })
+})
+
 const emit = defineEmits<Emit>()
 const { iconRender } = useIconRender()
 

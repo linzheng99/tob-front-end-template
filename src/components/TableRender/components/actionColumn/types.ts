@@ -5,6 +5,7 @@ export interface Actions {
   title: string
   componentProps?: ButtonProps
   iconConfig?: IconConfig
+  show?: boolean
 }
 
 export interface ActionColumnProps {

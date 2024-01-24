@@ -17,7 +17,7 @@ import { useIconRender } from '@/hooks/component/useIconRender'
 import { Actions } from './types'
 
 interface Props {
-  actions: Actions[] | undefined
+  actions: Actions[] | null
   record: Recordable
 }
 interface Emit {
