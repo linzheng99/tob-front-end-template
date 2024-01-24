@@ -4,8 +4,8 @@ import { ActionColumnProps } from "../components/actionColumn/types";
 
 export interface TableBasicColumn<T = InternalRowData> extends TableBaseColumn<T> {
   editable?: boolean;
-  editComponent?: ComponentType;
-  editComponentProps?: Recordable;
+  editComponent?: ComponentType
+  editComponentProps?: Recordable
   editRequired?: boolean;
   children?: TableBasicColumn<T>[]
 }
@@ -16,5 +16,18 @@ export type EmitType = ReturnType<typeof defineEmits>
 
 export interface ActionValues {
   title: String
-  record: Recordable
+  record: TableBasicRecordRow
 }
+
+export type TableBasicRecordRow<T = Recordable> = Partial<
+  {
+    onEdit?: (editable: boolean) => Promise<void>;
+    onCancelEdit?: () => void;
+    onSubmitEdit?: () => Promise<TableBasicRecordRow | boolean>;
+    editable?: boolean;
+    _key?: number;
+    submitCbs: Fn[];
+    cancelCbs: Fn[];
+    validCbs: Fn[];
+  } & T
+>

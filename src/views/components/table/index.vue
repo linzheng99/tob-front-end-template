@@ -4,6 +4,7 @@
       <n-button @click="changePage" type="primary">chang page</n-button>
       <n-button @click="fetchApi" type="primary">fetch</n-button>
       <n-button @click="changeColumn" type="primary">column</n-button>
+      <n-button @click="changeLoading" type="primary">loading</n-button>
     </div>
     <TableRender
       ref="tableRef"
@@ -23,29 +24,30 @@ import { ResponseApi } from '@/components/TableRender/types'
 import { ref, reactive } from 'vue'
 import { TableActionType } from '@/components/TableRender/types'
 import { TableBasicActionColumn } from '@/components/TableRender/types/column'
-import { ActionValues } from '../../../components/TableRender/types/column'
+import { ActionValues, TableBasicColumn } from '@/components/TableRender/types/column'
 
 const tableRef = ref<TableActionType>()
 const pagination = ref({ pageSize: 10 })
 const isDisable = ref(false)
 
+// TODO 把 click 放到props里面
 const actionColumn: TableBasicActionColumn = reactive({
   key: 'action',
   title: '操作',
   width: 200,
-  actions: () => {
+  actions: (record) => {
     return [
       {
         iconConfig: { icon: 'ep-search' },
-        title: '查看',
+        title: !record.editable ? '编辑' : '保存',
         componentProps: {
           type: 'primary',
-          disabled:  isDisable.value
+          disabled: isDisable.value
         }
       },
       {
         iconConfig: { icon: 'ep-search' },
-        title: '查看2',
+        title: '取消',
         componentProps: {
           type: 'primary'
         }
@@ -53,31 +55,55 @@ const actionColumn: TableBasicActionColumn = reactive({
     ]
   }
 })
-function handleAction(item: ActionValues) {
+async function handleAction(item: ActionValues) {
   console.log('page', item)
+  const { record, title } = item
+  switch (title) {
+    case '编辑':
+      record.onEdit && (await record.onEdit(true))
+      break
+    case '保存':
+      record.onSubmitEdit && (await record.onSubmitEdit())
+      break
+    case '取消':
+      record.onCancelEdit && record.onCancelEdit()
+      break
+
+    default:
+      break
+  }
 }
 
-const columns = ref([
+const columns = reactive<TableBasicColumn[]>([
   {
     title: 'Name',
-    key: 'name'
+    key: 'name',
+    editable: true,
+    editComponent: 'NInput'
   },
   {
     title: 'Age',
-    key: 'age'
+    key: 'age',
+    align: 'center',
+    editable: true,
+    editComponent: 'NInput'
   },
   {
     title: 'Address',
-    key: 'address'
+    key: 'address',
+    editable: true,
+    editComponent: 'NInput'
   }
 ])
 
-const data = Array.from({ length: 46 }).map((_, index) => ({
-  key: index,
-  name: `Edward King ${index}`,
-  age: 32,
-  address: `London, Park Lane no. ${index}`
-}))
+const data = ref(
+  Array.from({ length: 46 }).map((_, index) => ({
+    key: index,
+    name: `Edward King ${index}`,
+    age: 32,
+    address: `London, Park Lane no. ${index}`
+  }))
+)
 
 function changePage() {
   pagination.value.pageSize = 20
@@ -111,6 +137,13 @@ function promiseApiWithException() {
       }
     }, 1000) // 模拟异步操作的延迟
   })
+}
+
+function changeLoading() {
+  tableRef.value?.setLoading(true)
+  setTimeout(() => {
+    tableRef.value?.setLoading(false)
+  }, 1000)
 }
 </script>
 

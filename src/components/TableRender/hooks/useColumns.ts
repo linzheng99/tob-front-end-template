@@ -1,43 +1,24 @@
-import { computed, h, ref, unref, watch } from "vue"
-import { ActionValues, EmitType, TableBasicActionColumn, TableBasicProps } from "../types"
-import ActionColumn from '../components/actionColumn/ActionColumn.vue';
+import { computed, type ComputedRef } from "vue"
+import { EmitType, TableBasicProps } from "../types"
+import { addActionColumn, transformColumns } from "../helper";
 
-export const useColumns = (props: TableBasicProps, emit: EmitType) => {
-  const { columns, actionColumn } = props
+export const useColumns = (props: ComputedRef<TableBasicProps>, emit: EmitType) => {
+  const { columns, actionColumn } = props.value
 
-  const actionColumnRef = computed(() => {
-    return unref(actionColumn)
-  })
+  // const actionColumnRef = computed(() => {
+  //   return unref(actionColumn)
+  // })
 
+  // 重新组合table columns
   const getColumns = computed(() => {
-    const tableAction = handleActionColumn()
-
-    if (tableAction) {
-      const actionIdx = columns.findIndex(i => i.key === '_action')
-      actionIdx !== -1 ? columns.splice(actionIdx, 1, tableAction) : columns.push(tableAction)
-    }
+    // 操作列
+    addActionColumn(columns, actionColumn, emit)
+    // 每一列
+    transformColumns(columns)
 
     return columns
   })
 
-  function handleActionColumn(): TableBasicActionColumn | undefined {
-    if (!actionColumnRef.value) return
-    const { actions, ...restProps } = actionColumnRef.value
-
-    return {
-      ...restProps,
-      key: '_action',
-      render(record) {
-        return h(ActionColumn, {
-          actions,
-          record,
-          onHandleClick: (values: ActionValues) => {
-            emit('handle-action', values)
-          }
-        })
-      }
-    }
-  }
 
   return {
     getColumns

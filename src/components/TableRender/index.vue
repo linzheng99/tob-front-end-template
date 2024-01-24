@@ -15,7 +15,8 @@ import { usePagination } from './hooks/usePagination'
 import { useLoading } from './hooks/useLoading'
 import { useDataSource } from './hooks/useDataSource'
 import { useColumns } from './hooks/useColumns'
-import { ActionValues } from './types/column';
+import { ActionValues } from './types/column'
+import { TableActionType } from './types/tableActionType'
 
 const props = withDefaults(defineProps<TableBasicProps>(), {
   remote: false,
@@ -39,7 +40,7 @@ const tableData = ref<Recordable[]>([])
 
 const { getPagination, setPagination } = usePagination(unref(getProps))
 const { getLoading, setLoading } = useLoading()
-const { getColumns } = useColumns(unref(getProps), emit)
+const { getColumns } = useColumns(getProps, emit)
 const { requestData } = useDataSource({
   setLoading,
   requestApi: props.requestApi,
@@ -94,9 +95,10 @@ function updatePageSize(size: number) {
   setPagination({ page: 1, pageSize: size })
 }
 
-const tableAction = {
+const tableAction: TableActionType = {
   setPagination,
-  reloadData
+  reloadData,
+  setLoading
 }
 
 defineExpose(tableAction)
