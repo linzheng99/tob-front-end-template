@@ -1,6 +1,7 @@
 import { InternalRowData, TableBaseColumn } from "naive-ui/es/data-table/src/interface";
 import { ComponentType } from "./componentType";
 import { ActionColumnProps } from "../components/actionColumn/types";
+import { Ref } from "vue";
 
 export interface TableBasicColumn<T = InternalRowData> extends TableBaseColumn<T> {
   editable?: boolean;
@@ -29,5 +30,6 @@ export type TableBasicRecordRow<T = Recordable> = Partial<
     submitCbs: Fn[];
     cancelCbs: Fn[];
     validCbs: Fn[];
+    editValueRefs: Recordable<Ref>;
   } & T
 >

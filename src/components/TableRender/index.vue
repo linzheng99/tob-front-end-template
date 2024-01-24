@@ -29,6 +29,9 @@ const props = withDefaults(defineProps<TableBasicProps>(), {
 
 interface Emit {
   (e: 'handle-action', values: ActionValues): void
+  (e: 'edit-submit', values: any): void
+  (e: 'edit-cancel', values: any): void
+  (e: 'edit-change', values: any): void
 }
 
 const emit = defineEmits<Emit>()

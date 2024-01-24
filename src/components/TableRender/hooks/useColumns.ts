@@ -14,7 +14,7 @@ export const useColumns = (props: ComputedRef<TableBasicProps>, emit: EmitType) 
     // 操作列
     addActionColumn(columns, actionColumn, emit)
     // 每一列
-    transformColumns(columns)
+    transformColumns(columns, emit)
 
     return columns
   })

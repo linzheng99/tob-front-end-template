@@ -1,30 +1,30 @@
 import { h, ref } from "vue";
 import { ActionValues, EmitType, TableBasicActionColumn, TableBasicColumn, TableBasicRecordRow } from '../types';
-import EditaleCell from '../components/editableCell/EditaleCell.vue';
+import EditableCell from '../components/editableCell/EditableCell.vue';
 import ActionColumn from '../components/actionColumn/ActionColumn.vue';
 
-export const transformEditCell = (column: TableBasicColumn) => {
+export const transformEditCell = (column: TableBasicColumn, emit: EmitType) => {
   return (record: TableBasicRecordRow, index: number) => {
     const _key = column.key;
     const value = record[_key];
     record.onEdit = async (edit: boolean) => {
       record.editable = edit
     }
-    return h(EditaleCell, {
-      column, value, record, index
+    return h(EditableCell, {
+      column, value, record, index, emit
     })
   }
 };
 
-export const transformColumns = (columns: TableBasicColumn[]) => {
+export const transformColumns = (columns: TableBasicColumn[], emit: EmitType) => {
   columns.forEach(column => {
     const { editable, render } = column
     if (!editable || render) return column
 
     if (column.children && column.children.length) {
-      transformColumns(column.children)
+      transformColumns(column.children, emit)
     } else if (column.editable) {
-      column.render = transformEditCell(column)
+      column.render = transformEditCell(column, emit)
     }
   })
 }

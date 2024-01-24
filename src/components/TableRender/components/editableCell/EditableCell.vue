@@ -10,6 +10,7 @@
       v-if="isCheckComp"
       :is="getComponent"
       v-bind="getComponentProps"
+      @update:value="handleChange"
       v-model:checked="currentValueRef"
       class="flex-1"
     />
@@ -17,6 +18,7 @@
       v-else
       :is="getComponent"
       v-bind="getComponentProps"
+      @update:value="handleChange"
       v-model:value="currentValueRef"
       class="flex-1"
     />
@@ -24,11 +26,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, unref, watchEffect } from 'vue'
+import { computed, ref, unref, watchEffect, nextTick } from 'vue';
 import { TableBasicColumn, TableBasicRecordRow, EmitType } from '../../types/column'
 import { componentMap } from '@/components/EditRowTable/componentMap'
-import { isArray } from '@/utils/is'
-import { set } from 'lodash-es';
+import { isArray} from '@/utils/is'
+import { set} from 'lodash-es';
 
 interface Props {
   column: TableBasicColumn
@@ -48,23 +50,37 @@ watchEffect(() => {
   defaultValueRef.value = props.value
 })
 
+async function handleChange() {
+  const { emit, record, index, column } = props
+  await nextTick()
+  emit('edit-change', { record, index, value: unref(currentValueRef), key: column.key })
+}
+
 async function AddRecordAttribute() {
   initCbs('cancelCbs', handleCancel)
   initCbs('submitCbs', handleSubmit)
+  setEditValue()
   props.record.onSubmitEdit = async () => onSubmitEdit()
   props.record.onCancelEdit = () => onCancelEdit()
 }
+
 function initCbs(cbs: 'submitCbs' | 'validCbs' | 'cancelCbs', handle: Fn) {
   if (props.record) {
     isArray(props.record[cbs]) ? props.record[cbs]?.push(handle) : (props.record[cbs] = [handle])
   }
 }
+
 function onSubmitEdit() {
   isArray(props.record?.submitCbs) && props.record?.submitCbs.forEach((fn) => fn())
+  const { record, index, emit } = props
+  emit('edit-submit', { record, index })
   return props.record
 }
+
 function onCancelEdit() {
   isArray(props.record?.cancelCbs) && props.record?.cancelCbs.forEach((fn) => fn())
+  const { record, index, emit } = props
+  emit('edit-cancel', { record, index })
 }
 
 function handleCancel() {
@@ -72,6 +88,14 @@ function handleCancel() {
   currentValueRef.value = defaultValueRef.value
 }
 
+function setEditValue() {
+  if (props.column.key) {
+    if (!props.record.editValueRefs) props.record.editValueRefs = {}
+    props.record.editValueRefs[props.column.key] = currentValueRef
+  }
+}
+
+// TODO 校验rule
 function handleSubmit() {
   props.record.editable = false
   const { column, record } = props
@@ -111,7 +135,7 @@ const getComponentProps = computed(() => {
 
   return {
     clearable: true,
-    ...compProps
+    ...compProps,
   }
 })
 

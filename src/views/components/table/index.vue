@@ -14,6 +14,8 @@
       :request-api="promiseApiWithException"
       :action-column="actionColumn"
       @handle-action="handleAction"
+      @edit-submit="editSubmit"
+      @edit-change="editChange"
     />
   </div>
 </template>
@@ -26,10 +28,20 @@ import { TableActionType } from '@/components/TableRender/types'
 import { TableBasicActionColumn } from '@/components/TableRender/types/column'
 import { ActionValues, TableBasicColumn } from '@/components/TableRender/types/column'
 import { Actions } from '@/components/TableRender/components/actionColumn/types'
+import { TreeOption } from 'naive-ui'
 
 const tableRef = ref<TableActionType>()
 const pagination = ref({ pageSize: 10 })
 const isDisable = ref(false)
+
+function editSubmit(values) {
+  console.log(values)
+}
+function editChange(values) {
+  const { record } = values
+  console.log('change', values)
+  record.editValueRefs.address = '232'
+}
 
 // TODO 把 click 放到props里面
 const actionColumn: TableBasicActionColumn = reactive({
@@ -44,6 +56,16 @@ async function handleAction(item: ActionValues) {
   switch (title) {
     case '编辑':
       record.onEdit && (await record.onEdit(true))
+      options.value = [
+        {
+          value: 'nan',
+          label: '男'
+        },
+        {
+          value: 'nv',
+          label: '女'
+        }
+      ]
       break
     case '保存':
       record.onSubmitEdit && (await record.onSubmitEdit())
@@ -56,6 +78,8 @@ async function handleAction(item: ActionValues) {
       break
   }
 }
+
+const options = ref<TreeOption[]>([])
 
 const columns = reactive<TableBasicColumn[]>([
   {
@@ -83,9 +107,12 @@ const columns = reactive<TableBasicColumn[]>([
     editable: true,
     editComponent: 'NSelect',
     editComponentProps: {
-      options: []
+      options: options,
+      onUpdateValue(e) {
+        console.log(e)
+      }
     }
-  },
+  }
 ])
 
 const data = ref(
