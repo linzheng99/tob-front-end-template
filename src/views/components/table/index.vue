@@ -38,9 +38,12 @@ function editSubmit(values) {
   console.log(values)
 }
 function editChange(values) {
-  const { record } = values
+  const { record, key } = values
   console.log('change', values)
-  record.editValueRefs.address = '232'
+  console.log(record.editValueRefs)
+  if (key === 'age') {
+    record.editValueRefs.address = '2'
+  }
 }
 
 // TODO 把 click 放到props里面
@@ -92,14 +95,29 @@ const columns = reactive<TableBasicColumn[]>([
     title: 'Age',
     key: 'age',
     align: 'center',
+    editRequired: true,
+    editRule: async (record) => {
+      console.log('editRule', record)
+      if (record.age !== '18') {
+        console.log('!==');
+        
+        return false
+      }
+      return true
+    },
     editable: true,
-    editComponent: 'NInput'
+    editComponent: 'NInput',
+    editComponentProps: {}
   },
   {
     title: 'Address',
     key: 'address',
     editable: true,
-    editComponent: 'NInput'
+    editComponent: 'NInput',
+    editRequired: true,
+    editRule: async () => {
+      return true
+    }
   },
   {
     title: 'sex',

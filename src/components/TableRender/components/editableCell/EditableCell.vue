@@ -26,11 +26,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, unref, watchEffect, nextTick } from 'vue';
+import { computed, ref, unref, watchEffect, nextTick } from 'vue'
 import { TableBasicColumn, TableBasicRecordRow, EmitType } from '../../types/column'
 import { componentMap } from '@/components/EditRowTable/componentMap'
-import { isArray} from '@/utils/is'
-import { set} from 'lodash-es';
+import { isArray } from '@/utils/is'
+import { set } from 'lodash-es'
 
 interface Props {
   column: TableBasicColumn
@@ -59,22 +59,57 @@ async function handleChange() {
 async function AddRecordAttribute() {
   initCbs('cancelCbs', handleCancel)
   initCbs('submitCbs', handleSubmit)
-  setEditValue()
+  initCbs('validCbs', handleEditableRule)
+  collectEditValue()
   props.record.onSubmitEdit = async () => onSubmitEdit()
   props.record.onCancelEdit = () => onCancelEdit()
 }
 
 function initCbs(cbs: 'submitCbs' | 'validCbs' | 'cancelCbs', handle: Fn) {
-  if (props.record) {
-    isArray(props.record[cbs]) ? props.record[cbs]?.push(handle) : (props.record[cbs] = [handle])
+  const { record } = props
+  if (record) {
+    isArray(record[cbs]) ? record[cbs]?.push(handle) : (record[cbs] = [handle])
   }
 }
 
-function onSubmitEdit() {
+async function onSubmitEdit() {
+  // TODO 优化成pop组件
+  const pass = await handleVerify()
+  if (!pass) return false
+
   isArray(props.record?.submitCbs) && props.record?.submitCbs.forEach((fn) => fn())
   const { record, index, emit } = props
   emit('edit-submit', { record, index })
-  return props.record
+  return record
+}
+
+async function handleVerify() {
+  const validFns = (props.record?.validCbs || []).map((fn) => fn())
+  const res = await Promise.all(validFns)
+  return res.every((item) => !!item)
+}
+
+async function handleEditableRule(): Promise<Error | boolean> {
+  const { column, record } = props
+  const { editRule, editRequired } = column
+  const currentValue = unref(currentValueRef)
+
+  if (editRequired) {
+    // TODO 数字
+    if (!currentValue) {
+      window.$message?.error('必填')
+      return false
+    }
+  }
+  if (editRule) {
+    try {
+      const res = await editRule(record)
+      return res
+    } catch (error) {
+      throw new Error(`${error}`)
+    }
+  }
+  return true
 }
 
 function onCancelEdit() {
@@ -88,10 +123,11 @@ function handleCancel() {
   currentValueRef.value = defaultValueRef.value
 }
 
-function setEditValue() {
-  if (props.column.key) {
-    if (!props.record.editValueRefs) props.record.editValueRefs = {}
-    props.record.editValueRefs[props.column.key] = currentValueRef
+function collectEditValue() {
+  const { column, record } = props
+  if (column.key) {
+    if (!record.editValueRefs) record.editValueRefs = {}
+    record.editValueRefs[column.key] = currentValueRef
   }
 }
 
@@ -135,7 +171,7 @@ const getComponentProps = computed(() => {
 
   return {
     clearable: true,
-    ...compProps,
+    ...compProps
   }
 })
 

@@ -5,9 +5,10 @@ import { Ref } from "vue";
 
 export interface TableBasicColumn<T = InternalRowData> extends TableBaseColumn<T> {
   editable?: boolean;
+  editRequired?: boolean;
+  editRule?: (record: Recordable) => Promise<boolean>
   editComponent?: ComponentType
   editComponentProps?: Recordable
-  editRequired?: boolean;
   children?: TableBasicColumn<T>[]
 }
 
