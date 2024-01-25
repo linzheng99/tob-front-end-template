@@ -39,8 +39,6 @@ function editSubmit(values) {
 }
 function editChange(values) {
   const { record, key } = values
-  console.log('change', values)
-  console.log(record.editValueRefs)
   if (key === 'age') {
     record.editValueRefs.address = '2'
   }
@@ -96,18 +94,27 @@ const columns = reactive<TableBasicColumn[]>([
     key: 'age',
     align: 'center',
     editRequired: true,
-    editRule: async (record) => {
+    editRule: async (value, record) => {
       console.log('editRule', record)
-      if (record.age !== '18') {
-        console.log('!==');
-        
+      if (value != '18') {
+        console.log('!==')
+
         return false
       }
       return true
     },
     editable: true,
     editComponent: 'NInput',
-    editComponentProps: {}
+    editComponentProps: {
+      onUpdateValue() {
+        options.value = [
+          {
+            value: 'nan',
+            label: '男'
+          }
+        ]
+      }
+    }
   },
   {
     title: 'Address',
@@ -122,12 +129,13 @@ const columns = reactive<TableBasicColumn[]>([
   {
     title: 'sex',
     key: 'sex',
+    textKey: 'sexStr',
     editable: true,
     editComponent: 'NSelect',
     editComponentProps: {
       options: options,
-      onUpdateValue(e) {
-        console.log(e)
+      onUpdateValue(e, option) {
+        console.log(e, option)
       }
     }
   }
@@ -138,7 +146,9 @@ const data = ref(
     key: index,
     name: `Edward King ${index}`,
     age: 32,
-    address: `London, Park Lane no. ${index}`
+    address: `London, Park Lane no. ${index}`,
+    sex: 'nan',
+    sexStr: '男'
   }))
 )
 

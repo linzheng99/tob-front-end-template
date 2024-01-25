@@ -27,10 +27,18 @@
 
 <script setup lang="ts">
 import { computed, ref, unref, watchEffect, nextTick } from 'vue'
-import { TableBasicColumn, TableBasicRecordRow, EmitType } from '../../types/column'
-import { componentMap } from '@/components/EditRowTable/componentMap'
+import {
+  TableBasicColumn,
+  TableBasicRecordRow,
+  EmitType
+} from '../../types/column'
 import { isArray } from '@/utils/is'
 import { set } from 'lodash-es'
+import { componentMap } from '../../config/componentMap'
+
+defineOptions({
+  name: 'EditableCell'
+})
 
 interface Props {
   column: TableBasicColumn
@@ -103,7 +111,7 @@ async function handleEditableRule(): Promise<Error | boolean> {
   }
   if (editRule) {
     try {
-      const res = await editRule(record)
+      const res = await editRule(currentValue, record)
       return res
     } catch (error) {
       throw new Error(`${error}`)
@@ -145,8 +153,15 @@ function handleSubmit() {
 
 // 回显
 const tramsformValue = computed(() => {
-  const { value } = props
-  return value
+  const { column, record } = props
+  const { editComponent, textKey } = column
+  let currentValue = unref(currentValueRef)
+
+  if (editComponent?.includes('NSelect')) {
+    return textKey ? record[textKey] : currentValue
+  }
+
+  return currentValue
 })
 
 const isEdit = computed(() => {
