@@ -26,6 +26,7 @@ pnpm dev:docs
 * vitest
 ---
 ## Task List
+- [ ] 删除重复代码 (componentMap: FormRender & TableRender)
 ### axios
 - [x] axios封装
   - [x] get
@@ -80,16 +81,8 @@ common
 - [x] echarts
 - [x] Form 
   - [ ] (是否存在优化: schema 配置项中的 component 改成组件导入的形式而不是 string, 可以配合 unplugin-auto-import 插件自动导入;)
-- [ ] Table
-  - [x] v-bind values
-  - [x] pagination
-  - [x] data
-    - [x] 是否内置query & loading
-    - [x] try catch
-  - [ ] columns
-    - [x] action column
-    - [ ] edit column
-  - [ ] emit
+- [x] Table
+  - [ ] 优化校验 函数
 - [x] Descriptions (缺少类型提示;形式也不够优雅)
 - [ ] 高德的地图
 - [ ] MessageBox

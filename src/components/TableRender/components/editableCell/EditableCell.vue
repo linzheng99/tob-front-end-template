@@ -6,35 +6,39 @@
   </template>
   <template v-else>
     <!-- 能否抽成一个组件 后面还会出现日期选择器的组件 -->
-    <component
-      v-if="isCheckComp"
-      :is="getComponent"
-      v-bind="getComponentProps"
-      @update:value="handleChange"
-      v-model:checked="currentValueRef"
-      class="flex-1"
-    />
-    <component
-      v-else
-      :is="getComponent"
-      v-bind="getComponentProps"
-      @update:value="handleChange"
-      v-model:value="currentValueRef"
-      class="flex-1"
-    />
+    <n-popover :show="!!showPop" placement="bottom" trigger="manual" :animated="false">
+      <template #trigger>
+        <component
+          v-if="isCheckComp"
+          :is="getComponent"
+          v-bind="getComponentProps"
+          @update:value="handleChange"
+          v-model:checked="currentValueRef"
+          class="flex-1"
+        />
+        <component
+          v-else
+          :is="getComponent"
+          v-bind="getComponentProps"
+          @update:value="handleChange"
+          v-model:value="currentValueRef"
+          class="flex-1"
+        />
+      </template>
+      <div>
+        {{ ruleMsg }}
+      </div>
+    </n-popover>
   </template>
 </template>
 
 <script setup lang="ts">
 import { computed, ref, unref, watchEffect, nextTick } from 'vue'
-import {
-  TableBasicColumn,
-  TableBasicRecordRow,
-  EmitType
-} from '../../types/column'
+import { TableBasicColumn, TableBasicRecordRow, EmitType } from '../../types/column'
 import { isArray } from '@/utils/is'
 import { set } from 'lodash-es'
 import { componentMap } from '../../config/componentMap'
+import { createPlaceholderMessage } from '@/utils/helper/createPlaceholder'
 
 defineOptions({
   name: 'EditableCell'
@@ -53,6 +57,14 @@ const props = defineProps<Props>()
 // 当前值
 const currentValueRef = ref(props.value)
 const defaultValueRef = ref(props.value)
+const ruleMsg = ref<string>('')
+const ruleVisible = ref(false)
+
+const showPop = computed(() => {
+  console.log(ruleMsg.value, ruleVisible.value);
+  
+  return unref(ruleMsg) && unref(ruleVisible)
+})
 
 watchEffect(() => {
   defaultValueRef.value = props.value
@@ -62,6 +74,7 @@ async function handleChange() {
   const { emit, record, index, column } = props
   await nextTick()
   emit('edit-change', { record, index, value: unref(currentValueRef), key: column.key })
+  await handleEditableRule()
 }
 
 async function AddRecordAttribute() {
@@ -99,24 +112,31 @@ async function handleVerify() {
 
 async function handleEditableRule(): Promise<Error | boolean> {
   const { column, record } = props
-  const { editRule, editRequired } = column
+  const { editRule, editRequired, editComponent } = column
   const currentValue = unref(currentValueRef)
 
   if (editRequired) {
     // TODO 数字
     if (!currentValue) {
-      window.$message?.error('必填')
+      ruleVisible.value = true
+      ruleMsg.value = createPlaceholderMessage(editComponent) || ''
+      // window.$message?.error('必填')
       return false
     }
   }
   if (editRule) {
     try {
       const res = await editRule(currentValue, record)
+      if(res) {
+        resetRule()
+      }
       return res
     } catch (error) {
       throw new Error(`${error}`)
     }
   }
+
+  resetRule()
   return true
 }
 
@@ -129,6 +149,7 @@ function onCancelEdit() {
 function handleCancel() {
   props.record.editable = false
   currentValueRef.value = defaultValueRef.value
+  resetRule()
 }
 
 function collectEditValue() {
@@ -139,7 +160,6 @@ function collectEditValue() {
   }
 }
 
-// TODO 校验rule
 function handleSubmit() {
   props.record.editable = false
   const { column, record } = props
@@ -149,6 +169,7 @@ function handleSubmit() {
   if (!key) return
 
   set(record, key, unref(currentValueRef))
+  resetRule()
 }
 
 // 回显
@@ -189,6 +210,11 @@ const getComponentProps = computed(() => {
     ...compProps
   }
 })
+
+function resetRule() {
+  ruleVisible.value = false
+  ruleMsg.value = ''
+}
 
 AddRecordAttribute()
 </script>
