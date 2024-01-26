@@ -48,6 +48,7 @@ function editChange(values) {
 const actionColumn: TableBasicActionColumn = reactive({
   key: 'action',
   title: '操作',
+  align: 'center',
   width: 200,
   actions: (record) => actionBtns(record)
 })
@@ -97,8 +98,6 @@ const columns = reactive<TableBasicColumn[]>([
     editRule: async (value, record) => {
       console.log('editRule', record)
       if (value != '18') {
-        console.log('!==')
-
         return false
       }
       return true
@@ -121,10 +120,7 @@ const columns = reactive<TableBasicColumn[]>([
     key: 'address',
     editable: true,
     editComponent: 'NInput',
-    editRequired: true,
-    editRule: async () => {
-      return true
-    }
+    editRequired: true
   },
   {
     title: 'sex',

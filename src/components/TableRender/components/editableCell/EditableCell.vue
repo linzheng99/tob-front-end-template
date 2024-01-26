@@ -61,8 +61,8 @@ const ruleMsg = ref<string>('')
 const ruleVisible = ref(false)
 
 const showPop = computed(() => {
-  console.log(ruleMsg.value, ruleVisible.value);
-  
+  console.log(ruleMsg.value, ruleVisible.value)
+
   return unref(ruleMsg) && unref(ruleVisible)
 })
 
@@ -123,16 +123,16 @@ async function handleEditableRule(): Promise<Error | boolean> {
       // window.$message?.error('必填')
       return false
     }
-  }
-  if (editRule) {
-    try {
-      const res = await editRule(currentValue, record)
-      if(res) {
-        resetRule()
+    if (editRule) {
+      try {
+        const res = await editRule(currentValue, record)
+        if (res) {
+          resetRule()
+        }
+        return res
+      } catch (error) {
+        throw new Error(`${error}`)
       }
-      return res
-    } catch (error) {
-      throw new Error(`${error}`)
     }
   }
 

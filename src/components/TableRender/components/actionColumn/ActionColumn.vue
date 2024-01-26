@@ -1,33 +1,29 @@
 <template>
-  <div class="flex-center space-x-2">
-    <template v-if="!isDropdown">
+  <template v-if="!isDropdown">
+    <ActionButton
+      :actions="getActions"
+      :record="record"
+      @handleClick="handleAction"
+    />
+  </template>
+  <template v-else>
+    <n-popover trigger="click" placement="bottom">
+      <template #trigger>
+        <n-button
+          type="primary"
+          :renderIcon="iconRender({ icon: 'ep:arrow-down-bold' })"
+          icon-placement="right"
+        >
+          更多
+        </n-button>
+      </template>
       <ActionButton
         :actions="getActions"
         :record="record"
         @handleClick="handleAction"
-        class="flex space-x-2"
       />
-    </template>
-    <template v-else>
-      <n-popover trigger="click" placement="bottom">
-        <template #trigger>
-          <n-button
-            type="primary"
-            :renderIcon="iconRender({ icon: 'ep:arrow-down-bold' })"
-            icon-placement="right"
-          >
-            更多
-          </n-button>
-        </template>
-        <ActionButton
-          :actions="getActions"
-          :record="record"
-          class="flex flex-col space-y-2"
-          @handleClick="handleAction"
-        />
-      </n-popover>
-    </template>
-  </div>
+    </n-popover>
+  </template>
 </template>
 
 <script setup lang="ts">
@@ -36,7 +32,7 @@ import ActionButton from './ActionButton.vue'
 import { useIconRender } from '@/hooks/component/useIconRender'
 import { ActionColumnProps, Actions } from './types'
 import { ActionValues } from '../../types'
-import { isBoolean } from '../../../../utils/is'
+import { isBoolean } from '@/utils/is'
 
 interface Emit {
   (e: 'handle-click', item: ActionValues): void

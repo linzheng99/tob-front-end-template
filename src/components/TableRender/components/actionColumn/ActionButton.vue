@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="space-x-2">
     <n-button
       v-for="(item, index) in actions"
       :key="`${index}-${item.title}`"
