@@ -5,8 +5,12 @@
     </n-ellipsis>
   </template>
   <template v-else>
+    <CellComponent
+      v-bind="getComponentProps"
+      :component="getComponent"
+    />
     <!-- 能否抽成一个组件 后面还会出现日期选择器的组件 -->
-    <n-popover :show="!!showPop" placement="bottom" trigger="manual" :animated="false">
+    <!-- <n-popover :show="!!showPop" placement="bottom" trigger="manual" :animated="false">
       <template #trigger>
         <component
           v-if="isCheckComp"
@@ -28,7 +32,7 @@
       <div>
         {{ ruleMsg }}
       </div>
-    </n-popover>
+    </n-popover> -->
   </template>
 </template>
 
@@ -37,8 +41,8 @@ import { computed, ref, unref, watchEffect, nextTick } from 'vue'
 import { TableBasicColumn, TableBasicRecordRow, EmitType } from '../../types/column'
 import { isArray } from '@/utils/is'
 import { set } from 'lodash-es'
-import { componentMap } from '../../config/componentMap'
 import { createPlaceholderMessage } from '@/utils/helper/createPlaceholder'
+import { CellComponent } from '../editableCell/CellComponent.ts'
 
 defineOptions({
   name: 'EditableCell'
@@ -70,10 +74,17 @@ watchEffect(() => {
   defaultValueRef.value = props.value
 })
 
-async function handleChange() {
+async function handleChange(e) {
   const { emit, record, index, column } = props
+  console.log(e);
+  
+  currentValueRef.value = e;
+  console.log(currentValueRef.value);
+  
+
   await nextTick()
   emit('edit-change', { record, index, value: unref(currentValueRef), key: column.key })
+
   await handleEditableRule()
 }
 
@@ -190,9 +201,10 @@ const isEdit = computed(() => {
   return column.editable && record.editable
 })
 
-const getComponent = computed(() => componentMap.get(props.column.editComponent || 'NInput'))
+// const getComponent = computed(() => componentMap.get(props.column.editComponent || 'NInput'))
+const getComponent = computed(() => props.column.editComponent || 'NInput')
 
-// 是否是 v-model:checked 的组件(选择类组件)
+// 是否是 v-model:checked 的组件(checkBox,radio组件)
 const isCheckComp = computed(() => {
   const {
     column: { editComponent }
@@ -203,11 +215,19 @@ const isCheckComp = computed(() => {
 })
 
 const getComponentProps = computed(() => {
-  const compProps = props.column?.editComponentProps || {}
+  const { column } = props
+  const { editComponentProps } = column
+  const isChecked =unref(isCheckComp)
+  // 绑定value & change事件
+  const value = isChecked ? 'checked' : 'value'
+  const onEvent = isChecked ? 'on-update:checked' : 'on-update:value'
+  
 
   return {
     clearable: true,
-    ...compProps
+    [value]: unref(currentValueRef),
+    [onEvent]: handleChange,
+    ...(editComponentProps || {})
   }
 })
 
