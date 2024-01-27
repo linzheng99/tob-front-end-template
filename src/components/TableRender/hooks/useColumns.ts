@@ -1,18 +1,18 @@
-import { computed, type ComputedRef } from "vue"
+import { computed, unref, type ComputedRef } from "vue"
 import { EmitType, TableBasicProps } from "../types"
 import { addActionColumn, transformColumns } from "../helper";
 
 export const useColumns = (props: ComputedRef<TableBasicProps>, emit: EmitType) => {
   const { columns, actionColumn } = props.value
 
-  // const actionColumnRef = computed(() => {
-  //   return unref(actionColumn)
-  // })
+  const actionColumnRef = computed(() => {
+    return unref(actionColumn)
+  })
 
-  // 重新组合table columns
+  // setup table columns
   const getColumns = computed(() => {
     // 操作列
-    addActionColumn(columns, actionColumn, emit)
+    addActionColumn(columns, unref(actionColumnRef), emit)
     // 每一列
     transformColumns(columns, emit)
 

@@ -6,7 +6,13 @@
   </template>
   <template v-else>
     <div :class="getEditColumnClass">
-      <CellComponent v-bind="getComponentProps" :component="getComponent" />
+      <CellComponent
+        v-bind="getComponentProps"
+        :component="getComponent"
+        :ruleMessage="ruleMessage"
+        :popoverVisible="popoverVisible"
+        :editRule="getEditRule"
+      />
       <EditRenderVNode
         v-for="v in editRenders"
         :key="v.key"
@@ -15,30 +21,6 @@
         :edit-values="getEditValueRefs"
       />
     </div>
-    <!-- 能否抽成一个组件 后面还会出现日期选择器的组件 -->
-    <!-- <n-popover :show="!!showPop" placement="bottom" trigger="manual" :animated="false">
-      <template #trigger>
-        <component
-          v-if="isCheckComp"
-          :is="getComponent"
-          v-bind="getComponentProps"
-          @update:value="handleChange"
-          v-model:checked="currentValueRef"
-          class="flex-1"
-        />
-        <component
-          v-else
-          :is="getComponent"
-          v-bind="getComponentProps"
-          @update:value="handleChange"
-          v-model:value="currentValueRef"
-          class="flex-1"
-        />
-      </template>
-      <div>
-        {{ ruleMsg }}
-      </div>
-    </n-popover> -->
   </template>
 </template>
 
@@ -50,6 +32,7 @@ import { set } from 'lodash-es'
 import { createPlaceholderMessage } from '@/utils/helper/createPlaceholder'
 import { CellComponent } from '../editableCell/CellComponent'
 import EditRenderVNode from './EditRenderVNode'
+import { isBoolean, isFunction } from '@/utils/is'
 
 defineOptions({
   name: 'EditableCell'
@@ -68,19 +51,20 @@ const props = defineProps<Props>()
 // 当前值
 const currentValueRef = ref(props.value)
 const defaultValueRef = ref(props.value)
-const ruleMsg = ref<string>('')
+const ruleMessage = ref<string>('')
 const ruleVisible = ref(false)
 
-// render 多个自定义的 comp
+// edit模式下 render 多个自定义的 comp
 const editRenders = ref(props.column.editRenders)
 const getEditValueRefs = computed(() => {
   return props.record.editValueRefs
 })
 
-// const showPop = computed(() => {
-//   console.log(ruleMsg.value, ruleVisible.value)
-//   return unref(ruleMsg) && unref(ruleVisible)
-// })
+const getEditRule = computed(() => props.column.editRule)
+
+const popoverVisible = computed(() => {
+  return unref(ruleMessage) && unref(ruleVisible)
+})
 
 watchEffect(() => {
   defaultValueRef.value = props.value
@@ -118,7 +102,6 @@ function initCbs(cbs: 'submitCbs' | 'validCbs' | 'cancelCbs', handle: Fn) {
 }
 
 async function onSubmitEdit() {
-  // TODO 优化成pop组件
   const pass = await handleVerify()
   if (!pass) return false
 
@@ -134,32 +117,30 @@ async function handleVerify() {
   return res.every((item) => !!item)
 }
 
-async function handleEditableRule(): Promise<Error | boolean> {
+async function handleEditableRule(): Promise<boolean> {
   const { column, record } = props
-  const { editRule, editRequired, editComponent } = column
+  const { editRule, editComponent } = column
   const currentValue = unref(currentValueRef)
 
-  if (editRequired) {
-    // TODO 数字
+  if (isBoolean(editRule)) {
     if (!currentValue) {
-      ruleVisible.value = true
-      ruleMsg.value = createPlaceholderMessage(editComponent) || ''
+      setupEditRuleStatus(true, (createPlaceholderMessage(editComponent) || '') + column.title)
       return false
     }
-    if (editRule) {
-      try {
-        const res = await editRule(currentValue, record)
-        if (res) {
-          resetRule()
-        }
-        return res
-      } catch (error) {
-        throw new Error(`${error}`)
+  } else if (isFunction(editRule)) {
+    try {
+      const res = await editRule(currentValue, record)
+      if (res) {
+        setupEditRuleStatus(false, '')
       }
+      return res
+    } catch (error) {
+      const msg = (error as Error).message
+      setupEditRuleStatus(true, msg)
+      return false
     }
   }
-
-  resetRule()
+  setupEditRuleStatus(false, '')
   return true
 }
 
@@ -172,7 +153,7 @@ function onCancelEdit() {
 function handleCancel() {
   props.record.editable = false
   currentValueRef.value = defaultValueRef.value
-  resetRule()
+  setupEditRuleStatus(false, '')
   collectEditValue()
   collectEditRenderValue()
 }
@@ -206,7 +187,7 @@ function handleSubmit() {
 
   setEditValue(record)
   setEditRenderValues(record)
-  resetRule()
+  setupEditRuleStatus(false, '')
 }
 
 function setEditValue(record: TableBasicRecordRow) {
@@ -241,7 +222,6 @@ const isEdit = computed(() => {
   return column.editable && record.editable
 })
 
-// const getComponent = computed(() => componentMap.get(props.column.editComponent || 'NInput'))
 const getComponent = computed(() => props.column.editComponent || 'NInput')
 
 // 是否是 v-model:checked 的组件(checkBox,radio组件)
@@ -270,9 +250,9 @@ const getComponentProps = computed(() => {
   }
 })
 
-function resetRule() {
-  ruleVisible.value = false
-  ruleMsg.value = ''
+function setupEditRuleStatus(visble: boolean, message: string) {
+  ruleVisible.value = visble
+  ruleMessage.value = message
 }
 
 AddRecordAttribute()

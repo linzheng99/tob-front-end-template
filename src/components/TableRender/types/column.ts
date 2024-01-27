@@ -5,8 +5,7 @@ import { Ref, VNodeChild } from "vue";
 
 export interface TableBasicColumn<T = InternalRowData> extends TableBaseColumn<T> {
   editable?: boolean;
-  editRequired?: boolean;
-  editRule?: (value: any, record: Recordable) => Promise<boolean>
+  editRule?: ((value: any, record: Recordable) => Promise<boolean>) | boolean
   editComponent?: ComponentType
   textKey?: string
   editComponentProps?: Recordable

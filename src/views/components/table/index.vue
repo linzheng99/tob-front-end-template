@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import TableRender from '@/components/TableRender/index.vue'
 import { ResponseApi } from '@/components/TableRender/types'
-import { ref, reactive, h } from 'vue'
+import { ref, reactive, h, nextTick } from 'vue';
 import { TableActionType } from '@/components/TableRender/types'
 import { TableBasicActionColumn } from '@/components/TableRender/types/column'
 import { ActionValues, TableBasicColumn } from '@/components/TableRender/types/column'
@@ -154,6 +154,14 @@ const columns = reactive<TableBasicColumn[]>([
     align: 'center',
     width: 160,
     ellipsis: { tooltip: true },
+    editRule: async (value, record) => {
+      await nextTick()
+      console.log(value, record)
+      if (value !== 3) {
+        throw new Error('33')
+      }
+      return true
+    },
     editable: true,
     editComponent: 'NInputNumber',
     editComponentProps: {
