@@ -23,12 +23,12 @@
 <script setup lang="ts">
 import TableRender from '@/components/TableRender/index.vue'
 import { ResponseApi } from '@/components/TableRender/types'
-import { ref, reactive } from 'vue'
+import { ref, reactive, h } from 'vue'
 import { TableActionType } from '@/components/TableRender/types'
 import { TableBasicActionColumn } from '@/components/TableRender/types/column'
 import { ActionValues, TableBasicColumn } from '@/components/TableRender/types/column'
 import { Actions } from '@/components/TableRender/components/actionColumn/types'
-import { TreeOption } from 'naive-ui'
+import { TreeOption, NButton, NInput } from 'naive-ui'
 
 const tableRef = ref<TableActionType>()
 const pagination = ref({ pageSize: 10 })
@@ -49,6 +49,7 @@ const actionColumn: TableBasicActionColumn = reactive({
   key: 'action',
   title: '操作',
   align: 'center',
+  fixed: 'right',
   width: 200,
   actions: (record) => actionBtns(record)
 })
@@ -85,55 +86,193 @@ const options = ref<TreeOption[]>([])
 
 const columns = reactive<TableBasicColumn[]>([
   {
-    title: 'Name',
-    key: 'name',
-    editable: true,
-    editComponent: 'NInput'
-  },
-  {
-    title: 'Age',
-    key: 'age',
+    title: '序号',
     align: 'center',
-    editRequired: true,
-    editRule: async (value, record) => {
-      console.log('editRule', record)
-      if (value != '18') {
-        return false
-      }
-      return true
-    },
-    editable: true,
-    editComponent: 'NInput',
-    editComponentProps: {
-      onUpdateValue() {
-        options.value = [
-          {
-            value: 'nan',
-            label: '男'
-          }
-        ]
-      }
-    }
+    key: 'index',
+    width: 60,
+    fixed: 'left',
+    render: (_, index) => `${index + 1}`
   },
   {
-    title: 'Address',
-    key: 'address',
-    editable: true,
-    editComponent: 'NInput',
-    editRequired: true
+    title: '日期',
+    key: 'date',
+    align: 'center',
+    width: 160,
+    ellipsis: { tooltip: true }
   },
   {
-    title: 'sex',
-    key: 'sex',
-    textKey: 'sexStr',
+    title: '班级',
+    key: 'classId',
+    textKey: 'className',
+    align: 'center',
+    width: 160,
     editable: true,
     editComponent: 'NSelect',
     editComponentProps: {
-      options: options,
-      onUpdateValue(e, option) {
-        console.log(e, option)
+      options: []
+    }
+  },
+  {
+    title: '儿童姓名',
+    key: 'childId',
+    textKey: 'childName',
+    align: 'center',
+    width: 160,
+    editable: true,
+    editComponent: 'NSelect',
+    editComponentProps: {
+      options: []
+    }
+  },
+  {
+    title: '老师',
+    key: 'workerId',
+    align: 'center',
+    width: 160,
+    editable: true,
+    editComponent: 'NInput',
+    editRenders: [
+      {
+        key: 'test',
+        render: ({ value, editValues }) => {
+          const show = true
+          return show
+            ? h(NInput, {
+                value,
+                onUpdateValue(e) {
+                  editValues.test = e
+                }
+              })
+            : ''
+        }
+      }
+    ]
+  },
+  {
+    title: '午睡时间(小时)',
+    key: 'siesta',
+    align: 'center',
+    width: 160,
+    ellipsis: { tooltip: true },
+    editable: true,
+    editComponent: 'NInputNumber',
+    editComponentProps: {
+      showButton: false
+    }
+  },
+  {
+    title: '如厕情况',
+    key: 'isToilet',
+    align: 'center',
+    width: 160,
+    ellipsis: { tooltip: true },
+    editable: true,
+    editComponent: 'NCheckbox',
+    editComponentProps: {
+      checkedValue: true,
+      uncheckedValue: false,
+      onUpdateChecked(e) {
+        console.log('checked', e)
       }
     }
+  },
+  {
+    title: '健康情况',
+    key: 'healthState',
+    textKey: 'healthStateStr',
+    align: 'center',
+    width: 160,
+    editable: true,
+    editComponent: 'NSelect',
+    editComponentProps: {
+      options: [],
+      valueField: 'key',
+      labelField: 'value'
+    }
+  },
+  {
+    title: '游戏/活动',
+    key: '',
+    align: 'center',
+    ellipsis: { tooltip: true },
+    children: [
+      {
+        title: '自主完成',
+        key: 'gameComplete',
+        align: 'center',
+        width: 160,
+        ellipsis: { tooltip: true },
+        editable: true,
+        editComponent: 'NInput'
+      },
+      {
+        title: '口头指导',
+        key: 'gameOral',
+        align: 'center',
+        width: 160,
+        ellipsis: { tooltip: true },
+        editable: true,
+        editComponent: 'NInput'
+      },
+      {
+        title: '协助完成',
+        key: 'gameHelp',
+        align: 'center',
+        width: 160,
+        ellipsis: { tooltip: true },
+        editable: true,
+        editComponent: 'NInput'
+      },
+      {
+        title: '未完成',
+        key: 'gameFail',
+        align: 'center',
+        width: 160,
+        ellipsis: { tooltip: true },
+        editable: true,
+        editComponent: 'NInput'
+      }
+    ]
+  },
+  {
+    title() {
+      return h(
+        'div',
+        {
+          class: 'flex flex-col'
+        },
+        [
+          h('span', {}, { default: () => '一日表现' }),
+          h(
+            NButton,
+            {
+              size: 'small',
+              type: 'primary'
+            },
+            { default: () => '模板管理' }
+          )
+        ]
+      )
+    },
+    key: 'dailyShow',
+    align: 'center',
+    width: 160,
+    editable: true,
+    editComponent: 'NSelect',
+    editComponentProps: {
+      options: [],
+      filterable: true,
+      tag: true
+    }
+  },
+  {
+    title: '其他情况',
+    key: 'otherMsg',
+    align: 'center',
+    width: 160,
+    ellipsis: { tooltip: true },
+    editable: true,
+    editComponent: 'NInput'
   }
 ])
 
@@ -144,7 +283,9 @@ const data = ref(
     age: 32,
     address: `London, Park Lane no. ${index}`,
     sex: 'nan',
-    sexStr: '男'
+    sexStr: '男',
+    workerId: 'work',
+    test: 'test'
   }))
 )
 

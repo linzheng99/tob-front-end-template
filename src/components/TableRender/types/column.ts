@@ -1,7 +1,7 @@
 import { InternalRowData, TableBaseColumn } from "naive-ui/es/data-table/src/interface";
 import { ComponentType } from "./componentType";
 import { ActionColumnProps } from "../components/actionColumn/types";
-import { Ref } from "vue";
+import { Ref, VNodeChild } from "vue";
 
 export interface TableBasicColumn<T = InternalRowData> extends TableBaseColumn<T> {
   editable?: boolean;
@@ -11,6 +11,11 @@ export interface TableBasicColumn<T = InternalRowData> extends TableBaseColumn<T
   textKey?: string
   editComponentProps?: Recordable
   children?: TableBasicColumn<T>[]
+  editRenders?: {
+    key: string,
+    render: (data: { value: any; editValues: Recordable }) => VNodeChild;
+  }[]
+  editCompClass?: string
 }
 
 export type TableBasicActionColumn = TableBaseColumn & Partial<ActionColumnProps>

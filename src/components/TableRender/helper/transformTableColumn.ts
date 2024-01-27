@@ -18,8 +18,8 @@ export const transformEditCell = (column: TableBasicColumn, emit: EmitType) => {
 
 export const transformColumns = (columns: TableBasicColumn[], emit: EmitType) => {
   columns.forEach(column => {
-    const { editable, render } = column
-    // if (!editable || render) return column
+    const { editable } = column
+    if (!editable) return column
 
     if (column.children && column.children.length) {
       transformColumns(column.children, emit)

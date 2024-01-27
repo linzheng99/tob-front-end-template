@@ -5,10 +5,16 @@
     </n-ellipsis>
   </template>
   <template v-else>
-    <CellComponent
-      v-bind="getComponentProps"
-      :component="getComponent"
-    />
+    <div :class="getEditColumnClass">
+      <CellComponent v-bind="getComponentProps" :component="getComponent" />
+      <EditRenderVNode
+        v-for="v in editRenders"
+        :key="v.key"
+        :create-v-node="v.render"
+        :value="getEditValueRefs?.[v.key]"
+        :edit-values="getEditValueRefs"
+      />
+    </div>
     <!-- 能否抽成一个组件 后面还会出现日期选择器的组件 -->
     <!-- <n-popover :show="!!showPop" placement="bottom" trigger="manual" :animated="false">
       <template #trigger>
@@ -42,7 +48,8 @@ import { TableBasicColumn, TableBasicRecordRow, EmitType } from '../../types/col
 import { isArray } from '@/utils/is'
 import { set } from 'lodash-es'
 import { createPlaceholderMessage } from '@/utils/helper/createPlaceholder'
-import { CellComponent } from '../editableCell/CellComponent.ts'
+import { CellComponent } from '../editableCell/CellComponent'
+import EditRenderVNode from './EditRenderVNode'
 
 defineOptions({
   name: 'EditableCell'
@@ -64,24 +71,29 @@ const defaultValueRef = ref(props.value)
 const ruleMsg = ref<string>('')
 const ruleVisible = ref(false)
 
-const showPop = computed(() => {
-  console.log(ruleMsg.value, ruleVisible.value)
-
-  return unref(ruleMsg) && unref(ruleVisible)
+// render 多个自定义的 comp
+const editRenders = ref(props.column.editRenders)
+const getEditValueRefs = computed(() => {
+  return props.record.editValueRefs
 })
+
+// const showPop = computed(() => {
+//   console.log(ruleMsg.value, ruleVisible.value)
+//   return unref(ruleMsg) && unref(ruleVisible)
+// })
 
 watchEffect(() => {
   defaultValueRef.value = props.value
 })
 
+// 样式
+const getEditColumnClass = computed(() => {
+  return props.column.editCompClass
+})
+
 async function handleChange(e) {
   const { emit, record, index, column } = props
-  console.log(e);
-  
-  currentValueRef.value = e;
-  console.log(currentValueRef.value);
-  
-
+  currentValueRef.value = e
   await nextTick()
   emit('edit-change', { record, index, value: unref(currentValueRef), key: column.key })
 
@@ -93,6 +105,7 @@ async function AddRecordAttribute() {
   initCbs('submitCbs', handleSubmit)
   initCbs('validCbs', handleEditableRule)
   collectEditValue()
+  collectEditRenderValue()
   props.record.onSubmitEdit = async () => onSubmitEdit()
   props.record.onCancelEdit = () => onCancelEdit()
 }
@@ -131,7 +144,6 @@ async function handleEditableRule(): Promise<Error | boolean> {
     if (!currentValue) {
       ruleVisible.value = true
       ruleMsg.value = createPlaceholderMessage(editComponent) || ''
-      // window.$message?.error('必填')
       return false
     }
     if (editRule) {
@@ -161,6 +173,8 @@ function handleCancel() {
   props.record.editable = false
   currentValueRef.value = defaultValueRef.value
   resetRule()
+  collectEditValue()
+  collectEditRenderValue()
 }
 
 function collectEditValue() {
@@ -171,16 +185,42 @@ function collectEditValue() {
   }
 }
 
+function collectEditRenderValue() {
+  const {
+    column: { editRenders },
+    record
+  } = props
+  if (editRenders && editRenders.length) {
+    const { editValueRefs } = record
+    editRenders.forEach((render) => {
+      const key = render['key']
+      if (editValueRefs) editValueRefs[key] = ref(record[key])
+    })
+  }
+}
+
 function handleSubmit() {
   props.record.editable = false
-  const { column, record } = props
+  const { record } = props
   if (!record) return false
 
-  const { key } = column
-  if (!key) return
-
-  set(record, key, unref(currentValueRef))
+  setEditValue(record)
+  setEditRenderValues(record)
   resetRule()
+}
+
+function setEditValue(record: TableBasicRecordRow) {
+  const { column } = props
+  const { key } = column
+  if (key) set(record, key, unref(currentValueRef))
+}
+
+function setEditRenderValues(record: TableBasicRecordRow) {
+  const renders = unref(editRenders)
+  const values = unref(getEditValueRefs)
+  if (renders && renders.length) {
+    renders.forEach((v) => set(record, v.key, values?.[v.key]))
+  }
 }
 
 // 回显
@@ -217,11 +257,10 @@ const isCheckComp = computed(() => {
 const getComponentProps = computed(() => {
   const { column } = props
   const { editComponentProps } = column
-  const isChecked =unref(isCheckComp)
+  const isChecked = unref(isCheckComp)
   // 绑定value & change事件
   const value = isChecked ? 'checked' : 'value'
   const onEvent = isChecked ? 'on-update:checked' : 'on-update:value'
-  
 
   return {
     clearable: true,
