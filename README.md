@@ -18,10 +18,8 @@ pnpm dev:docs
 * lodash-es
 * js-cookie
 * mock
-- [ ] code fix
-  - [ ] eslint
-  - [ ] prettier
-  - [ ] husky
+* eslint(antfu)
+- [ ] husky
 * vueUse
 * vitest
 ---
@@ -79,21 +77,21 @@ common
 ### components
 - [x] svgIcon封装
 - [x] echarts
-- [x] Form 
+- [x] Form
   - [ ] (是否存在优化: schema 配置项中的 component 改成组件导入的形式而不是 string, 可以配合 unplugin-auto-import 插件自动导入;)
 - [x] Table
-- [x] Descriptions 
+- [x] Descriptions
   - [ ] TODO (缺少类型提示;形式也不够优雅)
 - [ ] 高德的地图
 - [ ] MessageBox
 - [ ] Upload (可写)
 ### vite config
-- [x] proxy 
+- [x] proxy
 ### Vitest
 - [x] ~~add test case~~
-#### plugins 
+#### plugins
   - [x] mock
-  - [x] vite-plugin-svg-icons 
+  - [x] vite-plugin-svg-icons
   - [x] unplugin-vue-components
   - [x] vite-plugin-html
   - [x] vite-plugin-imagemin
