@@ -28,7 +28,7 @@
 import { computed, ref, unref, watchEffect, nextTick } from 'vue'
 import { TableBasicColumn, TableBasicRecordRow, EmitType } from '../../types/column'
 import { isArray } from '@/utils/is'
-import { set } from 'lodash-es'
+import { omit, set } from 'lodash-es'
 import { createPlaceholderMessage } from '@/utils/helper/createPlaceholder'
 import { CellComponent } from '../editableCell/CellComponent'
 import EditRenderVNode from './EditRenderVNode'
@@ -107,7 +107,10 @@ async function onSubmitEdit() {
 
   isArray(props.record?.submitCbs) && props.record?.submitCbs.forEach((fn) => fn())
   const { record, index, emit } = props
-  emit('edit-submit', { record, index })
+  emit('edit-submit', {
+    record: omitRecordKey(record),
+    index
+  })
   return record
 }
 
@@ -178,6 +181,21 @@ function collectEditRenderValue() {
       if (editValueRefs) editValueRefs[key] = ref(record[key])
     })
   }
+}
+
+function omitRecordKey(record: TableBasicRecordRow) {
+  return omit(
+    record,
+    'editable',
+    'onEdit',
+    'onCancelEdit',
+    'onSubmitEdit',
+    '_key',
+    'submitCbs',
+    'cancelCbs',
+    'editValueRefs',
+    'validCbs'
+  )
 }
 
 function handleSubmit() {

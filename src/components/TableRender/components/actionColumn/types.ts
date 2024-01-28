@@ -1,5 +1,6 @@
 import { ButtonProps } from "naive-ui"
 import { IconConfig } from '@/hooks/component/useIconRender';
+import { TableBasicRecordRow } from "../../types";
 
 export interface Actions {
   title: string
@@ -9,7 +10,7 @@ export interface Actions {
 }
 
 export interface ActionColumnProps {
-  actions: (record: Recordable) => Actions[]
-  record: Recordable
+  actions: (record: TableBasicRecordRow) => Actions[]
+  record: TableBasicRecordRow
   showDropdown?: boolean
 }

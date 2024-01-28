@@ -3,7 +3,6 @@ import { PageEnum } from '@/enums/pageEnum'
 import { WHITE_PATH_LIST } from '../index'
 import { usePermissionStoreWithOut } from '@/store/modules/permission'
 import { useUserStoreWithOut } from '@/store/modules/user'
-import { AppRouteRecordRaw } from '../routeTypes'
 import { searchRoute } from '@/utils/helper/routerHelper'
 
 const LOGIN_PATH = PageEnum.Login_page

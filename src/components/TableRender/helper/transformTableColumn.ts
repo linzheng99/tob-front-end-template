@@ -29,7 +29,10 @@ export const transformColumns = (columns: TableBasicColumn[], emit: EmitType) =>
   })
 }
 
-export function handleActionColumn(actionColumn: TableBasicActionColumn | undefined, emit: EmitType): TableBasicActionColumn | undefined {
+export function handleActionColumn(
+  actionColumn: TableBasicActionColumn | undefined,
+  emit: EmitType
+): TableBasicColumn | undefined {
   if (!actionColumn) return
   const { actions, ...restProps } = actionColumn
 
@@ -38,13 +41,13 @@ export function handleActionColumn(actionColumn: TableBasicActionColumn | undefi
     key: '_action',
     render(record) {
       const recordRef = ref(record)
-      return h(ActionColumn, {
+      return actions ? h(ActionColumn, {
         actions,
         record: recordRef.value,
         onHandleClick: (values: ActionValues) => {
           emit('handle-action', values)
         }
-      })
+      }) : null
     }
   }
 }
