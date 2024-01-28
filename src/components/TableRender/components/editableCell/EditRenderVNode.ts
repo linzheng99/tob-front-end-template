@@ -1,4 +1,5 @@
-import { PropType, defineComponent} from 'vue'
+import type { PropType } from 'vue'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   props: {
@@ -6,14 +7,13 @@ export default defineComponent({
     value: String as PropType<any>,
     editValues: {
       type: Object as PropType<Recordable>,
-      default: {}
-    }
+      default: {},
+    },
   },
   render() {
     const { value, editValues } = this
-    
-    if (this.createVNode) {
-      return this.createVNode({ value, editValues });
-    }
-  }
+
+    if (this.createVNode)
+      return this.createVNode({ value, editValues })
+  },
 })

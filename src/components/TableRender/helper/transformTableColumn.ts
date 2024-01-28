@@ -1,39 +1,46 @@
-import { h, ref } from "vue";
-import { ActionValues, EmitType, TableBasicActionColumn, TableBasicColumn, TableBasicRecordRow } from '../types';
-import EditableCell from '../components/editableCell/EditableCell.vue';
-import ActionColumn from '../components/actionColumn/ActionColumn.vue';
+import { h, ref } from 'vue'
+import type { ActionValues, EmitType, TableBasicActionColumn, TableBasicColumn, TableBasicRecordRow } from '../types'
+import EditableCell from '../components/editableCell/EditableCell.vue'
+import ActionColumn from '../components/actionColumn/ActionColumn.vue'
 
-export const transformEditCell = (column: TableBasicColumn, emit: EmitType) => {
+export function transformEditCell(column: TableBasicColumn, emit: EmitType) {
   return (record: TableBasicRecordRow, index: number) => {
-    const _key = column.key;
-    const value = record[_key];
+    const _key = column.key
+    const value = record[_key]
     record.onEdit = async (edit: boolean) => {
       record.editable = edit
     }
     return h(EditableCell, {
-      column, value, record, index, emit
+      column,
+      value,
+      record,
+      index,
+      emit,
     })
   }
-};
+}
 
-export const transformColumns = (columns: TableBasicColumn[], emit: EmitType) => {
-  columns.forEach(column => {
+export function transformColumns(columns: TableBasicColumn[], emit: EmitType) {
+  columns.forEach((column) => {
     const { editable } = column
-    if (!editable) return column
+    if (!editable)
+      return column
 
-    if (column.children && column.children.length) {
+    if (column.children && column.children.length)
       transformColumns(column.children, emit)
-    } else if (column.editable) {
+    else if (column.editable)
       column.render = transformEditCell(column, emit)
-    }
+
+    return column
   })
 }
 
 export function handleActionColumn(
   actionColumn: TableBasicActionColumn | undefined,
-  emit: EmitType
+  emit: EmitType,
 ): TableBasicColumn | undefined {
-  if (!actionColumn) return
+  if (!actionColumn)
+    return
   const { actions, ...restProps } = actionColumn
 
   return {
@@ -41,14 +48,16 @@ export function handleActionColumn(
     key: '_action',
     render(record) {
       const recordRef = ref(record)
-      return actions ? h(ActionColumn, {
-        actions,
-        record: recordRef.value,
-        onHandleClick: (values: ActionValues) => {
-          emit('handle-action', values)
-        }
-      }) : null
-    }
+      return actions
+        ? h(ActionColumn, {
+          actions,
+          record: recordRef.value,
+          onHandleClick: (values: ActionValues) => {
+            emit('handle-action', values)
+          },
+        })
+        : null
+    },
   }
 }
 

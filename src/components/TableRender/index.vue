@@ -9,14 +9,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed, unref, ref, reactive } from 'vue'
-import { TableBasicColumn, TableBasicProps } from './types'
+import { computed, reactive, ref, unref } from 'vue'
+import type { TableBasicColumn, TableBasicProps } from './types'
 import { usePagination } from './hooks/usePagination'
 import { useLoading } from './hooks/useLoading'
 import { useDataSource } from './hooks/useDataSource'
 import { useColumns } from './hooks/useColumns'
-import { ActionValues } from './types/column'
-import { TableActionType } from './types/tableActionType'
+import type { ActionValues, TableBasicRecordRow } from './types/column'
+import type { TableActionType } from './types/tableActionType'
 
 const props = withDefaults(defineProps<TableBasicProps>(), {
   remote: false,
@@ -24,17 +24,21 @@ const props = withDefaults(defineProps<TableBasicProps>(), {
   singleLine: false,
   bottomBordered: true,
   flexHeight: true,
-  showPagination: true
+  showPagination: true,
 })
+
+const emit = defineEmits<Emit>()
+const tableElRef = ref(null)
 
 interface Emit {
   (e: 'handle-action', values: ActionValues): void
-  (e: 'edit-submit', values: any): void
-  (e: 'edit-cancel', values: any): void
-  (e: 'edit-change', values: any): void
+  (e: 'edit-submit', values: TableBasicRecordRow): void
+  (e: 'edit-cancel', values: { record: TableBasicRecordRow, index: number }): void
+  (
+    e: 'edit-change',
+    values: { record: TableBasicRecordRow, index: number, value: any, key: string }
+  ): void
 }
-
-const emit = defineEmits<Emit>()
 
 const getProps = computed(() => {
   return { ...props }
@@ -48,7 +52,7 @@ const { requestData } = useDataSource({
   setLoading,
   requestApi: props.requestApi,
   setPagination,
-  getPagination
+  getPagination,
 })
 
 // 横向滚动宽度
@@ -64,9 +68,8 @@ const getBindValues = computed(() => {
   const configProps = reactive<Recordable>({})
 
   // 是否异步
-  if (remote) {
+  if (remote)
     configProps.data = unref(tableData)
-  }
 
   return {
     ...unref(getProps),
@@ -74,7 +77,7 @@ const getBindValues = computed(() => {
     scrollX: unref(scrollX),
     pagination: getPagination(),
     loading: unref(getLoading),
-    ...configProps
+    ...configProps,
   }
 })
 
@@ -82,18 +85,19 @@ async function reloadData(params?: any) {
   try {
     const data = await requestData(params)
     tableData.value = data || []
-  } catch (error) {
+  }
+  catch (error) {
     tableData.value = []
     throw new Error(`${error}`)
   }
 }
 
-//页码切换
+// 页码切换
 function updatePage(page: number) {
-  setPagination({ page: page })
+  setPagination({ page })
 }
 
-//分页数量切换
+// 分页数量切换
 function updatePageSize(size: number) {
   setPagination({ page: 1, pageSize: size })
 }
@@ -101,10 +105,10 @@ function updatePageSize(size: number) {
 const tableAction: TableActionType = {
   setPagination,
   reloadData,
-  setLoading
+  setLoading,
 }
 
-defineExpose(tableAction)
+defineExpose({ ...tableAction, tableElRef })
 </script>
 
 <style scoped></style>

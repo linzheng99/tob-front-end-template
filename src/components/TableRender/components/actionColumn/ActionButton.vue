@@ -13,22 +13,22 @@
 </template>
 
 <script setup lang="ts">
+import type { Actions } from './types'
 import { useIconRender } from '@/hooks/component/useIconRender'
-import { Actions } from './types'
 
 interface Props {
   actions: Actions[] | null
   record: Recordable
 }
 interface Emit {
-  (e: 'handle-click', title: string): void
+  (e: 'handleClick', title: string): void
 }
 defineProps<Props>()
 const emit = defineEmits<Emit>()
 const { iconRender } = useIconRender()
 
 function handleAction(title: string) {
-  emit('handle-click', title)
+  emit('handleClick', title)
 }
 </script>
 

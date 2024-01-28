@@ -1,8 +1,8 @@
-import { computed, unref, type ComputedRef } from "vue"
-import { EmitType, TableBasicProps } from "../types"
-import { addActionColumn, transformColumns } from "../helper";
+import { type ComputedRef, computed, unref } from 'vue'
+import type { EmitType, TableBasicProps } from '../types'
+import { addActionColumn, transformColumns } from '../helper'
 
-export const useColumns = (props: ComputedRef<TableBasicProps>, emit: EmitType) => {
+export function useColumns(props: ComputedRef<TableBasicProps>, emit: EmitType) {
   const { columns, actionColumn } = props.value
 
   const actionColumnRef = computed(() => {
@@ -19,8 +19,7 @@ export const useColumns = (props: ComputedRef<TableBasicProps>, emit: EmitType) 
     return columns
   })
 
-
   return {
-    getColumns
+    getColumns,
   }
 }

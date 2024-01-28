@@ -1,6 +1,6 @@
-import { ButtonProps } from "naive-ui"
-import { IconConfig } from '@/hooks/component/useIconRender';
-import { TableBasicRecordRow } from "../../types";
+import type { ButtonProps } from 'naive-ui'
+import type { TableBasicRecordRow } from '../../types'
+import type { IconConfig } from '@/hooks/component/useIconRender'
 
 export interface Actions {
   title: string

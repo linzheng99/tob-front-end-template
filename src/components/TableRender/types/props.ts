@@ -1,8 +1,8 @@
-import { TableBasicActionColumn, TableBasicColumn } from "./column"
+import type { TableBasicActionColumn, TableBasicColumn } from './column'
 
 export interface TableBasicProps {
   data: Recordable[]
-  columns: TableBasicColumn[],
+  columns: TableBasicColumn[]
   actionColumn?: TableBasicActionColumn
   remote?: boolean
   striped?: boolean
@@ -10,7 +10,7 @@ export interface TableBasicProps {
   bottomBordered?: boolean
   flexHeight?: boolean
   showPagination?: boolean
-  pagination?: Object | false
+  pagination?: object | false
   requestApi?: (params?: any) => Promise<ResponseApi>
 }
 

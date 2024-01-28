@@ -3,7 +3,7 @@
     <ActionButton
       :actions="getActions"
       :record="record"
-      @handleClick="handleAction"
+      @handle-click="handleAction"
     />
   </template>
   <template v-else>
@@ -11,7 +11,7 @@
       <template #trigger>
         <n-button
           type="primary"
-          :renderIcon="iconRender({ icon: 'ep:arrow-down-bold' })"
+          :render-icon="iconRender({ icon: 'ep:arrow-down-bold' })"
           icon-placement="right"
         >
           更多
@@ -20,7 +20,7 @@
       <ActionButton
         :actions="getActions"
         :record="record"
-        @handleClick="handleAction"
+        @handle-click="handleAction"
       />
     </n-popover>
   </template>
@@ -28,19 +28,21 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import type { ActionValues } from '../../types'
 import ActionButton from './ActionButton.vue'
+import type { ActionColumnProps, Actions } from './types'
 import { useIconRender } from '@/hooks/component/useIconRender'
-import { ActionColumnProps, Actions } from './types'
-import { ActionValues } from '../../types'
 import { isBoolean } from '@/utils/is'
 
 interface Emit {
-  (e: 'handle-click', item: ActionValues): void
+  (e: 'handleClick', item: ActionValues): void
 }
 
 const props = withDefaults(defineProps<ActionColumnProps>(), {
-  showDropdown: true
+  showDropdown: true,
 })
+
+const emit = defineEmits<Emit>()
 
 const getActions = computed<Actions[] | []>(() => {
   const { actions, record } = props
@@ -52,16 +54,16 @@ const getActions = computed<Actions[] | []>(() => {
   })
 })
 
-const emit = defineEmits<Emit>()
 const { iconRender } = useIconRender()
 
 const isDropdown = computed(() => {
-  if (!props.actions) return false
+  if (!props.actions)
+    return false
   return props.showDropdown && props.actions?.length > 2
 })
 
 function handleAction(title: string) {
-  emit('handle-click', { title, record: props.record })
+  emit('handleClick', { title, record: props.record })
 }
 </script>
 

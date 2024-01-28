@@ -1,6 +1,6 @@
-import { computed, ref, unref } from "vue";
+import { computed, ref, unref } from 'vue'
 
-export const useLoading = () => {
+export function useLoading() {
   const loadingRef = ref(false)
 
   const getLoading = computed(() => unref(loadingRef))
@@ -10,4 +10,4 @@ export const useLoading = () => {
   }
 
   return { getLoading, setLoading }
-};
+}
