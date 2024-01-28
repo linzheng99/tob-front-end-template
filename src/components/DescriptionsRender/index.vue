@@ -13,7 +13,14 @@
       :label-style="finallyItemLabelStyle"
       :content-style="finallyItemContentStyle"
     >
-      <template #label> {{ item.label }} </template>
+    <template #label>
+        <span v-if="isFunction(item.label)">
+            <RenderVNode :createVNode="item.label" :data="data" :param="item.param" />
+        </span>
+        <span v-else>
+          {{ item.label }}
+        </span>
+      </template>
       <template #default>
         <span v-if="item.render">
           <RenderVNode :createVNode="item.render" :data="data" :param="item.param" />
@@ -29,6 +36,7 @@ import { ref, onMounted } from 'vue'
 import { extend } from '@/utils/share'
 import { ListType } from './types'
 import RenderVNode from './renderVNode'
+import { isFunction } from '@/utils/is';
 
 interface Props {
   labelPlacement?: 'center' | 'left' | 'right'
