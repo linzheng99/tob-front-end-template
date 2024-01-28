@@ -50,7 +50,7 @@ import { computed, defineComponent, reactive, ref, unref, onMounted, Ref, watch 
 import { FormProps, FormSchema, FormActionType } from './types'
 import { useFormValues } from './hooks/useFormValues'
 import { deepMerge } from '@/utils'
-import { createPlaceholderMessage } from './helper'
+import { createPlaceholderMessage } from '@/utils/helper/createPlaceholder'
 import { basicProps } from './props'
 import { GridProps } from 'naive-ui'
 import { useFormEvents } from './hooks/useFormEvents'
