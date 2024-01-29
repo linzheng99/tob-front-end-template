@@ -60,9 +60,18 @@ const { requestData } = useDataSource({
 
 // 横向滚动宽度
 const scrollX = computed(() => {
-  return props.columns?.reduce((a: number, b: TableBasicColumn) => {
-    return a + +(b.width || 0)
-  }, 0)
+  const calculateWidth = (columns: TableBasicColumn[]) => {
+    return columns.reduce((totalWidth: number, column: TableBasicColumn) => {
+      totalWidth += +(column.width || 0)
+
+      if (column.children && column.children.length > 0)
+        totalWidth += calculateWidth(column.children)
+
+      return totalWidth
+    }, 0)
+  }
+
+  return calculateWidth(props.columns)
 })
 
 const getBindValues = computed(() => {
