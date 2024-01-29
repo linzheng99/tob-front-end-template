@@ -45,9 +45,9 @@ const props = withDefaults(defineProps<ActionColumnProps>(), {
 const emit = defineEmits<Emit>()
 
 const getActions = computed<Actions[] | []>(() => {
-  const { actions, record } = props
+  const { actions, record, index } = props
 
-  return actions(record).filter((action) => {
+  return actions(record, index).filter((action) => {
     const shouldInclude = isBoolean(action.show) ? action.show : !action.show
 
     return shouldInclude

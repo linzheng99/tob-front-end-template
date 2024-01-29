@@ -10,7 +10,8 @@ export interface Actions {
 }
 
 export interface ActionColumnProps {
-  actions: (record: TableBasicRecordRow) => Actions[]
+  actions: (record: TableBasicRecordRow, index: number) => Actions[]
+  index: number
   record: TableBasicRecordRow
   showDropdown?: boolean
 }

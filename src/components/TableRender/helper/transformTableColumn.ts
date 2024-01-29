@@ -46,12 +46,13 @@ export function handleActionColumn(
   return {
     ...restProps,
     key: '_action',
-    render(record) {
+    render(record, index) {
       const recordRef = ref(record)
       return actions
         ? h(ActionColumn, {
           actions,
           record: recordRef.value,
+          index,
           onHandleClick: (values: ActionValues) => {
             emit('handle-action', values)
           },

@@ -235,11 +235,11 @@ function setEditRenderValues(record: TableBasicRecordRow) {
 // 回显
 const tramsformValue = computed(() => {
   const { column, record } = props
-  const { editComponent, textKey } = column
+  const { editComponent, labelKey } = column
   const currentValue = unref(currentValueRef)
 
   if (editComponent?.includes('NSelect'))
-    return textKey ? record[textKey] : currentValue
+    return labelKey ? record[labelKey] : currentValue
 
   return currentValue
 })

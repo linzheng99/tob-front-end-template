@@ -3,13 +3,14 @@
     ref="tableElRef"
     class="flex-1"
     v-bind="getBindValues"
+    :row-key="(row: TableBasicRecordRow) => row.id || row._key"
     @update:page="updatePage"
     @update:page-size="updatePageSize"
   />
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref, unref } from 'vue'
+import { computed, ref, unref } from 'vue'
 import type { TableBasicColumn, TableBasicProps } from './types'
 import { usePagination } from './hooks/usePagination'
 import { useLoading } from './hooks/useLoading'
@@ -38,17 +39,19 @@ interface Emit {
     e: 'edit-change',
     values: { record: TableBasicRecordRow, index: number, value: any, key: string }
   ): void
+  (e: 'request-success', value: any): void
+  (e: 'request-error'): void
 }
 
 const getProps = computed(() => {
   return { ...props }
 })
-const tableData = ref<Recordable[]>([])
 
 const { getPagination, setPagination } = usePagination(unref(getProps))
 const { getLoading, setLoading } = useLoading()
 const { getColumns } = useColumns(getProps, emit)
 const { requestData } = useDataSource({
+  emit,
   setLoading,
   requestApi: props.requestApi,
   setPagination,
@@ -63,31 +66,20 @@ const scrollX = computed(() => {
 })
 
 const getBindValues = computed(() => {
-  const { remote } = unref(getProps)
-
-  const configProps = reactive<Recordable>({})
-
-  // 是否异步
-  if (remote)
-    configProps.data = unref(tableData)
-
   return {
     ...unref(getProps),
     columns: unref(getColumns),
     scrollX: unref(scrollX),
     pagination: getPagination(),
     loading: unref(getLoading),
-    ...configProps,
   }
 })
 
 async function reloadData(params?: any) {
   try {
-    const data = await requestData(params)
-    tableData.value = data || []
+    await requestData(params)
   }
   catch (error) {
-    tableData.value = []
     throw new Error(`${error}`)
   }
 }
@@ -95,11 +87,13 @@ async function reloadData(params?: any) {
 // 页码切换
 function updatePage(page: number) {
   setPagination({ page })
+  reloadData()
 }
 
 // 分页数量切换
 function updatePageSize(size: number) {
   setPagination({ page: 1, pageSize: size })
+  reloadData()
 }
 
 const tableAction: TableActionType = {

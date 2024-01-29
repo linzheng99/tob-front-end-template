@@ -1,10 +1,18 @@
 <template>
   <div class="h-full w-full flex flex-col">
     <div flex mb-2 space-x-2>
-      <n-button @click="changePage" type="primary">chang page</n-button>
-      <n-button @click="fetchApi" type="primary">fetch</n-button>
-      <n-button @click="changeColumn" type="primary">column</n-button>
-      <n-button @click="changeLoading" type="primary">loading</n-button>
+      <NButton type="primary" @click="changePage">
+        chang page
+      </NButton>
+      <NButton type="primary" @click="fetchApi">
+        fetch
+      </NButton>
+      <NButton type="primary" @click="changeColumn">
+        column
+      </NButton>
+      <NButton type="primary" @click="changeLoading">
+        loading
+      </NButton>
     </div>
     <TableRender
       ref="tableRef"
@@ -21,37 +29,36 @@
 </template>
 
 <script setup lang="ts">
+import { h, nextTick, reactive, ref } from 'vue'
+import type { TreeOption } from 'naive-ui'
+import { NButton, NInput } from 'naive-ui'
 import TableRender from '@/components/TableRender/index.vue'
-import { ResponseApi } from '@/components/TableRender/types'
-import { ref, reactive, h, nextTick } from 'vue';
-import { TableActionType } from '@/components/TableRender/types'
-import { TableBasicActionColumn } from '@/components/TableRender/types/column'
-import { ActionValues, TableBasicColumn } from '@/components/TableRender/types/column'
-import { Actions } from '@/components/TableRender/components/actionColumn/types'
-import { TreeOption, NButton, NInput } from 'naive-ui'
+import type { ResponseApi, TableActionType } from '@/components/TableRender/types'
+import type { ActionValues, TableBasicActionColumn, TableBasicColumn } from '@/components/TableRender/types/column'
+import type { Actions } from '@/components/TableRender/components/actionColumn/types'
 
 const tableRef = ref<TableActionType>()
 const pagination = ref({ pageSize: 10 })
 const isDisable = ref(false)
+const options = ref<TreeOption[]>([])
 
 function editSubmit(values) {
   console.log(values)
 }
 function editChange(values) {
   const { record, key } = values
-  if (key === 'age') {
+  if (key === 'age')
     record.editValueRefs.address = '2'
-  }
 }
 
 // TODO 把 click 放到props里面
 const actionColumn: TableBasicActionColumn = reactive({
-  key: 'action',
+  key: '_action',
   title: '操作',
   align: 'center',
   fixed: 'right',
   width: 200,
-  actions: (record) => actionBtns(record)
+  actions: record => actionBtns(record),
 })
 async function handleAction(item: ActionValues) {
   console.log('page', item)
@@ -62,12 +69,12 @@ async function handleAction(item: ActionValues) {
       options.value = [
         {
           value: 'nan',
-          label: '男'
+          label: '男',
         },
         {
           value: 'nv',
-          label: '女'
-        }
+          label: '女',
+        },
       ]
       break
     case '保存':
@@ -82,8 +89,6 @@ async function handleAction(item: ActionValues) {
   }
 }
 
-const options = ref<TreeOption[]>([])
-
 const columns = reactive<TableBasicColumn[]>([
   {
     title: '序号',
@@ -91,38 +96,38 @@ const columns = reactive<TableBasicColumn[]>([
     key: 'index',
     width: 60,
     fixed: 'left',
-    render: (_, index) => `${index + 1}`
+    render: (_, index) => `${index + 1}`,
   },
   {
     title: '日期',
     key: 'date',
     align: 'center',
     width: 160,
-    ellipsis: { tooltip: true }
+    ellipsis: { tooltip: true },
   },
   {
     title: '班级',
     key: 'classId',
-    textKey: 'className',
+    labelKey: 'className',
     align: 'center',
     width: 160,
     editable: true,
     editComponent: 'NSelect',
     editComponentProps: {
-      options: []
-    }
+      options: [],
+    },
   },
   {
     title: '儿童姓名',
     key: 'childId',
-    textKey: 'childName',
+    labelKey: 'childName',
     align: 'center',
     width: 160,
     editable: true,
     editComponent: 'NSelect',
     editComponentProps: {
-      options: []
-    }
+      options: [],
+    },
   },
   {
     title: '老师',
@@ -138,15 +143,15 @@ const columns = reactive<TableBasicColumn[]>([
           const show = true
           return show
             ? h(NInput, {
-                value,
-                onUpdateValue(e) {
-                  editValues.test = e
-                }
-              })
+              value,
+              onUpdateValue(e) {
+                editValues.test = e
+              },
+            })
             : ''
-        }
-      }
-    ]
+        },
+      },
+    ],
   },
   {
     title: '午睡时间(小时)',
@@ -157,16 +162,16 @@ const columns = reactive<TableBasicColumn[]>([
     editRule: async (value, record) => {
       await nextTick()
       console.log(value, record)
-      if (value !== 3) {
+      if (value !== 3)
         throw new Error('33')
-      }
+
       return true
     },
     editable: true,
     editComponent: 'NInputNumber',
     editComponentProps: {
-      showButton: false
-    }
+      showButton: false,
+    },
   },
   {
     title: '如厕情况',
@@ -181,13 +186,13 @@ const columns = reactive<TableBasicColumn[]>([
       uncheckedValue: false,
       onUpdateChecked(e) {
         console.log('checked', e)
-      }
-    }
+      },
+    },
   },
   {
     title: '健康情况',
     key: 'healthState',
-    textKey: 'healthStateStr',
+    labelKey: 'healthStateStr',
     align: 'center',
     width: 160,
     editable: true,
@@ -195,14 +200,15 @@ const columns = reactive<TableBasicColumn[]>([
     editComponentProps: {
       options: [],
       valueField: 'key',
-      labelField: 'value'
-    }
+      labelField: 'value',
+    },
   },
   {
     title: '游戏/活动',
     key: '',
     align: 'center',
     ellipsis: { tooltip: true },
+    editable: true,
     children: [
       {
         title: '自主完成',
@@ -211,7 +217,7 @@ const columns = reactive<TableBasicColumn[]>([
         width: 160,
         ellipsis: { tooltip: true },
         editable: true,
-        editComponent: 'NInput'
+        editComponent: 'NInput',
       },
       {
         title: '口头指导',
@@ -220,7 +226,7 @@ const columns = reactive<TableBasicColumn[]>([
         width: 160,
         ellipsis: { tooltip: true },
         editable: true,
-        editComponent: 'NInput'
+        editComponent: 'NInput',
       },
       {
         title: '协助完成',
@@ -229,7 +235,7 @@ const columns = reactive<TableBasicColumn[]>([
         width: 160,
         ellipsis: { tooltip: true },
         editable: true,
-        editComponent: 'NInput'
+        editComponent: 'NInput',
       },
       {
         title: '未完成',
@@ -238,16 +244,16 @@ const columns = reactive<TableBasicColumn[]>([
         width: 160,
         ellipsis: { tooltip: true },
         editable: true,
-        editComponent: 'NInput'
-      }
-    ]
+        editComponent: 'NInput',
+      },
+    ],
   },
   {
     title() {
       return h(
         'div',
         {
-          class: 'flex flex-col'
+          class: 'flex flex-col',
         },
         [
           h('span', {}, { default: () => '一日表现' }),
@@ -255,11 +261,11 @@ const columns = reactive<TableBasicColumn[]>([
             NButton,
             {
               size: 'small',
-              type: 'primary'
+              type: 'primary',
             },
-            { default: () => '模板管理' }
-          )
-        ]
+            { default: () => '模板管理' },
+          ),
+        ],
       )
     },
     key: 'dailyShow',
@@ -270,8 +276,8 @@ const columns = reactive<TableBasicColumn[]>([
     editComponentProps: {
       options: [],
       filterable: true,
-      tag: true
-    }
+      tag: true,
+    },
   },
   {
     title: '其他情况',
@@ -280,8 +286,8 @@ const columns = reactive<TableBasicColumn[]>([
     width: 160,
     ellipsis: { tooltip: true },
     editable: true,
-    editComponent: 'NInput'
-  }
+    editComponent: 'NInput',
+  },
 ])
 
 const data = ref(
@@ -293,8 +299,8 @@ const data = ref(
     sex: 'nan',
     sexStr: '男',
     workerId: 'work',
-    test: 'test'
-  }))
+    test: 'test',
+  })),
 )
 
 function changePage() {
@@ -304,7 +310,8 @@ function changePage() {
 async function fetchApi() {
   try {
     await tableRef.value?.reloadData()
-  } catch (error) {
+  }
+  catch (error) {
     console.log(error)
   }
 }
@@ -321,17 +328,17 @@ function actionBtns(record): Actions[] {
       title: !record.editable ? '编辑' : '保存',
       componentProps: {
         type: 'primary',
-        disabled: isDisable.value
-      }
+        disabled: isDisable.value,
+      },
     },
     {
       show: !!isShow,
       iconConfig: { icon: 'ep-search' },
       title: '取消',
       componentProps: {
-        type: 'primary'
-      }
-    }
+        type: 'primary',
+      },
+    },
   ]
 }
 
@@ -342,11 +349,12 @@ function promiseApiWithException() {
       const shouldReject = Math.random() < 0.5
       if (shouldReject) {
         reject(new Error('Simulated API Error'))
-      } else {
+      }
+      else {
         resolve({
           content: { data: [{ name: 'haha', address: 'address' }], total: 1 },
           code: 200,
-          msg: 'msg'
+          msg: 'msg',
         })
       }
     }, 1000) // 模拟异步操作的延迟
