@@ -1,8 +1,8 @@
-import type { TableBasicActionColumn, TableBasicColumn } from './column'
+import type { TableBasicActionColumn } from './column'
 
 export interface TableBasicProps {
   data: Recordable[]
-  columns: TableBasicColumn[]
+  columns: any[]
   actionColumn?: TableBasicActionColumn
   remote?: boolean
   striped?: boolean
