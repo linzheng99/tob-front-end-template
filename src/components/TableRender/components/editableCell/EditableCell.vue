@@ -6,20 +6,10 @@
   </template>
   <template v-else>
     <div :class="getEditColumnClass">
-      <CellComponent
-        v-bind="getComponentProps"
-        :component="getComponent"
-        :rule-message="ruleMessage"
-        :popover-visible="popoverVisible"
-        :edit-rule="getEditRule"
-      />
-      <EditRenderVNode
-        v-for="v in editRenders"
-        :key="v.key"
-        :create-v-node="v.render"
-        :value="getEditValueRefs?.[v.key]"
-        :edit-values="getEditValueRefs"
-      />
+      <CellComponent v-bind="getComponentProps" :component="getComponent" :rule-message="ruleMessage"
+        :popover-visible="popoverVisible" :edit-rule="getEditRule" />
+      <EditRenderVNode v-for="v in editRenders" :key="v.key" :create-v-node="v.render" :value="getEditValueRefs?.[v.key]"
+        :edit-values="getEditValueRefs" />
     </div>
   </template>
 </template>
@@ -30,7 +20,7 @@ import { omit, set } from 'lodash-es'
 import type { EmitType, TableBasicColumn, TableBasicRecordRow } from '../../types/column'
 import { CellComponent } from '../editableCell/CellComponent'
 import EditRenderVNode from './EditRenderVNode'
-import { isArray, isBoolean, isFunction } from '@/utils/is'
+import { isArray, isBoolean, isFunction, isString } from '@/utils/is'
 import { createPlaceholderMessage } from '@/utils/helper/createPlaceholder'
 
 defineOptions({
@@ -264,11 +254,22 @@ const isCheckComp = computed(() => {
 
 const getComponentProps = computed(() => {
   const { column } = props
-  const { editComponentProps } = column
+  const { editComponentProps, editComponent } = column
   const isChecked = unref(isCheckComp)
   // 绑定value & change事件
-  const value = isChecked ? 'checked' : 'value'
+  let value = isChecked ? 'checked' : 'value'
   const onEvent = isChecked ? 'on-update:checked' : 'on-update:value'
+
+  if (editComponent === 'NDatePicker') {
+    if (isString(value)) {
+      if (editComponentProps?.valueFormat)
+        value = 'formatted-value'
+    }
+    else if (isArray(value)) {
+      if (editComponentProps?.valueFormat)
+        value = 'formatted-value'
+    }
+  }
 
   return {
     clearable: true,
@@ -286,4 +287,5 @@ function setupEditRuleStatus(visible: boolean, message: string) {
 AddRecordAttribute()
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>
