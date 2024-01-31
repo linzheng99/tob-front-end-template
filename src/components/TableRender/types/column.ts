@@ -24,6 +24,7 @@ export type EmitType = ReturnType<typeof defineEmits>
 export interface ActionValues {
   title: string
   record: TableBasicRecordRow
+  index: number
 }
 
 export type TableBasicRecordRow<T = Recordable> = Partial<

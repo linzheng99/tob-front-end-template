@@ -1,10 +1,6 @@
 <template>
   <template v-if="!isDropdown">
-    <ActionButton
-      :actions="getActions"
-      :record="record"
-      @handle-click="handleAction"
-    />
+    <ActionButton :actions="getActions" :record="record" @handle-click="handleAction" />
   </template>
   <template v-else>
     <n-popover trigger="click" placement="bottom">
@@ -17,11 +13,7 @@
           更多
         </n-button>
       </template>
-      <ActionButton
-        :actions="getActions"
-        :record="record"
-        @handle-click="handleAction"
-      />
+      <ActionButton :actions="getActions" :record="record" @handle-click="handleAction" />
     </n-popover>
   </template>
 </template>
@@ -39,7 +31,7 @@ interface Emit {
 }
 
 const props = withDefaults(defineProps<ActionColumnProps>(), {
-  showDropdown: true,
+  showDropdown: true
 })
 
 const emit = defineEmits<Emit>()
@@ -57,13 +49,12 @@ const getActions = computed<Actions[] | []>(() => {
 const { iconRender } = useIconRender()
 
 const isDropdown = computed(() => {
-  if (!props.actions)
-    return false
+  if (!props.actions) return false
   return props.showDropdown && props.actions?.length > 2
 })
 
 function handleAction(title: string) {
-  emit('handleClick', { title, record: props.record })
+  emit('handleClick', { title, record: props.record, index: props.index })
 }
 </script>
 

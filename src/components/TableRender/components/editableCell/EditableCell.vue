@@ -6,10 +6,20 @@
   </template>
   <template v-else>
     <div :class="getEditColumnClass">
-      <CellComponent v-bind="getComponentProps" :component="getComponent" :rule-message="ruleMessage"
-        :popover-visible="popoverVisible" :edit-rule="getEditRule" />
-      <EditRenderVNode v-for="v in editRenders" :key="v.key" :create-v-node="v.render" :value="getEditValueRefs?.[v.key]"
-        :edit-values="getEditValueRefs" />
+      <CellComponent
+        v-bind="getComponentProps"
+        :component="getComponent"
+        :rule-message="ruleMessage"
+        :popover-visible="popoverVisible"
+        :edit-rule="getEditRule"
+      />
+      <EditRenderVNode
+        v-for="v in editRenders"
+        :key="v.key"
+        :create-v-node="v.render"
+        :value="getEditValueRefs?.[v.key]"
+        :edit-values="getEditValueRefs"
+      />
     </div>
   </template>
 </template>
@@ -59,6 +69,12 @@ watchEffect(() => {
   defaultValueRef.value = props.value
 })
 
+// 每次开启收集数据
+watchEffect(() => {
+  if (props.record.editable)
+    addRecordAttribute()
+})
+
 // 样式
 const getEditColumnClass = computed(() => {
   return props.column.editCompClass
@@ -73,7 +89,7 @@ async function handleChange(e) {
   await handleEditableRule()
 }
 
-async function AddRecordAttribute() {
+async function addRecordAttribute() {
   initCbs('cancelCbs', handleCancel)
   initCbs('submitCbs', handleSubmit)
   initCbs('validCbs', handleEditableRule)
@@ -283,9 +299,6 @@ function setupEditRuleStatus(visible: boolean, message: string) {
   ruleVisible.value = visible
   ruleMessage.value = message
 }
-
-AddRecordAttribute()
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
