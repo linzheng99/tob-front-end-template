@@ -7,7 +7,7 @@ export interface TableBasicColumn<T = InternalRowData> extends TableBaseColumn<T
   editable?: boolean
   editRule?: ((value: any, record: TableBasicRecordRow) => Promise<boolean>) | boolean
   editComponent?: ComponentType
-  labelKey?: string
+  labelKey?: string | ((record: TableBasicRecordRow, value: any) => VNodeChild)
   editComponentProps?: Recordable
   children?: TableBasicColumn<T>[]
   editRenders?: {

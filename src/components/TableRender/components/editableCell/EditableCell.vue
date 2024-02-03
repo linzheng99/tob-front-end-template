@@ -118,7 +118,7 @@ async function onSubmitEdit() {
     record: omitRecordKey(record),
     index,
   })
-  return record
+  return omitRecordKey(record)
 }
 
 async function handleVerify() {
@@ -241,11 +241,13 @@ function setEditRenderValues(record: TableBasicRecordRow) {
 // 回显
 const tramsformValue = computed(() => {
   const { column, record } = props
-  const { editComponent, labelKey } = column
+  const { labelKey } = column
   const currentValue = unref(currentValueRef)
 
-  if (editComponent?.includes('NSelect'))
-    return labelKey ? record[labelKey] : currentValue
+  if (isString(labelKey))
+    return record[labelKey]
+  else if (isFunction(labelKey))
+    return labelKey(record, currentValue)
 
   return currentValue
 })
