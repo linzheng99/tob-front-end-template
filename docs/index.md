@@ -3,7 +3,7 @@
 layout: home
 
 hero:
-  name: "Am Template"
+  name: "tob Template"
   text: "Document"
   tagline: Personal Studying and Project Development
   image:
@@ -31,4 +31,3 @@ features:
     title: creativity 自由创造
     details: 你可以轻松的自定义主题UI和扩展组件内容
 ---
-

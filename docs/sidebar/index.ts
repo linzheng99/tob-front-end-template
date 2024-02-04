@@ -6,7 +6,7 @@ export function setupSidebar() {
       items: [
         { text: 'Getting Started', link: '/sidebar/Introduction/getting-started' },
         { text: 'Structure', link: '/sidebar/Introduction/structure' },
-      ]
+      ],
     },
     {
       text: '项目指南',
@@ -18,7 +18,14 @@ export function setupSidebar() {
           items: [
             { text: 'router', link: '/sidebar/Guide/Router/router' },
             { text: 'guard', link: '/sidebar/Guide/Router/guard' },
-          ]
+          ],
+        },
+        {
+          text: 'Layout',
+          collapsed: true,
+          items: [
+            { text: 'sidebar', link: '/sidebar/Guide/Layout/sidebar' },
+          ],
         },
         {
           text: 'Helper',
@@ -26,21 +33,14 @@ export function setupSidebar() {
           items: [
             { text: 'routerHelper', link: '/sidebar/Guide/Helpers/routerHelper' },
             { text: 'menuHelper', link: '/sidebar/Guide/Helpers/menuHelper' },
-          ]
-        },
-        {
-          text: 'Layout',
-          collapsed: true,
-          items: [
-            { text: 'sidebar', link: '/sidebar/Guide/Layout/sidebar' },
-          ]
+          ],
         },
         {
           text: 'Theme',
           collapsed: true,
           items: [
             { text: 'themeConfig', link: '/sidebar/Guide/Theme/themeConfig' },
-          ]
+          ],
         },
         {
           text: 'Utils',
@@ -48,9 +48,17 @@ export function setupSidebar() {
           items: [
             { text: 'axios', link: '/sidebar/Guide/Utils/axios' },
             { text: 'cache', link: '/sidebar/Guide/Utils/cache' },
-          ]
+          ],
         },
-      ]
+        {
+          text: 'Components',
+          collapsed: true,
+          items: [
+            { text: 'TableRender', link: '/sidebar/Guide/Components/TableRender' },
+            { text: 'FormRender', link: '/sidebar/Guide/Components/FormRender' },
+          ],
+        },
+      ],
     },
     {
       text: '官方例子',
@@ -58,7 +66,7 @@ export function setupSidebar() {
       items: [
         { text: 'api-examples', link: '/sidebar/Examples/api-examples' },
         { text: 'markdown-examples', link: '/sidebar/Examples/markdown-examples' },
-      ]
-    }
+      ],
+    },
   ]
 }
