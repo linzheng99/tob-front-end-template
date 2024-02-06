@@ -30,7 +30,7 @@ import { omit, set } from 'lodash-es'
 import type { EmitType, TableBasicColumn, TableBasicRecordRow } from '../../types/column'
 import { CellComponent } from '../editableCell/CellComponent'
 import EditRenderVNode from './EditRenderVNode'
-import { isArray, isBoolean, isFunction, isString } from '@/utils/is'
+import { isArray, isBoolean, isFunction, isNumber, isString } from '@/utils/is'
 import { createPlaceholderMessage } from '@/utils/helper/createPlaceholder'
 
 defineOptions({
@@ -73,6 +73,12 @@ watchEffect(() => {
 watchEffect(() => {
   if (props.record.editable)
     addRecordAttribute()
+})
+
+watchEffect(() => {
+  // 在某一些联动的场景下需要监听一下
+  if (props.record.editValueRefs?.[props.column.key])
+    handleEditableRule()
 })
 
 // 样式
@@ -130,17 +136,17 @@ async function handleVerify() {
 async function handleEditableRule(): Promise<boolean> {
   const { column, record } = props
   const { editRule, editComponent } = column
-  const currentValue = unref(currentValueRef)
+  const editCurrentValue = record.editValueRefs?.[column.key]
 
   if (isBoolean(editRule)) {
-    if (!currentValue) {
+    if (!editCurrentValue && !isNumber(editCurrentValue)) {
       setupEditRuleStatus(true, (createPlaceholderMessage(editComponent) || '') + column.title)
       return false
     }
   }
   else if (isFunction(editRule)) {
     try {
-      const res = await editRule(currentValue, record)
+      const res = await editRule(editCurrentValue, record)
       if (res)
         setupEditRuleStatus(false, '')
 
