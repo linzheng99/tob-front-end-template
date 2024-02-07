@@ -107,6 +107,15 @@ async function addRecordAttribute() {
   props.record.onCancelEdit = () => onCancelEdit()
 }
 
+function cleanRecordCbs() {
+  const { record } = props
+  const cbs = ['submitCbs', 'validCbs', 'cancelCbs']
+  cbs.forEach((cb) => {
+    if (record[cb]?.length)
+      record[cb] = []
+  })
+}
+
 function initCbs(cbs: 'submitCbs' | 'validCbs' | 'cancelCbs', handle: Fn) {
   const { record } = props
   if (record)
@@ -124,6 +133,7 @@ async function onSubmitEdit() {
     record: omitRecordKey(record),
     index,
   })
+  cleanRecordCbs()
   return omitRecordKey(record)
 }
 
