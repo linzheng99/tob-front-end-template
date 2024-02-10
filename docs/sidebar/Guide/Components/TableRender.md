@@ -10,8 +10,7 @@ outline: deep
 1. 为了减少在业务代码中的重复,更快速(符合自己开发逻辑)的搭建表格;
 2. 方便统一管理;
 
-## 对此的封装,拓展了什么功能(实现)
-目前我将组件分成2种
+## 拓展功能
 1. 普通的展示
 2. 对编辑行的处理
 
@@ -116,9 +115,175 @@ function handleAction(item: ActionValues) {
 </script>
 
 ```
----
-```ts
-const a = 1
+:::
+
+## 简单的编辑表格
+::: details Simple Editable
+```html
+<template>
+  <div class="h-full flex">
+    <TableRender
+      ref="tableRef"
+      :data="data"
+      :columns="columns"
+      :request-api="requestDataSource"
+      :action-column="actionColumn"
+      @request-success="requestSuccess"
+      @handle-action="handleAction"
+      @edit-submit="editSubmit"
+      @edit-change="editChange"
+    />
+  </div>
+</template>
+
+<script setup lang="ts">
+import { onMounted, reactive, ref } from 'vue'
+import TableRender from '@/components/TableRender/index.vue'
+import type { ResponseApi, TableActionType } from '@/components/TableRender/types'
+import type {
+  ActionValues,
+  TableBasicActionColumn,
+  TableBasicColumn,
+  TableBasicRecordRow,
+} from '@/components/TableRender/types/column'
+import type { Actions } from '@/components/TableRender/components/actionColumn/types'
+
+interface Data {
+  name: string
+  age: number
+  address: string
+}
+
+onMounted(() => {
+  fetchApi()
+})
+
+const tableRef = ref<TableActionType>()
+const data = ref<Data[]>([])
+
+const columns = reactive<TableBasicColumn[]>([
+  {
+    title: '序号',
+    align: 'center',
+    key: 'index',
+    width: 60,
+    fixed: 'left',
+    render: (_, index) => `${index + 1}`,
+  },
+  {
+    title: '姓名',
+    key: 'name',
+    align: 'center',
+    width: 250,
+    editable: true,
+  },
+  {
+    title: '年龄',
+    key: 'age',
+    align: 'center',
+    width: 250,
+    editable: true,
+  },
+  {
+    title: '地址',
+    key: 'address',
+    align: 'center',
+    width: 250,
+    editable: true,
+  },
+])
+
+const actionColumn = reactive<TableBasicActionColumn>({
+  key: '_action',
+  title: '操作',
+  align: 'center',
+  fixed: 'right',
+  width: 200,
+  actions: record => actionBtns(record),
+})
+
+// 操作列按扭渲染
+function actionBtns(record: TableBasicRecordRow): Actions[] {
+  const isShow = record.editable
+
+  return [
+    {
+      iconConfig: { icon: 'ep-search' },
+      title: !record.editable ? '编辑' : '保存',
+      componentProps: {
+        type: 'primary',
+      },
+    },
+    {
+      show: !!isShow,
+      iconConfig: { icon: 'ep-search' },
+      title: '取消',
+      componentProps: {
+        type: 'primary',
+      },
+    },
+  ]
+}
+
+// 在保存 edit 时触发
+function editSubmit(values: { index: number, record: Recordable }) {
+  console.log(values)
+}
+
+// 在改变 column 中数据触发
+function editChange(values) {
+  const { record, key } = values
+  console.log(record, key)
+}
+
+// 点击操作列按扭触发
+async function handleAction(item: ActionValues) {
+  const { record, title } = item
+  switch (title) {
+    case '编辑':
+      await record.onEdit?.(true)
+      break
+    case '保存':
+      await record.onSubmitEdit?.()
+      break
+    case '取消':
+      record.onCancelEdit?.()
+      break
+
+    default:
+      break
+  }
+}
+
+// fetch
+async function fetchApi() {
+  await tableRef.value?.reloadData()
+}
+
+// 请求成功
+function requestSuccess(responseData: Data[]) {
+  data.value = responseData
+}
+
+// api
+function requestDataSource() {
+  return new Promise<ResponseApi>((resolve) => {
+    // 模拟一个异步操作
+    setTimeout(() => {
+      const apiResponse = Array.from({ length: 46 }).map((_, index) => ({
+        name: `name - ${index}`,
+        age: 18,
+        address: `address - ${index}`,
+      }))
+      resolve({
+        content: { data: apiResponse, total: apiResponse.length },
+        code: 200,
+        msg: 'success',
+      })
+    }, 1000) // 模拟异步操作的延迟
+  })
+}
+</script>
 ```
 :::
 
@@ -129,11 +294,10 @@ const a = 1
   321
 </template>
 ```
----
-```ts
-const a = 1
-```
 :::
+
+## 自定义 api 返回数据格式
+useDataSource
 
 ## Props
 
@@ -151,6 +315,8 @@ const a = 1
 | flexHeight     | 让表格自适应高度(如果要给死高度现将其设置为false) | `true / boolean`           |
 | showPagination | 是否展示分页数据                                  | `true / boolean`           |
 | requestApi     | 请求数据的api                                     | `自定义的 Promise request` |
+
+### TableBasicColumn
 
 ## Methods
 
