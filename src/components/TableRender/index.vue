@@ -33,7 +33,7 @@ const tableElRef = ref(null)
 
 interface Emit {
   (e: 'handle-action', values: ActionValues): void
-  (e: 'edit-submit', values: TableBasicRecordRow): void
+  (e: 'edit-submit', values: { record: TableBasicRecordRow, index: number }): void
   (e: 'edit-cancel', values: { record: TableBasicRecordRow, index: number }): void
   (
     e: 'edit-change',

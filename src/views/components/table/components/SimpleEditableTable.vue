@@ -148,7 +148,7 @@ function requestDataSource() {
   return new Promise<ResponseApi>((resolve) => {
     // 模拟一个异步操作
     setTimeout(() => {
-      const apiResponse = Array.from({ length: 46 }).map((_, index) => ({
+      const apiResponse = Array.from({ length: 9 }).map((_, index) => ({
         name: `name - ${index}`,
         age: 18,
         address: `address - ${index}`,

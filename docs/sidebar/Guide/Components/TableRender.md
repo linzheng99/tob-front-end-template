@@ -13,6 +13,20 @@ outline: deep
 ## 拓展功能
 1. 普通的展示
 2. 对编辑行的处理
+::: tip 可以进行编辑的组件
+
+NInput, NInputNumber, NSelect, NCheckbox, Switch, DatePicker, TimePicker, Cascader
+
+:::
+
+---
+
+::: warning 表格唯一值的问题
+`naive ui 官网的建议: 传入 data 属性的数组的每一项都代表渲染的一行数据，每一行数据都要有唯一的 key，否则需要在 table 上声明 row-key 属性。`
+
+如果你有在进行自己创建多条编辑状态的行, 并且具有删除功能的时候 `一定要设置一个唯一值 _key 或者其它字段`
+
+:::
 
 ## 基础用法
 ::: details Normal
@@ -287,7 +301,7 @@ function requestDataSource() {
 ```
 :::
 
-## 可编辑行
+## 可编辑的表格
 ::: details Editable
 ```html
 <template>
@@ -297,11 +311,15 @@ function requestDataSource() {
 :::
 
 ## 自定义 api 返回数据格式
-useDataSource
+`hook - useDataSource`
+
+`requestData` 函数, 可自定义修改与后端规定好的数据结构
+
+`ResponseApi` 类型也是自定义的一个分页请求类型
 
 ## Props
 
-### TableBasicProps
+### `TableBasicProps`
 
 | 名称           | 说明                                              | 默认值 / 类型              |
 | -------------- | :------------------------------------------------ | :------------------------- |
@@ -316,7 +334,77 @@ useDataSource
 | showPagination | 是否展示分页数据                                  | `true / boolean`           |
 | requestApi     | 请求数据的api                                     | `自定义的 Promise request` |
 
-### TableBasicColumn
+### `TableBasicColumn`
+
+| 名称          | 说明                                           | 默认值 / 类型                                                             |
+| ------------- | :--------------------------------------------- | :------------------------------------------------------------------------ |
+| key           | 是否开启编辑                                   | `boolean`                                                                 |
+| editable      | 是否开启编辑                                   | `boolean`                                                                 |
+| editComponent | 组件名称                                       | `ComponentType`                                                           |
+| labelKey      | (只在editable状态下启用)展示字段的key与key不同 | `string / (record: TableBasicRecordRow, value: any) => string`            |
+| editRule      | 是否开启校验                                   | `boolean / (value: any, record: TableBasicRecordRow) => Promise<boolean>` |
+| editCompClass | 编辑元素的样式                                 | `string`                                                                  |
+| children      | 成组列头的子节点                               | `TableBasicColumn<T>[]`                                                   |
+
+::: tip key & labelKey
+labelKey 只会在 editable 为 true 的时候被使用
+
+::: details explain for labelKey
+`key` 是唯一值,也传给后端的值; `labelkey` 是展示的值,如果有labelKey,它就会使用labelKey去展示在页面;
+
+如 Select 组件, 有 `value` 和 `label`, 我们使用key去匹配value, 也是将value的值传给后端, 但是我们展示的是label; 所以我们在 `normal(非编辑)` 模式下, 显示的其实是label的值, 这时候就要使用到labelKey
+
+:::
+
+::: details type code
+```ts
+export interface TableBasicColumn<T = InternalRowData> extends TableBaseColumn<T> {
+  editable?: boolean
+  editRule?: ((value: any, record: TableBasicRecordRow) => Promise<boolean>) | boolean
+  editComponent?: ComponentType
+  labelKey?: string | ((record: TableBasicRecordRow, value: any) => string)
+  editComponentProps?: Recordable
+  children?: TableBasicColumn<T>[]
+  editRenders?: {
+    key: string
+    render: (data: { value: any, editValues: Recordable }) => VNodeChild
+  }[]
+  editCompClass?: string
+}
+```
+:::
+
+### `TableBasicRecordRow`
+
+| 名称          | 说明                           | 默认值 / 类型                                  |
+| ------------- | :----------------------------- | :--------------------------------------------- |
+| onEdit        | 开启关闭编辑                   | `(editable: boolean) => Promise<void>`         |
+| onCancelEdit  | 取消编辑                       | `() => void`                                   |
+| onSubmitEdit  | 保存编辑                       | `() => Promise<TableBasicRecordRow / boolean>` |
+| editable      | 可编辑的状态                   | `boolean`                                      |
+| _key          | 唯一值( 但是一般以id为唯一值 ) | `number`                                       |
+| submitCbs     | 收集一行中全部处于`编辑的保存回调`   | `Fn[]`                                         |
+| cancelCbs     | 收集一行中全部处于`编辑的删除回调`   | `Fn[]`                                         |
+| validCbs      | 收集一行中全部处于`编辑的校验回调`   | `Fn[]`                                         |
+| editValueRefs | 收集一行中全部处于`编辑状态的值`     | `Recordable<Ref>`                              |
+
+::: details type code
+```ts
+export type TableBasicRecordRow<T = Recordable> = Partial<
+  {
+    onEdit?: (editable: boolean) => Promise<void>
+    onCancelEdit?: () => void
+    onSubmitEdit?: () => Promise<TableBasicRecordRow | boolean>
+    editable?: boolean
+    _key?: number
+    submitCbs: Fn[]
+    cancelCbs: Fn[]
+    validCbs: Fn[]
+    editValueRefs: Recordable<Ref>
+  } & T
+>
+```
+:::
 
 ## Methods
 
