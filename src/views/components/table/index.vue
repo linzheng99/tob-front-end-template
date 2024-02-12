@@ -1,9 +1,9 @@
 <template>
-  <SimpleEditableTable />
+  <EditableTable />
 </template>
 
 <script setup lang="ts">
-import SimpleEditableTable from './components/SimpleEditableTable.vue'
+import EditableTable from './components/EditableTable.vue'
 </script>
 
 <style scoped></style>

@@ -1,23 +1,12 @@
 <template>
-  <div class="h-full w-full flex flex-col">
-    <div flex mb-2 space-x-2>
-      <NButton type="primary" @click="changePage">
-        chang page
-      </NButton>
-      <NButton type="primary" @click="fetchApi">
-        fetch
-      </NButton>
-      <NButton type="primary" @click="changeColumn">
-        column
-      </NButton>
-    </div>
+  <div class="h-full flex">
     <TableRender
       ref="tableRef"
       :data="data"
       :columns="columns"
-      :pagination="pagination"
-      :request-api="promiseApiWithException"
+      :request-api="requestDataSource"
       :action-column="actionColumn"
+      @request-success="requestSuccess"
       @handle-action="handleAction"
       @edit-submit="editSubmit"
       @edit-change="editChange"
@@ -26,9 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { h, reactive, ref } from 'vue'
-import type { TreeOption } from 'naive-ui'
-import { NButton, NInput } from 'naive-ui'
+import { onMounted, reactive, ref } from 'vue'
 import TableRender from '@/components/TableRender/index.vue'
 import type { ResponseApi, TableActionType } from '@/components/TableRender/types'
 import type {
@@ -38,10 +25,32 @@ import type {
 } from '@/components/TableRender/types/column'
 import type { Actions } from '@/components/TableRender/components/actionColumn/types'
 
+interface Data {
+  name: string
+  age: number
+  address: string
+  sex: number
+  sexStr: string
+  date: string[]
+}
+
+onMounted(() => {
+  fetchApi()
+})
+
 const tableRef = ref<TableActionType>()
-const pagination = ref({ pageSize: 10 })
 const isDisable = ref(false)
-const options = ref<TreeOption[]>([])
+const data = ref<Data[]>([])
+const options = ref([
+  {
+    label: '男',
+    value: 1,
+  },
+  {
+    label: '女',
+    value: 2,
+  },
+])
 
 const columns = reactive<TableBasicColumn[]>([
   {
@@ -53,215 +62,81 @@ const columns = reactive<TableBasicColumn[]>([
     render: (_, index) => `${index + 1}`,
   },
   {
-    title: '日期',
+    title: '日期范围',
     key: 'date',
     align: 'center',
     width: 250,
     editable: true,
     labelKey: (record) => {
-      return `${record.date}`
+      return `${record.date.join('-')}`
     },
     editComponent: 'NDatePicker',
     editComponentProps: {
       type: 'daterange',
       valueFormat: 'yyyy-MM-dd',
     },
-    ellipsis: { tooltip: true },
   },
   {
-    title: '班级',
-    key: 'classId',
-    labelKey: 'className',
+    title: '姓名',
+    key: 'name',
     align: 'center',
-    width: 160,
+    width: 250,
     editable: true,
+  },
+  {
+    title: '性别',
+    key: 'sex',
+    labelKey: 'sexStr',
+    align: 'center',
+    width: 250,
+    editable: true,
+    editRule: true,
     editComponent: 'NSelect',
     editComponentProps: {
       options: options.value,
     },
-  },
-  {
-    title: '儿童姓名',
-    key: 'childId',
-    labelKey: 'childName',
-    align: 'center',
-    width: 160,
-    editable: true,
-    editComponent: 'NSelect',
-    editComponentProps: {
-      options: [],
-    },
-  },
-  {
-    title: '老师',
-    key: 'workerId',
-    align: 'center',
-    width: 160,
-    editable: true,
-    editComponent: 'NInput',
     editRenders: [
       {
-        key: 'test',
-        render: ({ value, editValues }) => {
-          const show = true
-          return show
-            ? h(NInput, {
-              value,
-              onUpdateValue(e) {
-                editValues.test = e
-              },
-            })
-            : ''
+        key: '',
+        render({ editValues }) {
+          return editValues.sex === 1 ? '男' : ''
         },
       },
     ],
   },
   {
-    title: '午睡时间(小时)',
-    key: 'siesta',
+    title: '年龄',
+    key: 'age',
     align: 'center',
-    width: 160,
-    ellipsis: { tooltip: true },
-    editRule: async (value, record) => {
-      console.log(value, record)
-      if (value !== 3)
-        throw new Error('33')
-
-      return true
-    },
-    editable: true,
-    editComponent: 'NInputNumber',
-    editComponentProps: {
-      showButton: false,
-    },
-  },
-  {
-    title: '如厕情况',
-    key: 'isToilet',
-    align: 'center',
-    width: 160,
-    ellipsis: { tooltip: true },
-    editable: true,
-    editComponent: 'NCheckbox',
-    editComponentProps: {
-      checkedValue: true,
-      uncheckedValue: false,
-      onUpdateChecked(e) {
-        console.log('checked', e)
-      },
-    },
-  },
-  {
-    title: '健康情况',
-    key: 'healthState',
-    labelKey: 'healthStateStr',
-    align: 'center',
-    width: 160,
-    editable: true,
-    editComponent: 'NSelect',
-    editComponentProps: {
-      options: [],
-      valueField: 'key',
-      labelField: 'value',
-    },
-  },
-  {
-    title: '游戏/活动',
-    key: '',
-    align: 'center',
-    ellipsis: { tooltip: true },
-    editable: true,
-    children: [
-      {
-        title: '自主完成',
-        key: 'gameComplete',
-        labelKey: (record) => {
-          return record.date
-        },
-        align: 'center',
-        width: 160,
-        ellipsis: { tooltip: true },
-        editable: true,
-        editComponent: 'NInput',
-      },
-      {
-        title: '口头指导',
-        key: 'gameOral',
-        align: 'center',
-        width: 160,
-        ellipsis: { tooltip: true },
-        editable: true,
-        editComponent: 'NInput',
-      },
-      {
-        title: '协助完成',
-        key: 'gameHelp',
-        align: 'center',
-        width: 160,
-        ellipsis: { tooltip: true },
-        editable: true,
-        editComponent: 'NInput',
-      },
-      {
-        title: '未完成',
-        key: 'gameFail',
-        align: 'center',
-        width: 160,
-        ellipsis: { tooltip: true },
-        editable: true,
-        editComponent: 'NInput',
-      },
-    ],
-  },
-  {
-    title() {
-      return h(
-        'div',
-        {
-          class: 'flex flex-col',
-        },
-        [
-          h('span', {}, { default: () => '一日表现' }),
-          h(
-            NButton,
-            {
-              size: 'small',
-              type: 'primary',
-            },
-            { default: () => '模板管理' },
-          ),
-        ],
-      )
-    },
-    key: 'dailyShow',
-    align: 'center',
-    width: 160,
-    editable: true,
-    editComponent: 'NSelect',
-    editComponentProps: {
-      options: [],
-      filterable: true,
-      tag: true,
-    },
-  },
-  {
-    title: '其他情况',
-    key: 'otherMsg',
-    align: 'center',
-    width: 160,
-    ellipsis: { tooltip: true },
+    width: 250,
     editable: true,
     editComponent: 'NInput',
+    editRule: async (value, _record) => {
+      if (+value > 18)
+        throw new Error('请输入小于18的值')
+      return true
+    },
+  },
+  {
+    title: '地址',
+    key: 'address',
+    align: 'center',
+    width: 250,
+    editable: true,
   },
 ])
 
 function editSubmit(values) {
-  console.log(values)
+  const { record, index } = values
+  data.value[index].sexStr = record.sex === 1 ? '男' : '女'
+}
+// 请求成功
+function requestSuccess(responseData: Data[]) {
+  data.value = responseData
 }
 function editChange(values) {
   const { record, key } = values
-  if (key === 'age')
-    record.editValueRefs.address = '2'
+  console.log(record, key)
 }
 
 // TODO 把 click 放到props里面
@@ -274,51 +149,21 @@ const actionColumn = reactive<TableBasicActionColumn>({
   actions: record => actionBtns(record),
 })
 async function handleAction(item: ActionValues) {
-  console.log('page', item)
   const { record, title } = item
   switch (title) {
     case '编辑':
-      record.onEdit && (await record.onEdit(true))
-      options.value = [
-        {
-          value: 'nan',
-          label: '男',
-        },
-        {
-          value: 'nv',
-          label: '女',
-        },
-      ]
-      columns[3]!.editComponentProps!.options = options.value
+      await record.onEdit?.(true)
       break
     case '保存':
-      record.onSubmitEdit && (await record.onSubmitEdit())
+      await record.onSubmitEdit?.()
       break
     case '取消':
-      record.onCancelEdit && record.onCancelEdit()
+      record.onCancelEdit?.()
       break
 
     default:
       break
   }
-}
-
-const data = ref(
-  Array.from({ length: 46 }).map((_, index) => ({
-    key: index,
-    name: `Edward King ${index}`,
-    age: 32,
-    address: `London, Park Lane no. ${index}`,
-    sex: 'nan',
-    sexStr: '男',
-    workerId: 'work',
-    test: 'test',
-    date: ['2024-01-12', '2024-01-24'],
-  })),
-)
-
-function changePage() {
-  pagination.value.pageSize = 20
 }
 
 async function fetchApi() {
@@ -328,10 +173,6 @@ async function fetchApi() {
   catch (error) {
     console.log(error)
   }
-}
-
-function changeColumn() {
-  isDisable.value = !isDisable.value
 }
 
 function actionBtns(record): Actions[] {
@@ -356,21 +197,24 @@ function actionBtns(record): Actions[] {
   ]
 }
 
-function promiseApiWithException() {
-  return new Promise<ResponseApi>((resolve, reject) => {
+// api
+function requestDataSource() {
+  return new Promise<ResponseApi>((resolve) => {
     // 模拟一个异步操作
     setTimeout(() => {
-      const shouldReject = Math.random() < 0.5
-      if (shouldReject) {
-        reject(new Error('Simulated API Error'))
-      }
-      else {
-        resolve({
-          content: { data: [{ name: 'haha', address: 'address' }], total: 1 },
-          code: 200,
-          msg: 'msg',
-        })
-      }
+      const apiResponse = Array.from({ length: 9 }).map((_, index) => ({
+        name: `name - ${index}`,
+        sex: index % 2 ? 1 : 2,
+        sexStr: index % 2 ? '男' : '女',
+        age: 18,
+        address: `address - ${index}`,
+        date: ['2024-02-09', '2024-02-10'],
+      }))
+      resolve({
+        content: { data: apiResponse, total: apiResponse.length },
+        code: 200,
+        msg: 'success',
+      })
     }, 1000) // 模拟异步操作的延迟
   })
 }
