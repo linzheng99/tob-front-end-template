@@ -16,6 +16,7 @@ pnpm dev:docs
 * pinina
 * axios
 * lodash-es
+* dayjs, date-fns
 * js-cookie
 * mock
 * eslint(antfu)
