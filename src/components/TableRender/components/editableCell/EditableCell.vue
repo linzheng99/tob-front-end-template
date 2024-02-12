@@ -9,9 +9,9 @@
       <CellComponent
         v-bind="getComponentProps"
         :component="getComponent"
-        :rule-message="ruleMessage"
-        :popover-visible="popoverVisible"
-        :edit-rule="getEditRule"
+        :ruleMessage="ruleMessage"
+        :popoverVisible="popoverVisible"
+        :editRule="getEditRule"
       />
       <EditRenderVNode
         v-for="v in editRenders"
@@ -35,7 +35,7 @@ import { isArray, isBoolean, isFunction, isNumber, isString } from '@/utils/is'
 import { createPlaceholderMessage } from '@/utils/helper/createPlaceholder'
 
 defineOptions({
-  name: 'EditableCell',
+  name: 'EditableCell'
 })
 
 const props = defineProps<Props>()
@@ -72,14 +72,12 @@ watchEffect(() => {
 
 // 每次开启收集数据
 watchEffect(() => {
-  if (props.record.editable)
-    addRecordAttribute()
+  if (props.record.editable) addRecordAttribute()
 })
 
 watchEffect(() => {
   // 在某一些联动的场景下需要监听一下
-  if (props.record.editValueRefs?.[props.column.key])
-    handleEditableRule()
+  if (props.record.editValueRefs?.[props.column.key]) handleEditableRule()
 })
 
 // 样式
@@ -93,14 +91,10 @@ async function handleChange(e) {
 
   if (editComponent === 'NDatePicker') {
     const valueFormat = editComponentProps?.valueFormat
-    if (!valueFormat)
-      currentValueRef.value = e
-    else if (isArray(e))
-      currentValueRef.value = e.map(i => format(i, valueFormat))
-    else if (isNumber(e))
-      currentValueRef.value = format(e, valueFormat)
-  }
-  else {
+    if (!valueFormat) currentValueRef.value = e
+    else if (isArray(e)) currentValueRef.value = e.map((i) => format(i, valueFormat))
+    else if (isNumber(e)) currentValueRef.value = format(e, valueFormat)
+  } else {
     currentValueRef.value = e
   }
 
@@ -126,36 +120,33 @@ function cleanRecordCbs() {
   const { record } = props
   const cbs = ['submitCbs', 'validCbs', 'cancelCbs']
   cbs.forEach((cb) => {
-    if (record[cb]?.length)
-      record[cb] = []
+    if (record[cb]?.length) record[cb] = []
   })
 }
 
 function initCbs(cbs: 'submitCbs' | 'validCbs' | 'cancelCbs', handle: Fn) {
   const { record } = props
-  if (record)
-    isArray(record[cbs]) ? record[cbs]?.push(handle) : (record[cbs] = [handle])
+  if (record) isArray(record[cbs]) ? record[cbs]?.push(handle) : (record[cbs] = [handle])
 }
 
 async function onSubmitEdit() {
   const pass = await handleVerify()
-  if (!pass)
-    return false
+  if (!pass) return false
 
-  isArray(props.record?.submitCbs) && props.record?.submitCbs.forEach(fn => fn())
+  isArray(props.record?.submitCbs) && props.record?.submitCbs.forEach((fn) => fn())
   const { record, index, emit } = props
   emit('edit-submit', {
     record: omitRecordKey(record),
-    index,
+    index
   })
   cleanRecordCbs()
   return omitRecordKey(record)
 }
 
 async function handleVerify() {
-  const validFns = (props.record?.validCbs || []).map(fn => fn())
+  const validFns = (props.record?.validCbs || []).map((fn) => fn())
   const res = await Promise.all(validFns)
-  return res.every(item => !!item)
+  return res.every((item) => !!item)
 }
 
 async function handleEditableRule(): Promise<boolean> {
@@ -168,16 +159,13 @@ async function handleEditableRule(): Promise<boolean> {
       setupEditRuleStatus(true, (createPlaceholderMessage(editComponent) || '') + column.title)
       return false
     }
-  }
-  else if (isFunction(editRule)) {
+  } else if (isFunction(editRule)) {
     try {
       const res = await editRule(editCurrentValue, record)
-      if (res)
-        setupEditRuleStatus(false, '')
+      if (res) setupEditRuleStatus(false, '')
 
       return res
-    }
-    catch (error) {
+    } catch (error) {
       const msg = (error as Error).message
       setupEditRuleStatus(true, msg)
       return false
@@ -188,7 +176,7 @@ async function handleEditableRule(): Promise<boolean> {
 }
 
 function onCancelEdit() {
-  isArray(props.record?.cancelCbs) && props.record?.cancelCbs.forEach(fn => fn())
+  isArray(props.record?.cancelCbs) && props.record?.cancelCbs.forEach((fn) => fn())
   const { record, index, emit } = props
   emit('edit-cancel', { record, index })
 }
@@ -206,8 +194,7 @@ function handleCancel() {
 function collectEditValue() {
   const { column, record } = props
   if (column.key) {
-    if (!record.editValueRefs)
-      record.editValueRefs = {}
+    if (!record.editValueRefs) record.editValueRefs = {}
     record.editValueRefs[column.key] = currentValueRef
   }
 }
@@ -215,14 +202,13 @@ function collectEditValue() {
 function collectEditRenderValue() {
   const {
     column: { editRenders },
-    record,
+    record
   } = props
   if (editRenders && editRenders.length) {
     const { editValueRefs } = record
     editRenders.forEach((render) => {
       const key = render.key
-      if (editValueRefs)
-        editValueRefs[key] = ref(record[key])
+      if (editValueRefs) editValueRefs[key] = ref(record[key])
     })
   }
 }
@@ -238,7 +224,7 @@ function omitRecordKey(record: TableBasicRecordRow) {
     'submitCbs',
     'cancelCbs',
     'editValueRefs',
-    'validCbs',
+    'validCbs'
   )
 }
 
@@ -247,8 +233,7 @@ function handleSubmit() {
   // eslint-disable-next-line vue/no-mutating-props
   props.record.editable = false
   const { record } = props
-  if (!record)
-    return false
+  if (!record) return false
 
   setEditValue(record)
   setEditRenderValues(record)
@@ -258,15 +243,13 @@ function handleSubmit() {
 function setEditValue(record: TableBasicRecordRow) {
   const { column } = props
   const { key } = column
-  if (key)
-    set(record, key, unref(currentValueRef))
+  if (key) set(record, key, unref(currentValueRef))
 }
 
 function setEditRenderValues(record: TableBasicRecordRow) {
   const renders = unref(editRenders)
   const values = unref(getEditValueRefs)
-  if (renders && renders.length)
-    renders.forEach(v => set(record, v.key, values?.[v.key]))
+  if (renders && renders.length) renders.forEach((v) => set(record, v.key, values?.[v.key]))
 }
 
 // 回显
@@ -275,10 +258,8 @@ const tramsformValue = computed(() => {
   const { labelKey } = column
   const currentValue = unref(currentValueRef)
 
-  if (isString(labelKey))
-    return record[labelKey]
-  else if (isFunction(labelKey))
-    return labelKey(record, currentValue)
+  if (isString(labelKey)) return record[labelKey]
+  else if (isFunction(labelKey)) return labelKey(record, currentValue)
 
   return currentValue
 })
@@ -293,10 +274,9 @@ const getComponent = computed(() => props.column.editComponent || 'NInput')
 // 是否是 v-model:checked 的组件(checkBox,radio组件)
 const isCheckComp = computed(() => {
   const {
-    column: { editComponent },
+    column: { editComponent }
   } = props
-  if (!editComponent)
-    return false
+  if (!editComponent) return false
 
   return ['NCheckbox'].includes(editComponent)
 })
@@ -310,15 +290,14 @@ const getComponentProps = computed(() => {
   const onEvent = isChecked ? 'on-update:checked' : 'on-update:value'
 
   if (editComponent === 'NDatePicker') {
-    if (editComponentProps?.valueFormat)
-      value = 'formatted-value'
+    if (editComponentProps?.valueFormat) value = 'formatted-value'
   }
 
   return {
     clearable: true,
     [value]: unref(currentValueRef),
     [onEvent]: handleChange,
-    ...(editComponentProps || {}),
+    ...(editComponentProps || {})
   }
 })
 

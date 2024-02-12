@@ -29,7 +29,7 @@ export const CellComponent: FunctionalComponent<ComponentProps> = (
       class: 'c-red',
     },
     {
-      trigger: () => DefaultComp,
+      trigger: () => h('div', null, [h(DefaultComp)]),
       default: () => h('span', {}, { default: () => ruleMessage }),
     },
   )
