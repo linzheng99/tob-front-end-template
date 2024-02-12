@@ -27,6 +27,7 @@
 <script setup lang="ts">
 import { computed, nextTick, ref, unref, watchEffect } from 'vue'
 import { omit, set } from 'lodash-es'
+import { format } from 'date-fns'
 import type { EmitType, TableBasicColumn, TableBasicRecordRow } from '../../types/column'
 import { CellComponent } from '../editableCell/CellComponent'
 import EditRenderVNode from './EditRenderVNode'
@@ -88,7 +89,21 @@ const getEditColumnClass = computed(() => {
 
 async function handleChange(e) {
   const { emit, record, index, column } = props
-  currentValueRef.value = e
+  const { editComponent, editComponentProps } = column
+
+  if (editComponent === 'NDatePicker') {
+    const valueFormat = editComponentProps?.valueFormat
+    if (!valueFormat)
+      currentValueRef.value = e
+    else if (isArray(e))
+      currentValueRef.value = e.map(i => format(i, valueFormat))
+    else if (isNumber(e))
+      currentValueRef.value = format(e, valueFormat)
+  }
+  else {
+    currentValueRef.value = e
+  }
+
   await nextTick()
   emit('edit-change', { record, index, value: unref(currentValueRef), key: column.key })
 
@@ -295,14 +310,8 @@ const getComponentProps = computed(() => {
   const onEvent = isChecked ? 'on-update:checked' : 'on-update:value'
 
   if (editComponent === 'NDatePicker') {
-    if (isString(value)) {
-      if (editComponentProps?.valueFormat)
-        value = 'formatted-value'
-    }
-    else if (isArray(value)) {
-      if (editComponentProps?.valueFormat)
-        value = 'formatted-value'
-    }
+    if (editComponentProps?.valueFormat)
+      value = 'formatted-value'
   }
 
   return {
