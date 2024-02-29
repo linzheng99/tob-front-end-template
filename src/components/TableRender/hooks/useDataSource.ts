@@ -11,7 +11,7 @@ interface DataSourceOptions {
   setLoading: (value: boolean) => void
   setPagination: (values: Partial<PaginationProps>) => void
   getPagination: () => PaginationProps | false
-  requestParams?: () => Recordable | Recordable
+  requestParams?: (() => Recordable) | Recordable
 }
 
 export function useDataSource(options: DataSourceOptions) {
@@ -38,8 +38,6 @@ export function useDataSource(options: DataSourceOptions) {
     }
 
     extend(pageParams, { ...opt }, getRequestParams.value)
-
-    console.log('--------', pageParams)
 
     try {
       setLoading(true)

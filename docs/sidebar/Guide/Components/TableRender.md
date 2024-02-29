@@ -552,18 +552,19 @@ function requestDataSource() {
 
 ### `TableBasicProps`
 
-| 名称           | 说明                                              | 默认值 / 类型              |
-| -------------- | :------------------------------------------------ | :------------------------- |
-| data           | 数据源                                            | `Recordable[]`             |
-| columns        | 列                                                | `any[]`                    |
-| actionColumn   | 操作列                                            | `TableBasicActionColumn[]` |
-| remote         | 是否异步获取数据                                  | `false / boolean`          |
-| striped        | 斑马线条纹                                        | `true / boolean`           |
-| singleLine     | 是否不设定行的分割线                              | `false / boolean`          |
-| bottomBordered | 是否显示 bottom border                            | `true / boolean`           |
-| flexHeight     | 让表格自适应高度(如果要给死高度现将其设置为false) | `true / boolean`           |
-| showPagination | 是否展示分页数据                                  | `true / boolean`           |
-| requestApi     | 请求数据的api                                     | `自定义的 Promise request` |
+| 名称           | 说明                                              | 默认值 / 类型                   |
+| -------------- | :------------------------------------------------ | :------------------------------ |
+| data           | 数据源                                            | `Recordable[]`                  |
+| columns        | 列                                                | `any[]`                         |
+| actionColumn   | 操作列                                            | `TableBasicActionColumn[]`      |
+| remote         | 是否异步获取数据                                  | `false / boolean`               |
+| striped        | 斑马线条纹                                        | `true / boolean`                |
+| singleLine     | 是否不设定行的分割线                              | `false / boolean`               |
+| bottomBordered | 是否显示 bottom border                            | `true / boolean`                |
+| flexHeight     | 让表格自适应高度(如果要给死高度现将其设置为false) | `true / boolean`                |
+| showPagination | 是否展示分页数据                                  | `true / boolean`                |
+| requestApi     | 请求数据的api                                     | `自定义的 Promise request`      |
+| requestParams  | 请求数据时想要带的参数                            | `() => Recordable / Recordable` |
 
 ### `TableBasicColumn`
 

@@ -37,12 +37,10 @@ onMounted(() => {
   fetchApi()
 })
 
-function getParams() {
-  return {
-    type: 1,
-    name: '321',
-  }
-}
+const getParams = reactive({
+  type: 1,
+  name: 'lin',
+})
 
 const tableRef = ref<TableActionType>()
 const data = ref<Data[]>([])
