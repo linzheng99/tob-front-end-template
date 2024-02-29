@@ -6,6 +6,7 @@
       :columns="columns"
       :request-api="requestDataSource"
       :action-column="actionColumn"
+      :request-params="getParams"
       @request-success="requestSuccess"
       @handle-action="handleAction"
       @edit-submit="editSubmit"
@@ -35,6 +36,13 @@ interface Data {
 onMounted(() => {
   fetchApi()
 })
+
+function getParams() {
+  return {
+    type: 1,
+    name: '321',
+  }
+}
 
 const tableRef = ref<TableActionType>()
 const data = ref<Data[]>([])

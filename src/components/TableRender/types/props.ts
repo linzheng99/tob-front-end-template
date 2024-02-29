@@ -12,6 +12,7 @@ export interface TableBasicProps {
   showPagination?: boolean
   pagination?: object | false
   requestApi?: (params?: any) => Promise<ResponseApi>
+  requestParams?: () => Recordable | Recordable
 }
 
 export interface ResponseApi {

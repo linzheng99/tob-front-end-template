@@ -1,6 +1,8 @@
 import type { PaginationProps } from 'naive-ui'
+import { computed } from 'vue'
 import type { EmitType, ResponseApi } from '../types'
 import { extend } from '@/utils'
+import { isFunction } from '@/utils/is'
 
 interface DataSourceOptions {
   emit: EmitType
@@ -9,10 +11,19 @@ interface DataSourceOptions {
   setLoading: (value: boolean) => void
   setPagination: (values: Partial<PaginationProps>) => void
   getPagination: () => PaginationProps | false
+  requestParams?: () => Recordable | Recordable
 }
 
 export function useDataSource(options: DataSourceOptions) {
-  const { requestApi, setLoading, setPagination, getPagination, emit } = options
+  const { requestApi, setLoading, setPagination, getPagination, emit, requestParams } = options
+
+  const getRequestParams = computed(() => {
+    if (!requestParams)
+      return {}
+    if (isFunction(requestParams))
+      return requestParams()
+    return requestParams
+  })
 
   async function requestData(opt: any) {
     if (!requestApi)
@@ -23,10 +34,12 @@ export function useDataSource(options: DataSourceOptions) {
 
     if (pagination) {
       const { page, pageSize } = pagination
-      extend(pageParams, { page, pageSize })
+      extend(pageParams, { page, pageSize }, getRequestParams.value)
     }
 
-    extend(pageParams, { ...opt })
+    extend(pageParams, { ...opt }, getRequestParams.value)
+
+    console.log('--------', pageParams)
 
     try {
       setLoading(true)

@@ -56,6 +56,7 @@ const { requestData } = useDataSource({
   requestApi: props.requestApi,
   setPagination,
   getPagination,
+  requestParams: props.requestParams,
 })
 
 // 横向滚动宽度
