@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useGlobalEvents } from '@/utils/cache/events'
 import { darkTheme } from 'naive-ui'
+import { useGlobalEvents } from '@/utils/cache/events'
 import { useThemeStoreWithOut } from '@/store/modules/theme'
 import { subscribeStore } from '@/store/subscribe/index'
 import { useColorModeStore } from '@/store/modules/colorMode'

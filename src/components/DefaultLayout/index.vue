@@ -1,19 +1,27 @@
 <template>
   <div class="default-wrapper">
     <header class="default-header" :style="headerStyle">
-      <slot name="header"> header </slot>
+      <slot name="header">
+        header
+      </slot>
     </header>
     <div class="default-tab" :style="tabStyle">
-      <slot name="tab"> tab </slot>
+      <slot name="tab">
+        tab
+      </slot>
     </div>
     <aside class="default-sider" :style="siderStyle">
-      <slot name="sider"> sider </slot>
+      <slot name="sider">
+        sider
+      </slot>
     </aside>
     <main class="default-content" :style="contentStyle">
       <slot />
     </main>
     <footer v-if="footerVisible" class="default-footer" :style="footerStyle">
-      <slot name="footer"> footer </slot>
+      <slot name="footer">
+        footer
+      </slot>
     </footer>
   </div>
 </template>
@@ -26,19 +34,19 @@ interface Props {
   siderCollapes: boolean
   footerVisible?: boolean
 }
-const themeStore = useThemeStoreWithOut()
-
-const siderDefaultWidth = themeStore.getSiderDefaultWidth + 'px'
-const siderMinWidth = themeStore.getSiderMinWidth + 'px'
-const siderWidth = computed(() => {
-  return props.siderCollapes ? siderMinWidth : siderDefaultWidth
-})
-const headerHeight = themeStore.getHeaderHeight + 'px'
-const tabHeight = themeStore.getTabHeight + 'px'
-
 const props = withDefaults(defineProps<Props>(), {
   footerVisible: false,
 })
+
+const themeStore = useThemeStoreWithOut()
+
+const siderDefaultWidth = `${themeStore.getSiderDefaultWidth}px`
+const siderMinWidth = `${themeStore.getSiderMinWidth}px`
+const siderWidth = computed(() => {
+  return props.siderCollapes ? siderMinWidth : siderDefaultWidth
+})
+const headerHeight = `${themeStore.getHeaderHeight}px`
+const tabHeight = `${themeStore.getTabHeight}px`
 
 const siderStyle = computed(() => {
   return {
@@ -48,14 +56,14 @@ const siderStyle = computed(() => {
 const headerStyle = computed(() => {
   return {
     'padding-left': `${siderWidth.value}`,
-    height: headerHeight,
+    'height': headerHeight,
   }
 })
 const tabStyle = computed(() => {
   return {
     'padding-left': `${siderWidth.value}`,
-    top: headerHeight,
-    height: tabHeight,
+    'top': headerHeight,
+    'height': tabHeight,
   }
 })
 const contentStyle = computed(() => {

@@ -6,6 +6,7 @@
   </template>
   <template v-else>
     <div :class="getEditColumnClass">
+    <!-- CellComponent 组件的属性不能使用横杠,只能是驼峰,目前不知道是什么原因 -->
       <CellComponent
         v-bind="getComponentProps"
         :component="getComponent"
@@ -289,9 +290,9 @@ const getComponentProps = computed(() => {
   let value = isChecked ? 'checked' : 'value'
   const onEvent = isChecked ? 'on-update:checked' : 'on-update:value'
 
-  if (editComponent === 'NDatePicker') {
+  if (editComponent === 'NDatePicker') 
     if (editComponentProps?.valueFormat) value = 'formatted-value'
-  }
+  
 
   return {
     clearable: true,
