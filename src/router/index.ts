@@ -7,7 +7,7 @@ const basicRoutes: any = [...routes]
 // 白名单
 export const WHITE_PATH_LIST: string[] = []
 
-const getWhiteRouteList = (array: any[]) => {
+function getWhiteRouteList(array: any[]) {
   array.forEach((item) => {
     WHITE_PATH_LIST.push(item.path)
     getWhiteRouteList(item.children || [])
