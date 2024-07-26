@@ -14,7 +14,7 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { usePermissionStoreWithOut } from '@/store/modules/permission'
 import { transformAuthRouteToMenu } from '@/utils/helper/menuHelper'
-import { AppRouteRecordRaw } from '@/router/routeTypes'
+import type { AppRouteRecordRaw } from '@/router/routeTypes'
 import { useRouterPush } from '@/hooks/router/useRouterPush'
 import { useAppLocalConfig } from '@/hooks/setting/useAppLocalConfig'
 
@@ -29,7 +29,7 @@ const option = transformAuthRouteToMenu(backMenuList as AppRouteRecordRaw[])
 
 const activeKey = computed(() => route.name)
 
-const handleUpdateMenu = (_key, item) => {
+function handleUpdateMenu(_key, item) {
   routerPush(item.routePath)
 }
 </script>

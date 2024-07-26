@@ -11,6 +11,7 @@
 import { computed } from 'vue'
 import { useAppStoreWithOut } from '@/store/modules/app'
 import { useAppLocalConfig } from '@/hooks/setting/useAppLocalConfig'
+import SvgIcon from '@/components/SvgIcon/index.vue'
 
 const appStore = useAppStoreWithOut()
 const { getSiderCollapse } = useAppLocalConfig()

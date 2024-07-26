@@ -1,3 +1,14 @@
+<template>
+  <n-config-provider
+    :theme-overrides="themeStore.naiveThemeOverrides"
+    :theme="colorMode.themeColorMode === 'dark' ? darkTheme : undefined"
+  >
+    <naive-provider>
+      <router-view />
+    </naive-provider>
+  </n-config-provider>
+</template>
+
 <script setup lang="ts">
 import { darkTheme } from 'naive-ui'
 import { useGlobalEvents } from '@/utils/cache/events'
@@ -11,17 +22,6 @@ const colorMode = useColorModeStore()
 subscribeStore()
 useGlobalEvents()
 </script>
-
-<template>
-  <n-config-provider
-    :theme-overrides="themeStore.naiveThemeOverrides"
-    :theme="colorMode.themeColorMode === 'dark' ? darkTheme : undefined"
-  >
-    <naive-provider>
-      <router-view />
-    </naive-provider>
-  </n-config-provider>
-</template>
 
 <style>
 ::view-transition-old(root),

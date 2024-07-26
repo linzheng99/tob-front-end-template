@@ -15,6 +15,7 @@ import { computed } from 'vue'
 import { useAppLocalConfig } from '@/hooks/setting/useAppLocalConfig'
 import { useAppInfo } from '@/hooks/app/system'
 import { useThemeStoreWithOut } from '@/store/modules/theme'
+import SvgIcon from '@/components/SvgIcon/index.vue'
 
 const { getSiderCollapse } = useAppLocalConfig()
 const themeStore = useThemeStoreWithOut()

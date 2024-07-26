@@ -11,6 +11,7 @@
 
 <script setup lang="ts">
 import { useAppStoreWithOut } from '@/store/modules/app'
+import SvgIcon from '@/components/SvgIcon/index.vue'
 
 const appStore = useAppStoreWithOut()
 </script>

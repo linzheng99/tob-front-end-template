@@ -1,7 +1,6 @@
 <template>
   <n-data-table
     ref="tableElRef"
-    class="flex-1"
     v-bind="getBindValues"
     :row-key="(row: TableBasicRecordRow) => row.id || row._key"
     @update:page="updatePage"

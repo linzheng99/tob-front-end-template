@@ -12,9 +12,10 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useAppInfo } from '@/hooks/app/system'
 import { useThemeStoreWithOut } from '@/store/modules/theme'
-import { computed } from 'vue'
+import SvgIcon from '@/components/SvgIcon/index.vue'
 
 const { name, title } = useAppInfo()
 const themeStore = useThemeStoreWithOut()

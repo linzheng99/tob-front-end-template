@@ -1,7 +1,8 @@
 <template>
-  <div class="h-full flex">
+  <div class="h-full flex flex-col">
     <TableRender
       ref="tableRef"
+      class="flex-1"
       :data="data"
       :columns="columns"
       :request-api="requestDataSource"
@@ -147,6 +148,7 @@ async function fetchApi() {
 // 请求成功
 function requestSuccess(responseData: Data[]) {
   data.value = responseData
+  console.log(data.value)
 }
 
 // api

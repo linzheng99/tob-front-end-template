@@ -1,5 +1,5 @@
-import type { InternalRowData, TableBaseColumn } from 'naive-ui/es/data-table/src/interface'
 import type { Ref, VNodeChild } from 'vue'
+import type { InternalRowData, TableBaseColumn } from 'naive-ui/es/data-table/src/interface'
 import type { ActionColumnProps } from '../components/actionColumn/types'
 import type { ComponentType } from './componentType'
 

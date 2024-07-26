@@ -5,7 +5,6 @@
         <div class="__login_header_img">
           <SvgIcon local-icon="logo" :color="themeStore.themeColor" font-size="50" />
         </div>
-        <div>{{ name }}</div>
         <div>{{ title }}</div>
         <div>{{ desc }}</div>
       </div>
@@ -25,7 +24,9 @@
             <n-input v-model:value="userForm.user.password" placeholder="输入密码" />
           </n-form-item>
         </n-form>
-        <n-button type="primary" @click="handleValidateClick"> 登录 </n-button>
+        <n-button type="primary" @click="handleValidateClick">
+          登录
+        </n-button>
       </div>
     </div>
   </div>
@@ -33,10 +34,11 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { FormInst } from 'naive-ui'
+import type { FormInst } from 'naive-ui'
 import { useUserStore } from '@/store/modules/user'
 import { useAppInfo } from '@/hooks/app/system'
 import { useThemeStoreWithOut } from '@/store/modules/theme'
+import SvgIcon from '@/components/SvgIcon/index.vue'
 
 const { name, title, desc } = useAppInfo()
 const userStore = useUserStore()
@@ -65,19 +67,24 @@ const rules = {
   },
 }
 
-const handleValidateClick = (e: MouseEvent) => {
+function handleValidateClick(e: MouseEvent) {
   e.preventDefault()
   formRef.value?.validate(async (errors) => {
-    if (!errors) {
+    if (!errors)
       await userStore.login(userForm.value.user)
-    } else {
-      console.log(errors)
-    }
+    else
+      console.error(errors)
   })
 }
 </script>
 
 <style lang="scss" scoped>
+.light .__login_header_img, .light .login_warpper{
+  border: 1px solid #000;
+}
+.dark .__login_header_img, .dark .login_warpper{
+  border: 1px solid #fff;
+}
 .login_right {
   width: 100%;
   height: 100vh;
@@ -93,14 +100,12 @@ const handleValidateClick = (e: MouseEvent) => {
   align-items: center;
   justify-content: space-around;
   flex-direction: column;
-  background-color: #18181c;
   border: 1px solid #fff;
   border-radius: 24px;
   padding: 20px;
 }
 .login_header {
   display: flex;
-  color: #fff;
   flex-direction: column;
   align-items: flex-end;
   font-size: 18px;
@@ -108,7 +113,6 @@ const handleValidateClick = (e: MouseEvent) => {
   width: 100%;
 }
 .__login_header_img {
-  border: 1px solid #fff;
   height: 80px;
   width: 80px;
   display: flex;

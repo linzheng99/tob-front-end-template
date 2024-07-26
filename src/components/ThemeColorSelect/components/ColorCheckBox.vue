@@ -11,6 +11,8 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import SvgIcon from '@/components/SvgIcon/index.vue'
+
 interface Props {
   /** 颜色列表 */
   color: string

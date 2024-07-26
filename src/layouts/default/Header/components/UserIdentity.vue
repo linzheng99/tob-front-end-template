@@ -10,6 +10,8 @@
 <script setup lang="ts">
 import { useUserStoreWithOut } from '@/store/modules/user'
 import { useIconRender } from '@/hooks/component/useIconRender'
+import SvgIcon from '@/components/SvgIcon/index.vue'
+
 const userStore = useUserStoreWithOut()
 const { iconRender } = useIconRender()
 const options = [
@@ -17,17 +19,16 @@ const options = [
     label: '退出登录',
     key: 'logout',
     icon: iconRender({
-      icon: 'humbleicons:logout'
-    })
-  }
+      icon: 'humbleicons:logout',
+    }),
+  },
 ]
-const handleSelect = (key: string) => {
-  if (key === 'logout') {
+function handleSelect(key: string) {
+  if (key === 'logout')
     logout()
-  }
 }
 
-const logout = () => {
+function logout() {
   userStore.logout()
 }
 </script>

@@ -14,6 +14,7 @@
 <script setup lang="ts">
 import type { Tab } from '../TabsType'
 import { useThemeStoreWithOut } from '@/store/modules/theme'
+import SvgIcon from '@/components/SvgIcon/index.vue'
 
 interface Props {
   info: Tab
