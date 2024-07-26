@@ -9,14 +9,14 @@ import { isFunction } from '@/utils/is'
  * @param native 是否立即执行
  */
 export function useTimeoutFn(handle: Fn<any>, wait: number, native = false) {
-  if (!isFunction(handle)) {
+  if (!isFunction(handle))
     throw new Error('handle is not Function!')
-  }
 
   const { readyRef, stop, start } = useTimeoutRef(wait)
   if (native) {
     handle()
-  } else {
+  }
+  else {
     watch(
       readyRef,
       (maturity) => {

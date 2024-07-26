@@ -7,7 +7,7 @@ interface Window {
   $notification?: import('naive-ui').NotificationProviderInst
 }
 
-declare type Recordable<T = any> = Record<string, T>;
+declare type Recordable<T = any> = Record<string, T>
 declare type TimeoutHandle = ReturnType<typeof setTimeout>
 declare type Nullable<T> = T | null
 declare type DeepPartial<T> = {

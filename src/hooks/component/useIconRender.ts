@@ -22,7 +22,7 @@ interface IconStyle {
 }
 
 /** 图标渲染 */
-export const useIconRender = () => {
+export function useIconRender() {
   const iconRender = (config: IconConfig) => {
     const { icon, localIcon, color, fontSize } = config
 

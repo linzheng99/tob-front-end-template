@@ -13,9 +13,9 @@
       :label-style="finallyItemLabelStyle"
       :content-style="finallyItemContentStyle"
     >
-    <template #label>
+      <template #label>
         <span v-if="isFunction(item.label)">
-            <RenderVNode :createVNode="item.label" :data="data" :param="item.param" />
+          <RenderVNode :create-v-node="item.label" :data="data" :param="item.param" />
         </span>
         <span v-else>
           {{ item.label }}
@@ -23,7 +23,7 @@
       </template>
       <template #default>
         <span v-if="item.render">
-          <RenderVNode :createVNode="item.render" :data="data" :param="item.param" />
+          <RenderVNode :create-v-node="item.render" :data="data" :param="item.param" />
         </span>
         <span v-else>{{ data[item.param] }}</span>
       </template>
@@ -32,11 +32,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { extend } from '@/utils/share'
-import { ListType } from './types'
+import { onMounted, ref } from 'vue'
+import type { ListType } from './types'
 import RenderVNode from './renderVNode'
-import { isFunction } from '@/utils/is';
+import { extend } from '@/utils/share'
+import { isFunction } from '@/utils/is'
 
 interface Props {
   labelPlacement?: 'center' | 'left' | 'right'
@@ -54,7 +54,7 @@ const props = withDefaults(defineProps<Props>(), {
   describeList: () => [],
   labelAlign: 'right',
   itemContentStyle: () => {},
-  itemLabelStyle: () => {}
+  itemLabelStyle: () => {},
 })
 
 const finallyItemContentStyle = ref({ padding: '11px 10px', verticalAlign: 'middle' })

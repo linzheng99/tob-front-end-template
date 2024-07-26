@@ -1,8 +1,8 @@
-import { computed, nextTick, Ref, unref, watch } from 'vue'
-import echarts from '@/utils/lib/echarts'
-import { tryOnUnmounted, useBreakpoints, useDebounceFn, breakpointsTailwind } from '@vueuse/core'
-import { ref } from 'vue'
+import type { Ref } from 'vue'
+import { computed, nextTick, ref, unref, watch } from 'vue'
+import { breakpointsTailwind, tryOnUnmounted, useBreakpoints, useDebounceFn } from '@vueuse/core'
 import type { EChartsOption } from 'echarts'
+import echarts from '@/utils/lib/echarts'
 import { useTimeoutFn } from '@/hooks/core/useTimeout'
 import { useEventListener } from '@/hooks/event/useEventListener'
 
@@ -27,9 +27,9 @@ export function useECharts(elRef: Ref<HTMLDivElement>, theme: ThemeType = 'defau
 
   // 获取属性
   const getOptions = computed(() => {
-    if (theme !== 'dark') {
+    if (theme !== 'dark')
       return cacheOptions.value as EChartsOption
-    }
+
     return {
       backgroundColor: 'transparent', // dark 会出现背景颜色
       ...cacheOptions.value,
@@ -39,7 +39,8 @@ export function useECharts(elRef: Ref<HTMLDivElement>, theme: ThemeType = 'defau
   // 初始化echarts
   function initCharts(t = theme) {
     const el = unref(elRef)
-    if (!el || !unref(el)) return
+    if (!el || !unref(el))
+      return
     // 创建实例
     chartInstance = echarts.init(el, t)
     const { removeEvent } = useEventListener({
@@ -70,7 +71,8 @@ export function useECharts(elRef: Ref<HTMLDivElement>, theme: ThemeType = 'defau
       useTimeoutFn(() => {
         if (!chartInstance) {
           initCharts(getTheme.value)
-          if (!chartInstance) return
+          if (!chartInstance)
+            return
         }
         // 清空数据(失去数据动画过渡效果)
         clear && chartInstance?.clear()
@@ -99,16 +101,17 @@ export function useECharts(elRef: Ref<HTMLDivElement>, theme: ThemeType = 'defau
 
   // unmounted 生命周期
   tryOnUnmounted(() => {
-    if (!chartInstance) return
+    if (!chartInstance)
+      return
     removeResizeFn()
     chartInstance.dispose()
     chartInstance = null
   })
 
   function getInstance(): echarts.ECharts | null {
-    if (!chartInstance) {
+    if (!chartInstance)
       initCharts(getTheme.value as 'default')
-    }
+
     return chartInstance
   }
 

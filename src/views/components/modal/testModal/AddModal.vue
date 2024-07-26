@@ -1,5 +1,5 @@
 <template>
-  <ModalCard ref="ModalCard_ref" @closed="closed" :title="title">
+  <ModalCard ref="ModalCard_ref" :title="title" @closed="closed">
     <template #content>
       <FormRender ref="formRender_ref" :form-items="formItems" :form-item-config="formItemConfig" />
     </template>
@@ -7,24 +7,23 @@
 </template>
 
 <script setup lang="ts">
-import { ref, unref, reactive } from 'vue'
+import { reactive, ref, unref } from 'vue'
 import ModalCard from '@/components/ModalCardRender/index.vue'
 import FormRender from '@/components/FormRender/index.vue'
-import { FormItemType, FormItemConfig } from '@/components/FormRender/types'
+import type { FormItemConfig, FormItemType } from '@/components/FormRender/types'
 
+defineProps<Props>()
 const ModalCard_ref = ref(null)
-const toggleModal = (): void => {
+function toggleModal(): void {
   const domRef: any = unref(ModalCard_ref)
   domRef?.toggleModal()
 }
 
-interface Props{
+interface Props {
   title: any
 }
-defineProps<Props>()
-
 const formItemConfig: FormItemConfig = {
-  cols: 2
+  cols: 2,
 }
 
 const formItems: FormItemType[] = reactive([
@@ -33,7 +32,7 @@ const formItems: FormItemType[] = reactive([
     path: 'name',
     placeholder: 'name input',
     value: 'name',
-    itemType: 'input'
+    itemType: 'input',
   },
   {
     label: '所属上级组织',
@@ -45,8 +44,8 @@ const formItems: FormItemType[] = reactive([
       toggleFilter: true,
       options: [],
       labelField: 'wantLabel',
-      valueField: 'wantValue'
-    }
+      valueField: 'wantValue',
+    },
   },
   {
     label: '组织级别',
@@ -58,8 +57,8 @@ const formItems: FormItemType[] = reactive([
       toggleFilter: true,
       options: [],
       labelField: 'wantLabel',
-      valueField: 'wantValue'
-    }
+      valueField: 'wantValue',
+    },
   },
   {
     label: '业务线',
@@ -69,25 +68,25 @@ const formItems: FormItemType[] = reactive([
     checkboxList: [
       {
         value: 'beijing',
-        label: '终端定位服务'
+        label: '终端定位服务',
       },
       {
         value: 'shanghai',
-        label: '卡定位服务'
-      }
-    ]
+        label: '卡定位服务',
+      },
+    ],
   },
   {
     label: '联系人姓名',
     placeholder: 'name input',
     value: 'name',
-    itemType: 'input'
+    itemType: 'input',
   },
   {
     label: '联系人号码',
     placeholder: 'name input',
     value: 'name',
-    itemType: 'input'
+    itemType: 'input',
   },
   {
     label: '行政区域',
@@ -99,18 +98,18 @@ const formItems: FormItemType[] = reactive([
       toggleFilter: true,
       options: [],
       labelField: 'wantLabel',
-      valueField: 'wantValue'
-    }
+      valueField: 'wantValue',
+    },
   },
   {
     label: '联系地址',
     placeholder: 'name input',
     value: 'name',
-    itemType: 'input'
-  }
+    itemType: 'input',
+  },
 ])
 
-const closed = (toggle) => {
+function closed(toggle) {
   console.log('closed', toggle)
 }
 

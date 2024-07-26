@@ -1,24 +1,24 @@
 <template>
-  <n-form v-bind="getProps" :model="formModel" ref="formElRef">
+  <n-form v-bind="getProps" ref="formElRef" :model="formModel">
     <n-grid v-bind="getGrid">
-      <n-gi v-bind="schema.giProps" v-for="schema in getSchema" :key="schema.field">
+      <n-gi v-for="schema in getSchema" v-bind="schema.giProps" :key="schema.field">
         <n-form-item :label="schema.label" :path="schema.field" :show-label="schema.showLabel">
-          <!--判断插槽-->
+          <!-- 判断插槽 -->
           <template v-if="schema.slot">
             <slot
               :name="schema.slot"
               :model="formModel"
               :field="schema.field"
               :value="formModel[schema.field]"
-            ></slot>
+            />
           </template>
-          <!--动态渲染表单组件-->
+          <!-- 动态渲染表单组件 -->
           <component
-            v-else-if="schema.component"
             v-bind="getComponentProps(schema)"
             :is="schema.component"
+            v-else-if="schema.component"
             v-model:value="formModel[schema.field]"
-            :class="`${schema.isFull != false && getProps.isFull ? 'w-full' : ''}`"
+            :class="`${schema.isFull !== false && getProps.isFull ? 'w-full' : ''}`"
           />
         </n-form-item>
       </n-gi>
@@ -27,8 +27,8 @@
           <n-button
             v-if="getProps.showSubmitButton"
             v-bind="getSubmitBtnOptions"
-            @click="handleSubmit"
             :loading="loadingSub"
+            @click="handleSubmit"
           >
             {{ getProps.submitButtonText }}
           </n-button>
@@ -46,21 +46,22 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, ref, unref, onMounted, Ref, watch } from 'vue'
-import { FormProps, FormSchema, FormActionType } from './types'
+import type { Ref } from 'vue'
+import { computed, defineComponent, onMounted, reactive, ref, unref, watch } from 'vue'
+import type { GridProps } from 'naive-ui'
+import type { FormActionType, FormProps, FormSchema } from './types'
 import { useFormValues } from './hooks/useFormValues'
+import { basicProps } from './props'
+import { useFormEvents } from './hooks/useFormEvents'
 import { deepMerge } from '@/utils'
 import { createPlaceholderMessage } from '@/utils/helper/createPlaceholder'
-import { basicProps } from './props'
-import { GridProps } from 'naive-ui'
-import { useFormEvents } from './hooks/useFormEvents'
 import { isArray } from '@/utils/is'
 
 export default defineComponent({
-  name: 'basicFrom',
+  name: 'BasicFrom',
   components: {},
   props: {
-    ...basicProps
+    ...basicProps,
   },
   emits: ['reset', 'submit', 'register'],
   setup(props, { emit }) {
@@ -82,18 +83,17 @@ export default defineComponent({
       (): FormProps => {
         const formProps = { ...props, ...unref(propsRef) } as FormProps
         const rulesObj: any = {
-          rules: {}
+          rules: {},
         }
         const schemas: FormSchema[] = formProps.schemas || []
 
         schemas.forEach((item) => {
-          if (item.rules && isArray(item.rules)) {
+          if (item.rules && isArray(item.rules))
             rulesObj.rules[item.field] = item.rules
-          }
         })
 
         return { ...formProps, ...unref(rulesObj) }
-      }
+      },
     )
 
     /**
@@ -103,9 +103,9 @@ export default defineComponent({
       (): GridProps => {
         const { gridProps } = unref(getProps)
         return {
-          ...gridProps
+          ...gridProps,
         }
-      }
+      },
     )
 
     /**
@@ -123,9 +123,9 @@ export default defineComponent({
       return Object.assign(
         {
           size: props.size,
-          type: 'primary'
+          type: 'primary',
         },
-        props.submitButtonOptions
+        props.submitButtonOptions,
       )
     })
 
@@ -136,9 +136,9 @@ export default defineComponent({
       return Object.assign(
         {
           size: props.size,
-          type: 'default'
+          type: 'default',
         },
-        props.resetButtonOptions
+        props.resetButtonOptions,
       )
     })
 
@@ -148,7 +148,7 @@ export default defineComponent({
     const { handleFormValues, initDefault } = useFormValues({
       defaultFormModel,
       getSchema,
-      formModel
+      formModel,
     })
 
     /**
@@ -161,7 +161,7 @@ export default defineComponent({
       resetFields,
       getFieldsValue,
       setFieldsValue,
-      getFormSchema
+      getFormSchema,
     } = useFormEvents({
       emit,
       getProps,
@@ -170,7 +170,7 @@ export default defineComponent({
       formElRef: formElRef as Ref<FormActionType>,
       defaultFormModel,
       loadingSub,
-      handleFormValues
+      handleFormValues,
     })
 
     async function setProps(formProps: Partial<FormProps>): Promise<void> {
@@ -182,11 +182,11 @@ export default defineComponent({
      */
     function getComponentProps(schema: FormSchema) {
       const compProps = schema.componentProps ?? {}
-      let component = schema.component
+      const component = schema.component
       return {
         clearable: true,
         placeholder: createPlaceholderMessage(unref(component)),
-        ...compProps
+        ...compProps,
       }
     }
 
@@ -201,23 +201,23 @@ export default defineComponent({
       getFieldsValue,
       setFieldsValue,
       getFormSchema,
-      submit: handleSubmit
+      submit: handleSubmit,
     }
 
     watch(
       () => getSchema.value,
       (schema) => {
-        if (unref(isUpdateDefaultRef)) {
+        if (unref(isUpdateDefaultRef))
           return
-        }
+
         if (schema?.length) {
           initDefault()
           isUpdateDefaultRef.value = true
         }
       },
       {
-        deep: true
-      }
+        deep: true,
+      },
     )
 
     onMounted(() => {
@@ -238,9 +238,9 @@ export default defineComponent({
       handleSubmit,
       getSubmitBtnOptions,
       getResetBtnOptions,
-      resetFields
+      resetFields,
     }
-  }
+  },
 })
 </script>
 

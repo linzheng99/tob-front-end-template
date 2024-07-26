@@ -3,8 +3,8 @@ import axios from 'axios'
 import { cloneDeep } from 'lodash-es'
 import { isFunction } from '../is'
 import { ContentTypeEnum, RequestEnum } from '../../enums/httpEnum'
-import { CreateAxiosOptions } from './axiosTypes'
-import { RequestOptions, Result } from '@/typings/axios'
+import type { CreateAxiosOptions } from './axiosTypes'
+import type { RequestOptions, Result } from '@/typings/axios'
 
 /** 封装axios请求类 */
 export class InitAxios {
@@ -23,9 +23,8 @@ export class InitAxios {
   private setupInterceptors() {
     const transform = this.getTransform()
 
-    if (!transform) {
-      return;
-    }
+    if (!transform)
+      return
 
     const {
       requestInterceptors,
@@ -39,9 +38,9 @@ export class InitAxios {
      */
     this.axiosInstance.interceptors.request.use(
       (config: any) => {
-        if (isFunction(requestInterceptors)) {
+        if (isFunction(requestInterceptors))
           config = requestInterceptors(config, this.options)
-        }
+
         return config
       },
       (error) => {
@@ -52,26 +51,24 @@ export class InitAxios {
     /**
      * @description 请求拦截器错误捕获
      */
-    if (isFunction(requestInterceptorsCatch)) {
+    if (isFunction(requestInterceptorsCatch))
       this.axiosInstance.interceptors.request.use(undefined, requestInterceptorsCatch)
-    }
 
     /**
      * @description 处理响应结果拦截器
      */
     this.axiosInstance.interceptors.response.use((res) => {
-      if (isFunction(responseInterceptors)) {
+      if (isFunction(responseInterceptors))
         res = responseInterceptors(res)
-      }
+
       return res
     })
 
     /**
      * @description 响应结果拦截器错误捕获
      */
-    if (isFunction(responseInterceptorsCatch)) {
+    if (isFunction(responseInterceptorsCatch))
       this.axiosInstance.interceptors.response.use(undefined, responseInterceptorsCatch)
-    }
   }
 
   /**
@@ -94,9 +91,8 @@ export class InitAxios {
 
     const { beforeRequestHook, transformRequestHook, requestCatchHook } = transform || {}
 
-    if (isFunction(beforeRequestHook)) {
+    if (isFunction(beforeRequestHook))
       conf = beforeRequestHook(conf, opt)
-    }
 
     conf.requestOptions = opt
 
@@ -109,7 +105,8 @@ export class InitAxios {
             try {
               const ret = transformRequestHook(res, opt)
               resolve(ret)
-            } catch (err) {
+            }
+            catch (err) {
               reject(err || new Error('request error'))
             }
             return
@@ -117,9 +114,9 @@ export class InitAxios {
           resolve(res as unknown as Promise<T>)
         })
         .catch((e) => {
-          if (requestCatchHook && isFunction(requestCatchHook)) {
+          if (requestCatchHook && isFunction(requestCatchHook))
             return reject(requestCatchHook(e, opt))
-          }
+
           if (axios.isAxiosError(e)) {
             console.error('isAxiosError', e)
             return reject(e)
@@ -175,11 +172,10 @@ export class InitAxios {
     // 根据后端要求做逻辑处理
     const customFilename = params.name || 'file'
 
-    if (params.filename) {
+    if (params.filename)
       formData.append(customFilename, params.file, params.filename)
-    } else {
+    else
       formData.append(customFilename, params.file)
-    }
 
     if (params.data) {
       Object.keys(params.data).forEach((key) => {
@@ -201,7 +197,7 @@ export class InitAxios {
       data: formData,
       headers: {
         'Content-type': ContentTypeEnum.FORM_DATA,
-        ignoreCancelToken: true,
+        'ignoreCancelToken': true,
       },
     })
   }

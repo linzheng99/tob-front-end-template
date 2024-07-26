@@ -1,14 +1,13 @@
-import { InitAxios } from './initAxios'
+import type { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { deepMerge, setObjToUrlParams } from '../index'
-import { getCookieToken } from '@/utils/cookie'
-import { ContentTypeEnum, ResultEnum } from '@/enums/httpEnum'
-import { globalConfig } from '@/utils/env'
 import { isString } from '../is'
-import { RequestEnum } from '@/enums/httpEnum'
+import { InitAxios } from './initAxios'
+import type { AxiosTransform, CreateAxiosOptions } from './axiosTypes'
+import { getCookieToken } from '@/utils/cookie'
+import { ContentTypeEnum, RequestEnum, ResultEnum } from '@/enums/httpEnum'
+import { globalConfig } from '@/utils/env'
 import { useCreateMessage } from '@/hooks/web/useMessage'
-import { AxiosTransform, CreateAxiosOptions } from './axiosTypes'
-import { AxiosRequestConfig, AxiosResponse } from 'axios'
-import { RequestOptions, Result } from '@/typings/axios'
+import type { RequestOptions, Result } from '@/typings/axios'
 
 const { apiUrl, urlPrefix } = globalConfig()
 
@@ -20,19 +19,17 @@ const transform: AxiosTransform = {
   transformRequestHook: (res: AxiosResponse<Result>, options: RequestOptions) => {
     const { isTransformResponse, isReturnNativeResponse } = options
     // 是否返回原生响应头 比如：需要获取响应头时使用该属性
-    if (isReturnNativeResponse) {
+    if (isReturnNativeResponse)
       return res
-    }
+
     // 不进行处理，直接返回数据
-    if (!isTransformResponse) {
+    if (!isTransformResponse)
       return res.data
-    }
 
     const { data: result } = res
     // 错误的时候返回
-    if (!result) {
+    if (!result)
       throw new Error('apiRequestFailed')
-    }
 
     // 直接在处理请求数据的时候统一返回字段
     const { code, data, message } = result
@@ -40,7 +37,8 @@ const transform: AxiosTransform = {
     const hasSuccess = data && Reflect.has(result, 'code') && code === ResultEnum.SUCCESS
     if (hasSuccess) {
       return { code, data, message }
-    } else {
+    }
+    else {
       // TODO 判断接口登录凭证（cookie）是否过期
       createWindowErrorMsg(`${code}: ${message}`)
       return { code, message }
@@ -54,12 +52,12 @@ const transform: AxiosTransform = {
      * - method: 请求方法(默认get)
      * - data: 请求的body的data
      */
-    if (joinPrefix) {
+    if (joinPrefix)
       config.url = `${urlPrefix}${config.url}`
-    }
-    if (apiUrl && isString(apiUrl)) {
+
+    if (apiUrl && isString(apiUrl))
       config.url = `${apiUrl}${config.url}`
-    }
+
     const params = config.params || {}
     const data = config.data || false
     /**
@@ -76,11 +74,11 @@ const transform: AxiosTransform = {
     switch (method) {
       case RequestEnum.GET:
       case RequestEnum.DELETE:
-        if (!isString(params)) {
+        if (!isString(params))
           config.params = Object.assign(params || {})
-        } else {
+        else
           paramsIsString(config, params)
-        }
+
         break
       case RequestEnum.POST:
       case RequestEnum.PUT:
@@ -88,7 +86,8 @@ const transform: AxiosTransform = {
           if (Reflect.has(config, 'data') && config.data && Object.keys(config.data).length > 0) {
             config.data = data
             config.params = params
-          } else {
+          }
+          else {
             // 如果没有提供data，则将params视为data
             config.data = params
             config.params = undefined
@@ -99,7 +98,8 @@ const transform: AxiosTransform = {
               Object.assign({}, config.params, config.data),
             )
           }
-        } else {
+        }
+        else {
           paramsIsString(config, params)
         }
         break
@@ -122,7 +122,7 @@ const transform: AxiosTransform = {
     return config
   },
   /** 请求拦截器错误捕获 */
-  requestInterceptorsCatch: (error:any) => {
+  requestInterceptorsCatch: (error: any) => {
     throw new Error(error)
   },
   /** 响应拦截器处理 */
@@ -130,17 +130,17 @@ const transform: AxiosTransform = {
     return res
   },
   /** 响应拦截器错误处理 */
-  responseInterceptorsCatch: (error:any) => {
+  responseInterceptorsCatch: (error: any) => {
     return Promise.reject(error)
   },
 }
 
-const paramsIsString = (config: AxiosRequestConfig, params: string) => {
+function paramsIsString(config: AxiosRequestConfig, params: string) {
   config.url = `${config.url}/${params}`
   config.params = undefined
 }
 
-export const createAxios = (opt?: Partial<CreateAxiosOptions>) => {
+export function createAxios(opt?: Partial<CreateAxiosOptions>) {
   return new InitAxios(
     deepMerge(
       {
