@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { store } from '../index'
-import { initThemeConfig, getNaiveThemeOverrides } from '@/utils/helper/themeHelper'
+import { getNaiveThemeOverrides, initThemeConfig } from '@/utils/helper/themeHelper'
 import { setLocalkey } from '@/utils/cache/appLocal'
 import { LOCAL_THEME_CONFIG } from '@/enums/cacheEnum'
 

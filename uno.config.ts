@@ -20,6 +20,7 @@ export default defineConfig({
     'bg-base': 'bg-white dark:bg-[#020420]',
     'bg-active': 'bg-gray:20',
     'c-base': 'c-#000000 dark:c-#ffffffd1',
+    'icon-base': 'c-#000000 dark:c-#ffffffd1',
   },
   transformers: [
     transformerDirectives(),

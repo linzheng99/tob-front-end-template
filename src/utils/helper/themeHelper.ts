@@ -1,9 +1,9 @@
-import { themeConfig } from '@/theme'
-import { GlobalThemeOverrides } from 'naive-ui'
+import type { GlobalThemeOverrides } from 'naive-ui'
+import { cloneDeep } from 'lodash-es'
 import { addColorAlpha, getColorPalette } from '../color'
+import { themeConfig } from '@/theme'
 import { getLocalKey } from '@/utils/cache/appLocal'
 import { LOCAL_THEME_COLOR } from '@/enums/cacheEnum'
-import { cloneDeep } from 'lodash-es'
 
 export function initThemeConfig() {
   // 获取local theme
@@ -31,11 +31,11 @@ interface ColorAction {
 /** 获取主题颜色的各种场景对应的颜色 */
 function getThemeColors(colors: [ColorType, string][]) {
   const colorActions: ColorAction[] = [
-    { scene: '', handler: (color) => color },
-    { scene: 'Suppl', handler: (color) => color },
-    { scene: 'Hover', handler: (color) => getColorPalette(color, 5) },
-    { scene: 'Pressed', handler: (color) => getColorPalette(color, 7) },
-    { scene: 'Active', handler: (color) => addColorAlpha(color, 0.1) },
+    { scene: '', handler: color => color },
+    { scene: 'Suppl', handler: color => color },
+    { scene: 'Hover', handler: color => getColorPalette(color, 5) },
+    { scene: 'Pressed', handler: color => getColorPalette(color, 7) },
+    { scene: 'Active', handler: color => addColorAlpha(color, 0.1) },
   ]
 
   const themeColor: ThemeColor = {}

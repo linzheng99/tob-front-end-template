@@ -1,16 +1,18 @@
 <template>
   <div class="tab-wrapper c-base">
-    <div class="tab-content" :style="tabStyle(info.fullPath, activeTab)" @click="go(info.fullPath)">
+    <div
+      class="tab-content gap-1"
+      :style="tabStyle(info.fullPath, activeTab)"
+      @click="go(info.fullPath)"
+    >
       <span>{{ info.title }}</span>
-      <button v-if="showClose" class="close_btn" @click.stop="close(info)">
-        <SvgIcon icon="ep:close-bold" />
-      </button>
+      <SvgIcon v-if="showClose" icon="ep:close-bold" @click.stop="close(info)" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { Tab } from '../TabsType'
+import type { Tab } from '../TabsType'
 import { useThemeStoreWithOut } from '@/store/modules/theme'
 
 interface Props {
@@ -27,16 +29,16 @@ defineProps<Props>()
 const emit = defineEmits<Emit>()
 const themeStore = useThemeStoreWithOut()
 
-const go = (path: string) => {
+function go(path: string) {
   emit('go', path)
 }
-const close = (tab: Tab) => {
+function close(tab: Tab) {
   emit('close', tab)
 }
-const tabStyle = (path, activePath) => {
+function tabStyle(path, activePath) {
   if (path === activePath) {
     return {
-      border: `1px solid ${themeStore.themeColor}`
+      border: `1px solid ${themeStore.themeColor}`,
     }
   }
 }
@@ -53,9 +55,9 @@ const tabStyle = (path, activePath) => {
     &:last-child {
       margin-right: 0px;
     }
+    overflow-y: hidden;
   }
   &-content {
-    cursor: pointer;
     display: flex;
     align-items: center;
     padding: 6px 12px;
@@ -68,21 +70,5 @@ const tabStyle = (path, activePath) => {
   &-active {
     border: 1px solid #dcee62;
   }
-}
-.close_btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  @apply border-base bg-base border-1px;
-  border-radius: 3px;
-  height: 18px;
-  width: 18px;
-  font-size: 14px;
-  outline: none;
-  border: none;
-  position: relative;
-  padding: 0;
-  margin-left: 6px;
 }
 </style>

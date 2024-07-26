@@ -39,7 +39,7 @@ const defaultThemeConfig: Theme.Config = {
     headerHeight: 56,
   },
   tab: {
-    tabHeight: 44,
+    tabHeight: 45,
   },
   sidebar: {
     inverted: false,

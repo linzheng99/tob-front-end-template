@@ -35,13 +35,11 @@ type ColorIndex = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
 export function getColorPalette(color: AnyColor, index: ColorIndex): string {
   const transformColor = colord(color)
 
-  if (!transformColor.isValid()) {
-    throw Error('invalid input color value')
-  }
+  if (!transformColor.isValid())
+    throw new Error('invalid input color value')
 
-  if (index === 6) {
+  if (index === 6)
     return colord(transformColor).toHex()
-  }
 
   const isLight = index < 6
   const hsv = transformColor.toHsv()
@@ -83,7 +81,7 @@ export function getColorPalettes(
 ): string[] {
   const indexs: ColorIndex[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-  const patterns = indexs.map((index) => getColorPalette(color, index))
+  const patterns = indexs.map(index => getColorPalette(color, index))
 
   if (darkTheme) {
     const darkPatterns = darkColorMap.map(({ index, opacity }) => {
@@ -92,7 +90,7 @@ export function getColorPalettes(
       return darkColor
     })
 
-    return darkPatterns.map((item) => colord(item).toHex())
+    return darkPatterns.map(item => colord(item).toHex())
   }
 
   return patterns
@@ -114,20 +112,19 @@ function getHue(hsv: HsvColor, i: number, isLight: boolean) {
     // 减淡变亮 色相顺时针旋转 更暖
     // 加深变暗 色相逆时针旋转 更冷
     hue = isLight ? hsvH - hueStep * i : hsvH + hueStep * i
-  } else {
+  }
+  else {
     // 暖色调
     // 减淡变亮 色相逆时针旋转 更暖
     // 加深变暗 色相顺时针旋转 更冷
     hue = isLight ? hsvH + hueStep * i : hsvH - hueStep * i
   }
 
-  if (hue < 0) {
+  if (hue < 0)
     hue += 360
-  }
 
-  if (hue >= 360) {
+  if (hue >= 360)
     hue -= 360
-  }
 
   return hue
 }
@@ -140,31 +137,26 @@ function getHue(hsv: HsvColor, i: number, isLight: boolean) {
  */
 function getSaturation(hsv: HsvColor, i: number, isLight: boolean) {
   // 灰色不渐变
-  if (hsv.h === 0 && hsv.s === 0) {
+  if (hsv.h === 0 && hsv.s === 0)
     return hsv.s
-  }
 
   let saturation: number
 
-  if (isLight) {
+  if (isLight)
     saturation = hsv.s - saturationStep * i
-  } else if (i === darkColorCount) {
+  else if (i === darkColorCount)
     saturation = hsv.s + saturationStep
-  } else {
+  else
     saturation = hsv.s + saturationStep2 * i
-  }
 
-  if (saturation > 100) {
+  if (saturation > 100)
     saturation = 100
-  }
 
-  if (isLight && i === lightColorCount && saturation > 10) {
+  if (isLight && i === lightColorCount && saturation > 10)
     saturation = 10
-  }
 
-  if (saturation < 6) {
+  if (saturation < 6)
     saturation = 6
-  }
 
   return saturation
 }
@@ -178,15 +170,13 @@ function getSaturation(hsv: HsvColor, i: number, isLight: boolean) {
 function getValue(hsv: HsvColor, i: number, isLight: boolean) {
   let value: number
 
-  if (isLight) {
+  if (isLight)
     value = hsv.v + brightnessStep1 * i
-  } else {
+  else
     value = hsv.v - brightnessStep2 * i
-  }
 
-  if (value > 100) {
+  if (value > 100)
     value = 100
-  }
 
   return value
 }
