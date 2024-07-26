@@ -1,5 +1,7 @@
 <template>
-  <div id="app_content">角色</div>
+  <div id="app_content">
+    角色
+  </div>
 </template>
 
 <script setup lang="ts"></script>

@@ -1,11 +1,9 @@
 <template>
-  <div id="app_content">权限 <n-input v-model:value="authValue"></n-input> </div>
+  <div id="app_content">
+    权限
+  </div>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue'
-
-const authValue = ref('')
-</script>
+<script setup lang="ts"></script>
 
 <style lang="scss" scoped></style>

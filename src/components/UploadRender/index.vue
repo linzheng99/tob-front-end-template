@@ -7,21 +7,27 @@
       <div class="upload-content">
         <div class="upload-file">
           <span v-if="!files.length">请选择</span>
-          <span style="display: flex" v-else>
+          <span v-else style="display: flex">
             {{ files[0].name }}
-            <n-button text style="font-size: 18px; margin-left: 10px" @click="deleteFile"
-              :render-icon="iconRender({ icon: 'ep:circle-close', color: 'gray' })" />
+            <n-button
+              text style="font-size: 18px; margin-left: 10px" :render-icon="iconRender({ icon: 'ep:circle-close', color: 'gray' })"
+              @click="deleteFile"
+            />
           </span>
         </div>
         <div style="width: 88px">
-          <n-upload ref="upload_ref" action="https://naive-upload.free.beeceptor.com/"
-            :headers="{ 'naive-info': 'hello!' }" :data="{ 'naive-data': 'cool! naive!' }" :max="1"
-            :custom-request="customRequest" :show-file-list="false" v-model:file-list="files">
-            <n-button type="primary" style="height: 28px"> 选择文件 </n-button>
+          <n-upload
+            ref="upload_ref" v-model:file-list="files"
+            action="https://naive-upload.free.beeceptor.com/" :headers="{ 'naive-info': 'hello!' }" :data="{ 'naive-data': 'cool! naive!' }"
+            :max="1" :custom-request="customRequest" :show-file-list="false"
+          >
+            <n-button type="primary" style="height: 28px">
+              选择文件
+            </n-button>
           </n-upload>
         </div>
       </div>
-      <n-button type="primary" @click="download" :render-icon="iconRender({ icon: 'el:download' })">
+      <n-button type="primary" :render-icon="iconRender({ icon: 'el:download' })" @click="download">
         下载导入模板
       </n-button>
     </div>
@@ -29,23 +35,22 @@
 </template>
 
 <script setup lang="ts">
-import { useIconRender } from '@/hooks/component/useIconRender'
 import { ref, unref } from 'vue'
+import { useIconRender } from '@/hooks/component/useIconRender'
 
+const emits = defineEmits(['download'])
 const { iconRender } = useIconRender()
 const files: any = ref([])
 const upload_ref = ref(null)
-const emits = defineEmits(['download'])
-
-const customRequest = ({ file }) => {
+function customRequest({ file }) {
   files.value.push(file)
 }
 
-const download = () => {
+function download() {
   emits('download')
 }
 
-const deleteFile = () => {
+function deleteFile() {
   const dom: any = unref(upload_ref)
   dom.fileList.pop()
   files.value.pop()

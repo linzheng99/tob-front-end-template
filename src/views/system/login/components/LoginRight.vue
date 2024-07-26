@@ -40,7 +40,7 @@ import { useAppInfo } from '@/hooks/app/system'
 import { useThemeStoreWithOut } from '@/store/modules/theme'
 import SvgIcon from '@/components/SvgIcon/index.vue'
 
-const { name, title, desc } = useAppInfo()
+const { title, desc } = useAppInfo()
 const userStore = useUserStore()
 const themeStore = useThemeStoreWithOut()
 

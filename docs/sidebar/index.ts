@@ -56,6 +56,9 @@ export function setupSidebar() {
           items: [
             { text: 'TableRender', link: '/sidebar/Guide/Components/TableRender' },
             { text: 'FormRender', link: '/sidebar/Guide/Components/FormRender' },
+            { text: 'DescriptionsRender', link: '/sidebar/Guide/Components/DescriptionsRender' },
+            { text: 'UploadRender', link: '/sidebar/Guide/Components/UploadRender' },
+            { text: 'LoadingEmptyWrapper', link: '/sidebar/Guide/Components/LoadingEmptyWrapper' },
           ],
         },
       ],

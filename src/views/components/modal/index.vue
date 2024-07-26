@@ -5,18 +5,14 @@
   <n-button @click="toggleCheckModal">
     toggle checkModal
   </n-button>
-  <SvgIcon icon="icon-park-outline:good-two" />
   <AddModal ref="addModal_ref" :title="title" />
   <CheckModal ref="checkModal_ref" :data="checkData" :title="title" :type="checkType" />
-  <UploadRender />
 </template>
 
 <script setup lang="ts">
 import { reactive, ref, unref } from 'vue'
 import AddModal from './testModal/AddModal.vue'
 import CheckModal from './testModal/CheckModal.vue'
-import UploadRender from '@/components/UploadRender/index.vue'
-import SvgIcon from '@/components/SvgIcon/index.vue'
 
 const addModal_ref = ref(null)
 const checkModal_ref = ref(null)

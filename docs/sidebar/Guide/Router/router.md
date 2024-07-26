@@ -16,7 +16,7 @@ const basicRoutes = [
   }
 ]
 
-const getWhiteRouteList = (array) => {
+function getWhiteRouteList(array) {
   array.forEach((item) => {
     WHITE_PATH_LIST.push(item.path)
     getWhiteRouteList(item.children || [])
@@ -42,4 +42,3 @@ export async function setupRouter(app) {
 }
 // 在main.ts（项目入口文件）中挂载
 ```
-
