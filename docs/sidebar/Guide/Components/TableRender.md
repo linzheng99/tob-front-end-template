@@ -4,7 +4,7 @@ outline: deep
 
 # Table component
 
-基于[Naive UI Table组件](https://www.naiveui.com/zh-CN/dark/components/menu)进行二次封装
+基于[Naive UI Table组件](https://www.naiveui.com/zh-CN/dark/components/data-table)进行二次封装
 
 ## 组件背景
 1. 为了减少在业务代码中的重复,更快速(符合自己开发逻辑)的搭建表格;

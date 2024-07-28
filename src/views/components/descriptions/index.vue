@@ -15,7 +15,6 @@ const data = {
 const descripeList: ListType[] = [
   {
     label: '晚上',
-    renderContent: true,
     render(data, param) {
       return data[param]
     },

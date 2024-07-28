@@ -40,12 +40,12 @@ import { isFunction } from '@/utils/is'
 
 interface Props {
   labelPlacement?: 'center' | 'left' | 'right'
-  title?: any
+  title?: string
   describeList: ListType[]
   column?: number
-  data: any
-  itemLabelStyle?: any
-  itemContentStyle?: any
+  data: Recordable
+  itemLabelStyle?: Record<string, string>
+  itemContentStyle?: Record<string, string>
   labelAlign?: 'left' | 'right'
 }
 const props = withDefaults(defineProps<Props>(), {
@@ -53,12 +53,12 @@ const props = withDefaults(defineProps<Props>(), {
   title: '',
   describeList: () => [],
   labelAlign: 'right',
-  itemContentStyle: () => {},
-  itemLabelStyle: () => {},
+  itemContentStyle: () => ({ padding: '11px 10px', verticalAlign: 'middle' }),
+  itemLabelStyle: () => ({ width: '130px', padding: '11px 10px' }),
 })
 
-const finallyItemContentStyle = ref({ padding: '11px 10px', verticalAlign: 'middle' })
-const finallyItemLabelStyle = ref({ width: '130px', padding: '11px 10px' })
+const finallyItemContentStyle = ref({})
+const finallyItemLabelStyle = ref({})
 onMounted(() => {
   extend(finallyItemContentStyle.value, props.itemContentStyle)
   extend(finallyItemLabelStyle.value, props.itemLabelStyle)
