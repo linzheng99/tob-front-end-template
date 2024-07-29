@@ -79,3 +79,25 @@ const descripeList: ListType[] = [
 </script>
 ```
 :::
+
+## Props
+
+| 名称             | 说明           | 默认值                                              | 类型                     |
+| ---------------- | :------------- | :-------------------------------------------------- | :----------------------- |
+| labelPlacement   | label 显示位置 | left                                                | `center / left / right`  |
+| labelAlign       | label 对齐方式 | right                                               | `left / right`           |
+| title            | 标题           | 无                                                  | `string`                 |
+| describeList     | 需要循环的数据 | 空数据                                              | `ListType[]`             |
+| column           | 设置的总列数   | 1                                                   | `number`                 |
+| data             | 数据源         | {}                                                  | `Recordable`             |
+| itemLabelStyle   | label的样式    | `{ width: '130px', padding: '11px 10px' }`          | `Record<string, string>` |
+| itemContentStyle | 内容的样式     | `{ padding: '11px 10px', verticalAlign: 'middle' }` | `Record<string, string>` |
+
+### `ListType`
+
+| 名称   | 说明            | 类型                                                                  |
+| ------ | :-------------- | :-------------------------------------------------------------------- |
+| label  | 显示的 label 值 | `string / number / ((data: Recordable, param: string) => VNodeChild)` |
+| param  | 数据的key       | `string`                                                              |
+| span   | 所占的单元格数  | `number`                                                              |
+| render | (可选)渲染函数  | `(data: Recordable, param: string) => VNodeChild`                     |
