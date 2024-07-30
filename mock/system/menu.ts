@@ -104,6 +104,15 @@ const componentsRouter = {
         icon: 'simple-icons:apacheecharts',
       },
     },
+    {
+      path: '/components/uploadComp',
+      name: 'upload',
+      component: '/components/uploadComp/index.vue',
+      meta: {
+        title: 'upload',
+        icon: 'simple-icons:apacheecharts',
+      },
+    },
   ],
 }
 

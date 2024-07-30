@@ -1,10 +1,10 @@
 <template>
-  <div class="upload-wrapper">
+  <div class="upload-wrapper border border-base">
     <div class="upload-text">
       <span>请您按“导入模板”文档内的指定字段导入信息。</span>
     </div>
     <div class="upload-main">
-      <div class="upload-content">
+      <div class="upload-content border border-base border-rd-1">
         <div class="upload-file">
           <span v-if="!files.length">请选择</span>
           <span v-else style="display: flex">
@@ -66,7 +66,6 @@ defineExpose({ files })
     height: 132px;
     padding: 23px 0px;
     border-radius: 4px;
-    background-color: #f2f5fa;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -75,7 +74,6 @@ defineExpose({ files })
 
   &-text {
     font-size: 20px;
-    color: #303133;
     font-weight: bold;
     margin-bottom: 20px;
   }
@@ -89,7 +87,6 @@ defineExpose({ files })
     width: 380px;
     height: 40px;
     padding: 6px;
-    background-color: white;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
