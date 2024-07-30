@@ -95,6 +95,15 @@ const componentsRouter = {
         icon: 'simple-icons:apacheecharts',
       },
     },
+    {
+      path: '/components/loadingEmpty',
+      name: 'LoadingEmpty',
+      component: '/components/LoadingEmptyWrapper/index.vue',
+      meta: {
+        title: 'loadingEmpty',
+        icon: 'simple-icons:apacheecharts',
+      },
+    },
   ],
 }
 
@@ -117,7 +126,7 @@ const customLayout = {
         icon: 'ph:layout-bold',
       },
     },
-  ]
+  ],
 }
 
 export default [
