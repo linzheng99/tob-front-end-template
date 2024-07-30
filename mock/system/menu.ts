@@ -98,7 +98,7 @@ const componentsRouter = {
     {
       path: '/components/loadingEmpty',
       name: 'LoadingEmpty',
-      component: '/components/LoadingEmptyWrapper/index.vue',
+      component: '/components/loadingEmptyWrapper/index.vue',
       meta: {
         title: 'loadingEmpty',
         icon: 'simple-icons:apacheecharts',

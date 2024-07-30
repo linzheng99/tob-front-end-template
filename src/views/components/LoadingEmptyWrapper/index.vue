@@ -25,5 +25,3 @@ onMounted(() => {
   setLoading()
 })
 </script>
-
-<style scoped></style>
