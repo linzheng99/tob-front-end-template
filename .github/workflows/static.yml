@@ -53,10 +53,5 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
         with:
-          # Configure deployment paths
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          artifact_location: master-artifact
-          artifact_name: master-artifact
-          # The default artifact name for the second artifact
-          extra_artifact_location: docs-artifact
+          artifact_name: main-artifact
           extra_artifact_name: docs-artifact
