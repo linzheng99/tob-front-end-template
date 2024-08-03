@@ -31,40 +31,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Combine build outputs
-        run: |
-          mkdir -p combined
-          cp -r ./dist/* combined/
-          mkdir -p combined/docs
-          cp -r ./docs/.vitepress/dist/* combined/docs/
-        # 将主项目和文档项目的构建输出合并到 ./combined 目录
-
-      - name: Upload combined artifact
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./combined
-          name: github-pages
-
-      # - name: Setup Pages
-      #   uses: actions/configure-pages@v5
-
-      # - name: Upload master artifact
-      #   uses: actions/upload-pages-artifact@v3
-      #   with:
-      #     # Upload entire repository
-      #     path: ./dist
-      #     name: master-artifact
-
-      # - name: Upload docs artifact
-      #   uses: actions/upload-pages-artifact@v3
-      #   with:
-      #     # Upload entire repository
-      #     path: ./docs/.vitepress/dist
-      #     name: docs-artifact
-
+          # Upload entire repository
+          path: ./dist
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          artifact_name: github-pages
