@@ -6,6 +6,7 @@ import { setupSidebar } from '../sidebar'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  base: 'tob-front-end-template',
   title: 'tob Template',
   description: 'Document',
   head: [
