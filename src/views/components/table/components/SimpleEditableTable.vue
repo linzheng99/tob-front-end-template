@@ -112,13 +112,13 @@ function actionBtns(record: TableBasicRecordRow): Actions[] {
 
 // 在保存 edit 时触发
 function editSubmit(values: { index: number, record: Recordable }) {
-  console.log(values)
+  console.warn(values)
 }
 
 // 在改变 column 中数据触发
 function editChange(values) {
   const { record, key } = values
-  console.log(record, key)
+  console.warn(record, key)
 }
 
 // 点击操作列按扭触发
@@ -146,9 +146,8 @@ async function fetchApi() {
 }
 
 // 请求成功
-function requestSuccess(responseData: Data[]) {
+function requestSuccess(responseData) {
   data.value = responseData
-  console.log(data.value)
 }
 
 // api

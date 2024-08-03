@@ -5,6 +5,7 @@ import { getServiceEnvConfig } from './.env-config'
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
+  // eslint-disable-next-line node/prefer-global/process
   const root = process.cwd()
   const viteEnv = loadEnv(mode, root) as unknown as ImportMetaEnv
 
@@ -32,8 +33,8 @@ export default defineConfig(({ command, mode }) => {
     optimizeDeps: {
       include: [
         'echarts',
-        'lodash-es'
-      ]
+        'lodash-es',
+      ],
     },
     server: {
       host: true,

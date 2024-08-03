@@ -131,12 +131,12 @@ function editSubmit(values) {
   data.value[index].sexStr = record.sex === 1 ? '男' : '女'
 }
 // 请求成功
-function requestSuccess(responseData: Data[]) {
+function requestSuccess(responseData) {
   data.value = responseData
 }
 function editChange(values) {
   const { record, key } = values
-  console.log(record, key)
+  console.warn(record, key)
 }
 
 // TODO 把 click 放到props里面
@@ -171,7 +171,7 @@ async function fetchApi() {
     await tableRef.value?.reloadData()
   }
   catch (error) {
-    console.log(error)
+    console.error(error)
   }
 }
 

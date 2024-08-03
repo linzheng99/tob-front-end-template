@@ -1,0 +1,1 @@
+import o from"./LoginLeft-fb68b777.js";import t from"./LoginRight-04b47044.js";import{e as _,Y as n,Z as s,$ as e,a0 as c}from"./index-7ac5122e.js";import"./index.vue_vue_type_script_setup_true_lang-d857363d.js";const a={class:"login"},i=_({__name:"index",setup(r){return(p,d)=>(n(),s("div",a,[e(o),e(t)]))}});const u=c(i,[["__scopeId","data-v-535c37b6"]]);export{u as default};

@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { h, ref } from 'vue'
+import { ref } from 'vue'
 import { useECharts } from '@/hooks/web/useECharts'
 
 const barChart = ref()
