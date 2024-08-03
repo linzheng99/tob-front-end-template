@@ -31,8 +31,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
+
       - name: Upload master artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -46,8 +48,15 @@ jobs:
           # Upload entire repository
           path: ./docs/.vitepress/dist
           name: docs-artifact
-          destination_dir: docs
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          # Configure deployment paths
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          artifact_location: master-project-artifact
+          artifact_name: master-project
+          # The default artifact name for the second artifact
+          extra_artifact_location: docs-artifact
+          extra_artifact_name: docs
