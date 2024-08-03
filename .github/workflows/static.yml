@@ -53,5 +53,5 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
         with:
-          artifact_name: main-artifact
+          artifact_name: master-artifact
           extra_artifact_name: docs-artifact
