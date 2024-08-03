@@ -38,12 +38,14 @@ jobs:
         with:
           # Upload entire repository
           path: ./dist
+          name: master-project-artifact
 
       - name: Upload docs artifact
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload entire repository
           path: ./docs/.vitepress/dist
+          name: docs-artifact
           destination_dir: docs
 
       - name: Deploy to GitHub Pages
