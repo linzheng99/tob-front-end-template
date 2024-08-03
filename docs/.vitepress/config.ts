@@ -6,7 +6,7 @@ import { setupSidebar } from '../sidebar'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  base: '/tob-frond-end-template/docs/',
+  base: '/docs/',
   title: 'tob Template',
   description: 'Document',
   head: [
