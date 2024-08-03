@@ -43,7 +43,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload entire repository
-          path: ./docs/dist
+          path: ./docs/.vitepress/dist
           destination_dir: docs
 
       - name: Deploy to GitHub Pages
