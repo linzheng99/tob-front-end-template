@@ -4,7 +4,7 @@ export function setupSidebar() {
       text: '项目介绍',
       collapsed: false,
       items: [
-        { text: 'Getting Started', link: '/sidebar/Introduction/getting-started' },
+        { text: 'introduce', link: '/sidebar/Introduction/introduce' },
         { text: 'Structure', link: '/sidebar/Introduction/structure' },
       ],
     },
@@ -61,14 +61,6 @@ export function setupSidebar() {
             { text: 'UploadRender', link: '/sidebar/Guide/Components/UploadRender' },
           ],
         },
-      ],
-    },
-    {
-      text: '官方例子',
-      collapsed: false,
-      items: [
-        { text: 'api-examples', link: '/sidebar/Examples/api-examples' },
-        { text: 'markdown-examples', link: '/sidebar/Examples/markdown-examples' },
       ],
     },
   ]

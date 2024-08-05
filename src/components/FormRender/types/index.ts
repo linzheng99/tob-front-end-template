@@ -139,8 +139,9 @@ export interface FormSchema {
  * @description 表单的方法
  * @param submit 提交
  * @param validate 校验
- * @param restoreValidation 清空校验
+ * @param restoreValidation 恢复未校验状态
  * @param setProps 设置form的props
+ * @param getFormSchema 获取form schema 的值
  * @param setFieldsValue 设置form model 的值
  * @param getFieldsValue 获取form model 的值
  * @param resetFields 重置form表单数据
