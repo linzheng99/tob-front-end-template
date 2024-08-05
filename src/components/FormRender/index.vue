@@ -1,7 +1,7 @@
 <template>
   <n-form v-bind="getProps" ref="formElRef" :model="formModel">
     <n-grid v-bind="getGrid">
-      <n-gi v-for="schema in getSchema" v-bind="schema.giProps" :key="schema.field">
+      <n-gi v-for="schema in getSchema" v-bind="schema.giProps || getProps.giProps" :key="schema.field">
         <n-form-item :label="schema.label" :path="schema.field" :show-label="schema.showLabel">
           <!-- 判断插槽 -->
           <template v-if="schema.slot">
@@ -157,7 +157,7 @@ export default defineComponent({
     const {
       handleSubmit,
       validate,
-      clearValidate,
+      restoreValidation,
       resetFields,
       getFieldsValue,
       setFieldsValue,
@@ -195,7 +195,7 @@ export default defineComponent({
      */
     const formActionType: Partial<FormActionType> = {
       validate,
-      clearValidate,
+      restoreValidation,
       setProps,
       resetFields,
       getFieldsValue,

@@ -1,27 +1,27 @@
-import type { PropType } from 'vue';
-import { FormSchema } from './types';
-import { ButtonProps, GridItemProps, GridProps } from 'naive-ui';
+import type { PropType } from 'vue'
+import type { ButtonProps, GridItemProps, GridProps } from 'naive-ui'
+import type { FormSchema } from './types'
 
 export const basicProps = {
-  //grid 配置
+  // grid 配置
   gridProps: {
     type: Object as PropType<GridProps>,
     default: () => ({
       cols: 2,
       xGap: 20,
-      yGap: 0
-    })
+      yGap: 0,
+    }),
   },
-  //gi 配置
+  // gi 配置
   giProps: {
     type: Object as PropType<GridItemProps>,
     default: () => ({
-      span: 1
-    })
+      span: 1,
+    }),
   },
   // 标签宽度  固定宽度
   labelWidth: {
-    type: [Number, String] as PropType<number | string>,
+    type: [Number, String] as PropType<number | string | 'auto'>,
     default: 100,
   },
   // 表单配置规则
@@ -29,31 +29,31 @@ export const basicProps = {
     type: [Array] as PropType<FormSchema[]>,
     default: () => [],
   },
-  //是否展示为行内表单
+  // 是否展示为行内表单
   inline: {
     type: Boolean,
     default: false,
   },
-  //大小
+  // 底部btn大小
   size: {
-    type: String,
+    type: String as PropType<'small' | 'medium' | 'large'>,
     default: 'medium',
   },
-  //标签位置
+  // 标签位置
   labelPlacement: {
     type: String,
     default: 'left',
   },
   requireMarkPlacement: {
-    type: String,
+    type: String as PropType<'left' | 'right' | 'right-hanging'>,
     default: 'left',
   },
-  //组件是否width 100%
+  // 组件是否width 100%
   isFull: {
     type: Boolean,
     default: true,
   },
-  //是否显示操作按钮（查询/重置）
+  // 是否显示操作按钮（查询/重置）
   showActionButtonGroup: {
     type: Boolean,
     default: true,
@@ -82,4 +82,4 @@ export const basicProps = {
     type: String,
     default: '重置',
   },
-};
+}

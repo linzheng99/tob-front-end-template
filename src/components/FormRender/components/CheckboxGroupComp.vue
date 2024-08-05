@@ -14,9 +14,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, computed, unref, useAttrs } from 'vue'
+import type { PropType } from 'vue'
+import { computed, defineComponent, unref, useAttrs } from 'vue'
 
-type OptionsItem = { label: string; value: string | number; disabled?: boolean }
+interface OptionsItem { label: string, value: string | number, disabled?: boolean }
 
 export default defineComponent({
   name: 'ApiCheckboxGroup',
@@ -25,12 +26,12 @@ export default defineComponent({
     options: Array as PropType<OptionsItem[]>,
     labelField: {
       type: String,
-      default: 'label'
+      default: 'label',
     },
     valueField: {
       type: String,
-      default: 'value'
-    }
+      default: 'value',
+    },
   },
   setup(props) {
     const attrs = useAttrs()
@@ -42,8 +43,8 @@ export default defineComponent({
           const value = next[valueField]
           prev.push({
             label: next[labelField],
-            value: value,
-            disabled: next.disabled || false
+            value,
+            disabled: next.disabled || false,
           })
         }
         return prev
@@ -51,7 +52,7 @@ export default defineComponent({
     })
 
     return { attrs, getOptions }
-  }
+  },
 })
 </script>
 

@@ -1,17 +1,19 @@
 <template>
   <div id="app_content">
-    <FormRender ref="baseForm" @register="register">
-      <template #statusSlot>
-        <div> 占位符 </div>
+    <FormRender @register="register" @submit="formSubmit">
+      <template #statusSlot="{ model, field }">
+        <div> 内容:{{ model }} {{ field }} </div>
       </template>
     </FormRender>
   </div>
 </template>
 
 <script setup lang="ts">
-import { FormRender, useForm, FormSchema } from '@/components/FormRender/index'
+import type { FormSchema } from '@/components/FormRender/index'
+import { FormRender, useForm } from '@/components/FormRender/index'
+
 const [register] = useForm({
-  schemas: initSchemas()
+  schemas: initSchemas(),
 })
 function initSchemas(): FormSchema[] {
   return [
@@ -21,24 +23,8 @@ function initSchemas(): FormSchema[] {
       label: '姓名',
       componentProps: {
         placeholder: '请输入姓名',
-        onInput: (e: any) => {
-          console.log(e)
-        }
       },
-      giProps: {
-        span: 1
-      },
-      rules: [{ required: true, message: '请输入姓名', trigger: ['blur'] }]
-    },
-    {
-      field: '',
-      label: '',
-      //插槽
-      slot: 'statusSlot',
-      showLabel: false,
-      giProps: {
-        span: 2
-      }
+      rules: [{ required: true, message: '请输入姓名', trigger: ['blur'] }],
     },
     {
       field: 'age',
@@ -46,10 +32,7 @@ function initSchemas(): FormSchema[] {
       label: '年龄',
       componentProps: {
         placeholder: '请输入姓名',
-        onInput: (e: any) => {
-          console.log(e)
-        }
-      }
+      },
     },
     {
       field: 'address',
@@ -57,33 +40,41 @@ function initSchemas(): FormSchema[] {
       label: '地址',
       componentProps: {
         placeholder: '请输入姓名',
-        onInput: (e: any) => {
-          console.log(e)
-        }
-      }
+      },
+      giProps: {
+        span: 2,
+      },
+    },
+    {
+      field: 'slot',
+      label: '这里是插槽',
+      // 插槽
+      slot: 'statusSlot',
+      showLabel: true,
+      giProps: {
+        span: 2,
+      },
     },
     {
       field: 'makeSource',
-      component: 'NRadioGroup',
+      component: 'RadioGroupComp',
       label: '来源',
       componentProps: {
         options: [
           {
             label: '网上',
-            value: 1
+            value: 1,
           },
           {
             label: '门店',
-            value: 2
-          }
+            value: 2,
+          },
         ],
-        onUpdateChecked: (e: any) => {
-          console.log(e)
-        }
-      }
-    }
+      },
+    },
   ]
 }
+function formSubmit(_values: Recordable) {}
 </script>
 
 <style lang="scss" scoped></style>

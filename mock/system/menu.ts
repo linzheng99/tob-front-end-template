@@ -101,18 +101,18 @@ const componentsRouter = {
       component: '/components/loadingEmptyWrapper/index.vue',
       meta: {
         title: 'loadingEmpty',
-        icon: 'simple-icons:apacheecharts',
+        icon: 'hugeicons:loading-01',
       },
     },
-    {
-      path: '/components/uploadComp',
-      name: 'upload',
-      component: '/components/uploadComp/index.vue',
-      meta: {
-        title: 'upload',
-        icon: 'simple-icons:apacheecharts',
-      },
-    },
+    // {
+    //   path: '/components/uploadComp',
+    //   name: 'upload',
+    //   component: '/components/uploadComp/index.vue',
+    //   meta: {
+    //     title: 'upload',
+    //     icon: 'ic:baseline-upload',
+    //   },
+    // },
   ],
 }
 

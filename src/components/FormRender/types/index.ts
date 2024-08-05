@@ -1,5 +1,5 @@
-import { ButtonProps, GridItemProps, GridProps } from "naive-ui"
-import { ComponentType } from "./component"
+import type { ButtonProps, GridItemProps, GridProps } from 'naive-ui'
+import type { ComponentType } from './component'
 
 /**
  * @description FormItem 配置项
@@ -16,7 +16,7 @@ export interface FormItemType {
   placeholder?: string
   disabled?: TwoAryFunc | null
   value: string
-  itemType: string,
+  itemType: string
   selectConfig?: selectConfig
   checkboxList?: Options<string>[]
   cascaderConfig?: cascaderConfig
@@ -24,8 +24,9 @@ export interface FormItemType {
 
 type TwoAryFunc = (a: any, b: any) => boolean
 
-export type Options<T extends any> = {
-  [key: string]: T;
+// eslint-disable-next-line ts/no-unnecessary-type-constraint
+export interface Options<T extends any> {
+  [key: string]: T
 }
 
 export interface selectConfig {
@@ -71,7 +72,6 @@ export interface FormItemConfig {
   requireMarkPlacement?: 'left' | 'right' | 'right-hanging'
 }
 
-
 /**
  * @description 表单配置
  * @param inline 行内表单
@@ -92,21 +92,21 @@ export interface FormItemConfig {
  * @param submitFunc 提交函数
  */
 export interface FormProps {
-  inline: boolean;
-  size: string;
-  schemas?: FormSchema[];
-  gridProps?: GridProps;
-  giProps?: GridItemProps;
+  inline: boolean
+  size: string
+  schemas?: FormSchema[]
+  gridProps?: GridProps
+  giProps?: GridItemProps
   isFull?: boolean
-  showActionButtonGroup?: boolean;
-  showSubmitButton?: boolean;
-  submitButtonOptions?: Partial<ButtonProps>;
-  submitButtonText?: string;
-  showResetButton?: boolean;
-  resetButtonOptions?: Partial<ButtonProps>;
-  resetButtonText?: string;
-  resetFunc?: () => Promise<void>;
-  submitFunc?: () => Promise<void>;
+  showActionButtonGroup?: boolean
+  showSubmitButton?: boolean
+  submitButtonOptions?: Partial<ButtonProps>
+  submitButtonText?: string
+  showResetButton?: boolean
+  resetButtonOptions?: Partial<ButtonProps>
+  resetButtonText?: string
+  resetFunc?: () => Promise<void>
+  submitFunc?: () => Promise<void>
 }
 
 /**
@@ -123,40 +123,41 @@ export interface FormProps {
  * @param rules 表单校验
  */
 export interface FormSchema {
-  field: string;
-  label: string;
-  component?: ComponentType;
-  componentProps?: object;
-  defaultValue?: any;
-  isFull?: boolean;
+  field: string
+  label: string
+  component?: ComponentType
+  componentProps?: object
+  defaultValue?: any
+  isFull?: boolean
   slot?: string
   showLabel?: boolean
   giProps?: GridItemProps
-  rules?: object | object[];
+  rules?: object | object[]
 }
 
 /**
  * @description 表单的方法
  * @param submit 提交
  * @param validate 校验
- * @param clearValidate 清空校验
+ * @param restoreValidation 清空校验
  * @param setProps 设置form的props
  * @param setFieldsValue 设置form model 的值
  * @param getFieldsValue 获取form model 的值
  * @param resetFields 重置form表单数据
+ * @param setLoading 设置内置按扭loading
  */
 export interface FormActionType {
-  submit: () => Promise<any>;
-  validate: (nameList?: any[]) => Promise<any>;
-  clearValidate: (name?: string | string[]) => Promise<void>;
-  setProps: (formProps: Partial<FormProps>) => Promise<void>;
-  getFormSchema: () => Promise<FormSchema[]>;
-  setFieldsValue: (values: Recordable) => Promise<void>;
-  getFieldsValue: () => Recordable;
-  resetFields: () => Promise<void>;
-  // setLoading: (status: boolean) => void;
+  submit: () => Promise<any>
+  validate: () => Promise<Recordable[][]>
+  restoreValidation: () => Promise<void>
+  setProps: (formProps: Partial<FormProps>) => Promise<void>
+  getFormSchema: () => Promise<FormSchema[]>
+  setFieldsValue: (values: Recordable) => Promise<void>
+  getFieldsValue: () => Recordable
+  resetFields: () => Promise<void>
+  setLoading: (status: boolean) => Promise<void>
 }
 
-export type RegisterFn = (formInstance: FormActionType) => void;
+export type RegisterFn = (formInstance: FormActionType) => void
 
-export type UseFormReturnType = [RegisterFn, FormActionType];
+export type UseFormReturnType = [RegisterFn, FormActionType]
