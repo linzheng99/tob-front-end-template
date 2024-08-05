@@ -5,7 +5,7 @@
 ```ts
 import axios from 'axios'
 
-class InitAxios{
+class InitAxios {
   private axiosInstance
   // options 是外部的传值
   private readonly options
@@ -79,7 +79,7 @@ class InitAxios {
       }
     )
     // 2. 请求拦截器错误捕获
-    this.axiosInstance.interceptors.request.use(undefined,requestInterceptorsCatch)
+    this.axiosInstance.interceptors.request.use(undefined, requestInterceptorsCatch)
     // 3. 处理响应结果拦截器
     this.axiosInstance.interceptors.response.use((res) => {
       res = responseInterceptors(res)
@@ -100,7 +100,7 @@ axios 发起一个请求并在then方法中处理响应,响应数据存储在`re
 :::
 ```ts
 // 默认声明规范
-interface Result{
+interface Result {
   code: number
   type: 'success' | 'error' | 'warning'
   message: string
@@ -120,9 +120,9 @@ const transform = {
     // options可以自定义传值，表达了扩展性
     // 比如给更改请求的url、post请求将参数添加到url等
     const { joinParamsToUrl } = options
-    if(apiUrl) {
+    if (apiUrl)
       config.url = `${apiUrl}${config.url}`
-    }
+
     /**
      * @params 请求参数
      * - url: 请求地址
@@ -134,7 +134,7 @@ const transform = {
     const data = config.data || false
     // 考虑每次请求不同对应不同的处理
     const method = config.method?.toUpperCase()
-    switch(method) {
+    switch (method) {
       case 'GET':
         break
       case 'POST':
@@ -149,7 +149,7 @@ const transform = {
     return config
   },
   /** 处理请求数据 */
-  transformRequestHook:(res, options) => {
+  transformRequestHook: (res, options) => {
     // options可以自定义传值，表达了扩展性
     // 接下来对数据进行想要的处理
     const { data } = res
@@ -158,7 +158,8 @@ const transform = {
     const hasSuccess = result && Reflect.has(data, 'code') && code === ResultEnum.SUCCESS
     if (hasSuccess) {
       return { code, data, message }
-    } else {
+    }
+    else {
       // 自定义想做的比如 token过期 / 弹一个message 等
       return { code, message }
     }
@@ -170,9 +171,9 @@ const transform = {
 ```
 :::
 ```ts
-class InitAxios{
+class InitAxios {
   // ... 忽略其他内容
-  request(config, options){
+  request(config, options) {
     let conf = cloneDeep(config)
     const transfrom = this.getTransform()
 
@@ -186,9 +187,8 @@ class InitAxios{
     } = transform || {}
 
     // 请求前
-    if (isFunction(beforeRequestHook)) {
+    if (isFunction(beforeRequestHook))
       conf = beforeRequestHook(conf, opt)
-    }
 
     conf.requestOptions = opt
 
@@ -196,26 +196,27 @@ class InitAxios{
       this.axiosInstance.request(conf).then((res) => {
         // 请求后
         if (isFunction(transformRequestHook)) {
-            try {
-              const ret = transformRequestHook(res, opt)
-              resolve(ret)
-            } catch (err) {
-              reject(err || new Error('request error'))
-            }
-            return
+          try {
+            const ret = transformRequestHook(res, opt)
+            resolve(ret)
           }
+          catch (err) {
+            reject(err || new Error('request error'))
+          }
+          return
+        }
         resolve(res)
       })
-      .catch((e) => {
-        if (requestCatchHook && isFunction(requestCatchHook)) {
+        .catch((e) => {
+          if (requestCatchHook && isFunction(requestCatchHook))
             return reject(requestCatchHook(e, opt))
-          }
+
           if (axios.isAxiosError(e)) {
             console.error('isAxiosError', e)
             return reject(e)
           }
           reject(e)
-      })
+        })
     })
   }
 }
@@ -269,4 +270,3 @@ class InitAxios{
   }
 ```
 :::
-

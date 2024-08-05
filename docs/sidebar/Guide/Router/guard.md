@@ -7,21 +7,20 @@
 ## step1(创建路由守卫)
 ```ts
 function createPermissionGuard(router) {
-  router.beforeEach(async (to,form,next) => {
+  router.beforeEach(async (to, form, next) => {
     // 用户信息
     const userStore = useUserStoreWithOut()
     const token = userStore.getToken
     // 用户通行权限
     const permissionStore = usePermissionStoreWithOut()
   })
-
 }
 ```
 ## step2(判断路由)
 1. 路由包含（白名单路由和基本路由）
 2. 判断路由 (是否存在特例)
 ```ts
-router.beforeEach(async (to,form,next) => {
+router.beforeEach(async (to, form, next) => {
   // ... 省略其他逻辑
   if (WHITE_PATH_LIST.includes(to.path)) {
     if (to.path === LOGIN_PATH && token) {
@@ -29,26 +28,24 @@ router.beforeEach(async (to,form,next) => {
       try {
         await userStore.afterLoginAction()
         return
-      } catch {}
+      }
+      catch {}
     }
     next()
-    return
   }
 })
 ```
 ## step3(判断token)
 ```ts
-router.beforeEach(async (to,form,next) => {
+router.beforeEach(async (to, form, next) => {
   // ... 省略其他逻辑
-  if (!token) {
+  if (!token)
     next('/login')
-    return
-  }
 })
 ```
 ## step4(用户的主动刷新操作)
 ```ts
-router.beforeEach(async (to,form,next) => {
+router.beforeEach(async (to, form, next) => {
   // ... 省略其他逻辑
   // 在登录成功时存储时间戳至pinia
   if (userStore.getLastUpdateTime === 0) {
@@ -56,9 +53,9 @@ router.beforeEach(async (to,form,next) => {
       // 更新用户状态
       permissionStore.setDynamicAddedRoute(false)
       await userStore.getUserInfoAction()
-    } catch (error) {
+    }
+    catch (error) {
       next()
-      return
     }
   }
 })
@@ -68,7 +65,7 @@ router.beforeEach(async (to,form,next) => {
 2. 添加用户的路由
 3. 跳转路由
 ```ts
-router.beforeEach(async (to,form,next) => {
+router.beforeEach(async (to, form, next) => {
   // ... 省略其他逻辑
   if (permissionStore.getIsDynamicAddedRoute) {
     next()
@@ -94,12 +91,11 @@ await permissionStore.buildRoutesAction()
 ```
 ## step6(用户手动更改路由)
 ```ts
-router.beforeEach(async (to,form,next) => {
+router.beforeEach(async (to, form, next) => {
   // ... 省略其他逻辑
   // 强制手动退出登录逻辑
-  if (to.path === LOGIN_PATH) {
+  if (to.path === LOGIN_PATH)
     next('/')
-  }
 })
 ```
 ## step7(挂载路由守卫)
