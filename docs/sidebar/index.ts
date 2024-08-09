@@ -4,7 +4,7 @@ export function setupSidebar() {
       text: '项目介绍',
       collapsed: false,
       items: [
-        { text: 'introduce', link: '/sidebar/Introduction/introduce' },
+        { text: 'introduce', link: '/sidebar/Introduction/getting-started' },
         { text: 'Structure', link: '/sidebar/Introduction/structure' },
       ],
     },

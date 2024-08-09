@@ -1,1 +1,0 @@
-import{_ as e}from"./index.vue_vue_type_script_setup_true_lang-dd78683b.js";import{e as o,Z as s,$ as t,Y as a}from"./index-798afc94.js";const n={class:"w-100vw h-100vh"},p=o({__name:"index",setup(_){return(c,r)=>(a(),s("div",n,[t(e)]))}});export{p as default};
