@@ -21,7 +21,12 @@
             <n-input v-model:value="userForm.user.username" placeholder="输入用户名" />
           </n-form-item>
           <n-form-item label="密码" path="user.password">
-            <n-input v-model:value="userForm.user.password" placeholder="输入密码" />
+            <n-input
+              v-model:value="userForm.user.password"
+              placeholder="输入密码"
+              type="password"
+              show-password-on="mousedown" 
+            />
           </n-form-item>
         </n-form>
         <n-button type="primary" @click="handleValidateClick">
@@ -72,17 +77,18 @@ function handleValidateClick(e: MouseEvent) {
   formRef.value?.validate(async (errors) => {
     if (!errors)
       await userStore.login(userForm.value.user)
-    else
-      console.error(errors)
+    else console.error(errors)
   })
 }
 </script>
 
 <style lang="scss" scoped>
-.light .__login_header_img, .light .login_warpper{
+.light .__login_header_img,
+.light .login_warpper {
   border: 1px solid #000;
 }
-.dark .__login_header_img, .dark .login_warpper{
+.dark .__login_header_img,
+.dark .login_warpper {
   border: 1px solid #fff;
 }
 .login_right {

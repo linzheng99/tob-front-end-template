@@ -1,1 +1,0 @@
-import{_ as i}from"./index.vue_vue_type_script_setup_true_lang-5ac61ad5.js";import{g as s}from"./index-73a9b030.js";function m(){return{iconRender:t=>{const{icon:n,localIcon:c,color:r,fontSize:e}=t,o={};return r&&(o.color=r),e&&(o.fontSize=`${e}px`),!n&&!c&&console.warn("请输入有效 icon / localIcon!"),()=>s(i,{icon:n,localIcon:c,style:o})}}}export{m as u};

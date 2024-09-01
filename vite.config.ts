@@ -16,7 +16,7 @@ export default defineConfig(({ command, mode }) => {
   const envConfig = getServiceEnvConfig(viteEnv)
 
   return {
-    base: VITE_BASE_URL,
+    base: isBuild ? '/tob-front-end-template' : VITE_BASE_URL,
     resolve: {
       alias: {
         '@': getSrcPath(),

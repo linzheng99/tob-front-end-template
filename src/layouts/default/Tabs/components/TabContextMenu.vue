@@ -26,13 +26,13 @@ interface Emits {
 }
 type ActionKey = 'reload-page' | 'close-page'
 
-const routeStore = useRouteStoreWithout()
-
 const props = withDefaults(defineProps<Props>(), {
-  visible: false
+  visible: false,
 })
 
 const emits = defineEmits<Emits>()
+
+const routeStore = useRouteStoreWithout()
 
 const showDropdown = computed({
   get() {
@@ -40,25 +40,25 @@ const showDropdown = computed({
   },
   set(visible: boolean) {
     emits('update:visible', visible)
-  }
+  },
 })
 
 const options = [
   {
     label: '重新加载',
-    key: 'reload-page'
-  }
+    key: 'reload-page',
+  },
 ]
 
 const actionMap = new Map<ActionKey, () => void>([
-  ['reload-page', () => routeStore.reloadPage(props.currentPath)]
+  ['reload-page', () => routeStore.reloadPage(props.currentPath)],
 ])
 
-const hide = () => {
+function hide() {
   showDropdown.value = false
 }
 
-const handleSelect = (key: ActionKey) => {
+function handleSelect(key: ActionKey) {
   hide()
   const action = actionMap.get(key)
   action && action()
