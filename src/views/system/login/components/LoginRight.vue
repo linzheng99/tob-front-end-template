@@ -25,7 +25,7 @@
               v-model:value="userForm.user.password"
               placeholder="输入密码"
               type="password"
-              show-password-on="mousedown" 
+              show-password-on="mousedown"
             />
           </n-form-item>
         </n-form>
@@ -53,8 +53,8 @@ const formRef = ref<FormInst | null>(null)
 const size = 'small'
 const userForm = ref({
   user: {
-    username: 'admin',
-    password: 'admin123',
+    username: 'linzheng99',
+    password: '123456',
   },
 })
 const rules = {
@@ -75,9 +75,13 @@ const rules = {
 function handleValidateClick(e: MouseEvent) {
   e.preventDefault()
   formRef.value?.validate(async (errors) => {
-    if (!errors)
-      await userStore.login(userForm.value.user)
-    else console.error(errors)
+    if (!errors) {
+      await userStore.login({
+        username: userForm.value.user.username,
+        password: userForm.value.user.password,
+      })
+    }
+    else { console.error(errors) }
   })
 }
 </script>

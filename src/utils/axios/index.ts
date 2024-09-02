@@ -36,7 +36,7 @@ const transform: AxiosTransform = {
     // 判断后端接口是否与前端定义参数统一
     const hasSuccess = data && Reflect.has(result, 'code') && code === ResultEnum.SUCCESS
     if (hasSuccess) {
-      return { code, data, message }
+      return data
     }
     else {
       // TODO 判断接口登录凭证（cookie）是否过期

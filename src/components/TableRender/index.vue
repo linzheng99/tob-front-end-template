@@ -94,15 +94,15 @@ async function reloadData(params?: any) {
 }
 
 // 页码切换
-function updatePage(page: number) {
+async function updatePage(page: number) {
   setPagination({ page })
-  reloadData()
+  await reloadData()
 }
 
 // 分页数量切换
-function updatePageSize(size: number) {
+async function updatePageSize(size: number) {
   setPagination({ page: 1, pageSize: size })
-  reloadData()
+  await reloadData()
 }
 
 const tableAction: TableActionType = {

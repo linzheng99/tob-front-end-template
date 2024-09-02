@@ -2,10 +2,11 @@ import { isObject } from './is'
 
 export function deepMerge<T = any>(source: any = {}, target: any = {}): T {
   let key: string
-  for (key in target)
+  for (key in target) {
     source[key] = isObject(source[key])
       ? deepMerge(source[key], target[key])
       : (source[key] = target[key])
+  }
 
   return source
 }
@@ -30,13 +31,13 @@ export function setObjToUrlParams(baseUrl: string, obj: any): string {
 
 export const extend = Object.assign
 
-export const restRefsKey = (refs) => {
-  for (const [_key, ref] of Object.entries(refs)) {
+export function restRefsKey(refs) {
+  for (const [_key, ref] of Object.entries(refs))
     (ref as any).value = null
-  }
 }
-// 
-/** 针对 区域结构的树 进行对它的一个转换变成一个对象数组
+//
+/**
+ * 针对 区域结构的树 进行对它的一个转换变成一个对象数组
  * Example usage:
     const data:NodeType[] = [
       {
@@ -61,7 +62,7 @@ export const restRefsKey = (refs) => {
         ],
       },
     ];
-    constructFullName(data); 
+    constructFullName(data);
  */
 interface NodeType {
   [key: string]: any
@@ -78,22 +79,21 @@ export function constructFullName(data: NodeType[], config: NodeConfigType = {
   idAttr: 'id',
   childrenAttr: 'children',
 }, parentNames = '') {
-  const { nameAttr, areaIdAttr, idAttr, childrenAttr } = config;
-  const result: NodeType[] = [];
+  const { nameAttr, areaIdAttr, idAttr, childrenAttr } = config
+  const result: NodeType[] = []
 
   for (const node of data) {
-    const name: string = node[nameAttr];
-    const areaId: string = node[areaIdAttr];
-    const id: string = node[idAttr];
-    const children: NodeType[] = node[childrenAttr];
+    const name: string = node[nameAttr]
+    const areaId: string = node[areaIdAttr]
+    const id: string = node[idAttr]
+    const children: NodeType[] = node[childrenAttr]
 
-    const currentFullName = parentNames ? `${parentNames}-${name}` : name;
-    result.push({ [areaIdAttr]: areaId, [nameAttr]: currentFullName, [idAttr]: id });
+    const currentFullName = parentNames ? `${parentNames}-${name}` : name
+    result.push({ [areaIdAttr]: areaId, [nameAttr]: currentFullName, [idAttr]: id })
 
-    if (children && children.length > 0) {
-      result.push(...constructFullName(children, config, currentFullName));
-    }
+    if (children && children.length > 0)
+      result.push(...constructFullName(children, config, currentFullName))
   }
 
-  return result;
+  return result
 }

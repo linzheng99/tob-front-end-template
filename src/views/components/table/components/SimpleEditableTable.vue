@@ -161,7 +161,7 @@ function requestDataSource() {
         address: `address - ${index}`,
       }))
       resolve({
-        content: { data: apiResponse, total: apiResponse.length },
+        data: { items: apiResponse, total: apiResponse.length },
         code: 200,
         msg: 'success',
       })

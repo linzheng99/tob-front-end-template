@@ -131,7 +131,7 @@ export class InitAxios {
    * @param config - 请求配置
    * @param options - axios配置
    */
-  get(config: AxiosRequestConfig, options?: RequestOptions) {
+  get<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
     return this.request({ ...config, method: RequestEnum.GET }, options)
   }
 
@@ -140,7 +140,7 @@ export class InitAxios {
    * @param config - 请求配置
    * @param options - axios配置
    */
-  post(config: AxiosRequestConfig, options?: RequestOptions) {
+  post<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
     return this.request({ ...config, method: RequestEnum.POST }, options)
   }
 
@@ -149,7 +149,7 @@ export class InitAxios {
    * @param config - 请求配置
    * @param options - axios配置
    */
-  put(config: AxiosRequestConfig, options?: RequestOptions) {
+  put<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
     return this.request({ ...config, method: RequestEnum.PUT }, options)
   }
 
@@ -158,7 +158,7 @@ export class InitAxios {
    * @param config - 请求配置
    * @param options - axios配置
    */
-  delete(config: AxiosRequestConfig, options?: RequestOptions) {
+  delete<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
     return this.request({ ...config, method: RequestEnum.DELETE }, options)
   }
 
@@ -167,7 +167,7 @@ export class InitAxios {
    * @param config - 请求配置
    * @param params - axios配置
    */
-  uploadFile(config: AxiosRequestConfig, params) {
+  uploadFile<T = any>(config: AxiosRequestConfig, params) {
     const formData = new window.FormData()
     // 根据后端要求做逻辑处理
     const customFilename = params.name || 'file'
@@ -191,7 +191,7 @@ export class InitAxios {
       })
     }
 
-    return this.axiosInstance.request({
+    return this.axiosInstance.request<T>({
       ...config,
       method: RequestEnum.POST,
       data: formData,

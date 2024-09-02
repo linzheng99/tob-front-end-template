@@ -18,8 +18,8 @@ export interface TableBasicProps {
 export interface ResponseApi {
   // 定义你期望的 API 响应的数据结构
   code: number
-  content: {
-    data: Recordable[]
+  data: {
+    items: Recordable[]
     total: number
   }
   msg: string

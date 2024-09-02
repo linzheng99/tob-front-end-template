@@ -2,7 +2,7 @@ import { resultSuccess } from '../_util'
 
 export default [
   {
-    url: '/basic-api/login',
+    url: '/api/login',
     method: 'post',
     response: () => {
       return resultSuccess({
@@ -11,7 +11,7 @@ export default [
     },
   },
   {
-    url: '/basic-api/getUserInfo',
+    url: '/api/getUserInfo',
     methods: 'get',
     response: () => {
       return resultSuccess({

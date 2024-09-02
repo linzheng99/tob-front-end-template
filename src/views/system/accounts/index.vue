@@ -1,9 +1,26 @@
 <template>
   <div id="app_content">
-    账号
+    {{ aNumber }}
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import type { Ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import { getUserListApi } from '@/api/user/index'
+
+const aNumber: Ref<number> = ref(0)
+
+async function getUserList() {
+  const { items, totalItems } = await getUserListApi()
+
+  aNumber.value = totalItems
+  return items
+}
+
+onMounted(async () => {
+  await getUserList()
+})
+</script>
 
 <style lang="scss" scoped></style>

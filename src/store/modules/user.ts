@@ -1,9 +1,10 @@
 import { defineStore } from 'pinia'
-import { setCookieToken, removeCookieToken, getCookieToken } from '@/utils/cookie/index'
-import { getUserInfoApi, loginApi } from '@/api/user'
-import { router } from '@/router'
 import { store } from '../index'
+import { getCookieToken, removeCookieToken, setCookieToken } from '@/utils/cookie/index'
+import { getUserInfoApi, loginApi } from '@/api/user/index'
+import { router } from '@/router'
 import { useAppStoreWithOut } from '@/store/modules/app'
+import type { ILogin } from '@/api/user/type'
 
 interface UserState {
   userInfo: any
@@ -48,29 +49,25 @@ export const useUserStore = defineStore({
       setCookieToken(token)
     },
     // 登录
-    async login(params) {
-      const result: any = await loginApi(params)
-      const { data, code, message } = result
-      if (code === 200) {
-        this.setToken(data.token)
-        appStore.setAppLocalConfig({ siderCollapse: false })
-        return this.afterLoginAction()
-      } else {
-        console.error(message)
-      }
+    async login(params: ILogin) {
+      const { accessToken } = await loginApi(params)
+      this.setToken(accessToken)
+      appStore.setAppLocalConfig({ siderCollapse: false })
+      return this.afterLoginAction()
     },
     // 获取用户信息
     async afterLoginAction() {
-      if (!this.token) return
+      if (!this.token)
+        return
       const info = await this.getUserInfoAction()
       // TODO 判断接口登录凭证（cookie）是否过期
       router.replace('/')
       return info
     },
     async getUserInfoAction() {
-      if (!this.getToken) return
-      const result: any = await getUserInfoApi({ token: this.getToken })
-      const { data } = result
+      if (!this.getToken)
+        return
+      const data = await getUserInfoApi({ token: this.getToken })
       this.setUserInfo(data)
       return data
     },

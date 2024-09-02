@@ -17,6 +17,9 @@ dependencies:
   colord:
     specifier: ^2.9.3
     version: registry.npmmirror.com/colord@2.9.3
+  crypto-js:
+    specifier: ^4.2.0
+    version: 4.2.0
   echarts:
     specifier: ^5.4.1
     version: registry.npmmirror.com/echarts@5.4.2
@@ -1241,6 +1244,10 @@ packages:
       shebang-command: 2.0.0
       which: 2.0.2
     dev: true
+
+  /crypto-js@4.2.0:
+    resolution: {integrity: sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==, tarball: https://registry.npmmirror.com/crypto-js/-/crypto-js-4.2.0.tgz}
+    dev: false
 
   /css-render@0.15.12:
     resolution: {integrity: sha512-eWzS66patiGkTTik+ipO9qNGZ+uNuGyTmnz6/+EJIiFg8+3yZRpnMwgFo8YdXhQRsiePzehnusrxVvugNjXzbw==, tarball: https://registry.npmmirror.com/css-render/-/css-render-0.15.12.tgz}

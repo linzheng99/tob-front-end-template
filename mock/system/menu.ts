@@ -140,7 +140,7 @@ const customLayout = {
 
 export default [
   {
-    url: '/basic-api/getMenuList',
+    url: '/api/getMenuList',
     methods: 'get',
     response: () => {
       return resultSuccess({

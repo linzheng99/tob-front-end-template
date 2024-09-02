@@ -42,7 +42,6 @@ am-template
 │  ├─ App.vue                         // vue文件入口
 │  └─ main.ts                         // 项目入口ts文件
 ├─ .env                               // 环境文件
-├─ .env-config.ts                     // 请求环境的配置文件
 ├─ .env.development                   // 开发环境文件
 ├─ .env.production                    // 生产环境文件
 ├─ package.json                       // npm依赖描述文件

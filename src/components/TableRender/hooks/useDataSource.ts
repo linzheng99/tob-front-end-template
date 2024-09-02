@@ -42,11 +42,11 @@ export function useDataSource(options: DataSourceOptions) {
     try {
       setLoading(true)
       // 自定义修改与后端规定好的数据结构
-      const { content } = await requestApi(pageParams)
-      const { data, total } = content
+      const { data } = await requestApi(pageParams)
+      const { items, total } = data
       setPagination({ itemCount: total })
-      emit('request-success', data)
-      return data
+      emit('request-success', items)
+      return items
     }
     catch (error) {
       emit('request-error')
