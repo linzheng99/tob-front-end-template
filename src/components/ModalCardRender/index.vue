@@ -1,7 +1,7 @@
 <template>
   <n-modal
-    transform-origin="center"
     v-model:show="modalState"
+    transform-origin="center"
     class="custom-card"
     :mask-closable="false"
     :header-style="headerStyle"
@@ -17,20 +17,24 @@
     <template #header-extra>
       <slot name="header-extra" />
     </template>
-    <slot name="content"> 内容 </slot>
+    <slot name="content">
+      内容
+    </slot>
     <template #footer>
       <slot name="footer">
         <div class="default_btns">
           <n-button
-            @click="cancelCallback"
             strong
             secondary
             type="tertiary"
             style="margin-right: 20px"
+            @click="cancelCallback"
           >
             取消
           </n-button>
-          <n-button @click="confirmCallback" type="primary">确认</n-button>
+          <n-button type="primary" @click="confirmCallback">
+            确认
+          </n-button>
         </div>
       </slot>
     </template>
@@ -38,7 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import { extend } from '@/utils'
 
 type SizeType = 'small' | 'medium' | 'large' | 'huge'
@@ -48,48 +52,48 @@ interface Emit {
   (e: 'confirm'): void
 }
 interface Props {
-  bodyStyle: Object
-  segmented: Object
+  bodyStyle: object
+  segmented: object
   size: SizeType
   title: any
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  bodyStyle: () => ({}),
+  bodyStyle: () => ({ width: '800px' }),
   segmented: () => ({}),
   size: 'huge',
-  title: 'title'
+  title: 'title',
 })
-
-extend(props.bodyStyle, { width: '800px' })
 
 const emit = defineEmits<Emit>()
 
-let modalState = ref(false)
+extend(props.bodyStyle)
+
+const modalState = ref(false)
 
 const headerStyle = reactive({
-  padding: '10px'
+  padding: '10px',
 })
 const contentStyle = reactive({
-  padding: '10px'
+  padding: '10px',
 })
 const footerStyle = reactive({
-  padding: '10px'
+  padding: '10px',
 })
 
-const toggleModal = () => {
-  modalState.value = !modalState.value 
+function toggleModal() {
+  modalState.value = !modalState.value
 }
 
-const closedCallback = () => {
+function closedCallback() {
   emit('closed', modalState.value)
 }
 
-const cancelCallback = () => {
+function cancelCallback() {
   toggleModal()
   emit('cancel')
 }
-const confirmCallback = () => {
+function confirmCallback() {
   emit('confirm')
 }
 

@@ -37,6 +37,15 @@ const systemRouter = {
         icon: 'dashicons:networking',
       },
     },
+    {
+      path: '/system/menu',
+      name: 'Menu',
+      component: '/system/menu/index.vue',
+      meta: {
+        title: '菜单管理',
+        icon: 'eos-icons:role-binding',
+      },
+    },
   ],
 }
 
