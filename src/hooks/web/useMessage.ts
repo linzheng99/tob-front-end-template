@@ -28,12 +28,12 @@ export function useCreateMessage() {
     message[type](text, { keepAliveOnHover, icon, duration, closable, onClose } || {})
   }
 
-  function createWindowErrorMsg(text: string) {
-    window.$message?.error(text)
+  function createWindowMsg(type: types, text: string) {
+    window.$message?.[type](text)
   }
 
   return {
     createMessage,
-    createWindowErrorMsg,
+    createWindowMsg,
   }
 }

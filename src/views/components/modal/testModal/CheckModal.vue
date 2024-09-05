@@ -1,6 +1,6 @@
 <template>
   <ModalCard ref="ModalCard_ref" :title="title" :body-style="bodyStyle">
-    <template #content>
+    <template #default>
       <DescriptionsRender :describe-list="descripeList" :data="data" :column="2" />
     </template>
     <template #footer>

@@ -1,6 +1,6 @@
 const toString = Object.prototype.toString
 
-export function is(val: unknown, type: string) {
+export function is(val: unknown, type: string): boolean {
   return toString.call(val) === `[object ${type}]`
 }
 
@@ -21,47 +21,44 @@ export function isArray(val: any): val is Array<any> {
 }
 
 export function isNumber(val: any) {
-  return is(val, 'Number');
+  return is(val, 'Number')
 }
 
 export function isBoolean(val: unknown): val is boolean {
-  return is(val, 'Boolean');
+  return is(val, 'Boolean')
 }
 
 export function isEmpty<T = unknown>(val: T): val is T {
-  if (isArray(val) || isString(val)) {
+  if (isArray(val) || isString(val))
     return val.length === 0
-  }
 
-  if (val instanceof Map || val instanceof Set) {
+  if (val instanceof Map || val instanceof Set)
     return val.size === 0
-  }
 
-  if (isObject(val)) {
+  if (isObject(val))
     return Object.keys(val).length === 0
-  }
 
   return false
 }
 /**
  * @description: 是否已定义
  */
-export const isDef = <T = unknown>(val?: T): val is T => {
-  return typeof val !== 'undefined';
-};
+export function isDef<T = unknown>(val?: T): val is T {
+  return typeof val !== 'undefined'
+}
 
-export const isUnDef = <T = unknown>(val?: T): val is T => {
-  return !isDef(val);
-};
+export function isUnDef<T = unknown>(val?: T): val is T {
+  return !isDef(val)
+}
 
 export function isNull(val: unknown): val is null {
-  return val === null;
+  return val === null
 }
 
 export function isNullAndUnDef(val: unknown): val is null | undefined {
-  return isUnDef(val) && isNull(val);
+  return isUnDef(val) && isNull(val)
 }
 
 export function isNullOrUnDef(val: unknown): val is null | undefined {
-  return isUnDef(val) || isNull(val);
+  return isUnDef(val) || isNull(val)
 }

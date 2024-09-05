@@ -1,6 +1,6 @@
 <template>
   <ModalCard ref="ModalCard_ref" :title="title" @closed="closed">
-    <template #content>
+    <template #default>
       <FormRender :form-items="formItems" :form-item-config="formItemConfig" />
     </template>
   </ModalCard>

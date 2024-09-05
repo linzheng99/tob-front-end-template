@@ -17,10 +17,10 @@
     <template #header-extra>
       <slot name="header-extra" />
     </template>
-    <slot name="content">
+    <slot name="default">
       内容
     </slot>
-    <template #footer>
+    <template v-if="footer" #footer>
       <slot name="footer">
         <div class="default_btns">
           <n-button
@@ -56,6 +56,7 @@ interface Props {
   segmented: object
   size: SizeType
   title: any
+  footer: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -63,6 +64,7 @@ const props = withDefaults(defineProps<Props>(), {
   segmented: () => ({}),
   size: 'huge',
   title: 'title',
+  footer: true,
 })
 
 const emit = defineEmits<Emit>()
