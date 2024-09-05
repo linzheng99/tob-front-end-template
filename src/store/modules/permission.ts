@@ -1,9 +1,8 @@
 import { defineStore } from 'pinia'
-import { getCookieToken } from '../../utils/cookie/index'
 import type { AppRouteRecordRaw, Menu } from '@/router/routeTypes'
 import { store } from '@/store/index'
 import { transformAuthRouteToVueRoutes } from '@/utils/helper/routerHelper'
-import { getMenuListApi } from '@/api/menu'
+import { getMenuListApi } from '@/api/menu/index.ts'
 
 interface PermissionState {
   // 后台路由
@@ -12,9 +11,6 @@ interface PermissionState {
   lastBuildMenuTime: number
   // 动态添加路由
   isDynamicAddedRoute: boolean
-}
-interface resultType {
-  menus: any
 }
 
 export const usePermissionStore = defineStore({
@@ -51,10 +47,8 @@ export const usePermissionStore = defineStore({
       let authMenuList: AppRouteRecordRaw[] = []
 
       try {
-        const { menus } = (await getMenuListApi({
-          token: getCookieToken(),
-        })) as resultType
-        authMenuList = menus
+        const data = await getMenuListApi()
+        authMenuList = data
       }
       catch (error) {
         console.error(error)

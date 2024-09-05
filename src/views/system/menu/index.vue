@@ -1,22 +1,31 @@
 <template>
-  <div id="app_content">
+  <div class="h-flex-col">
     <div class="mb-2.5">
-      <n-button type="primary" size="small">
+      <n-button type="primary" size="small" @click="handleAddMenu">
         新增菜单
       </n-button>
     </div>
     <TableRender
+      class="flex-1"
       :data="data"
       :columns="columns"
       :action-column="actionColumn"
+      :show-pagination="false"
       :flex-height="false"
       @handle-action="handleAction"
+    />
+    <HandleMenuModal
+      :id="editMenu?.id"
+      ref="handleMenuModalRef"
+      :type="type"
+      @success="getMenuList"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
+import HandleMenuModal from './components/HandleMenuModal.vue'
 import TableRender from '@/components/TableRender/index.vue'
 import type {
   ActionValues,
@@ -25,6 +34,7 @@ import type {
   TableBasicRecordRow,
 } from '@/components/TableRender/types'
 import type { Actions } from '@/components/TableRender/components/actionColumn/types'
+import { deleteMenuApi, getMenuListApi } from '@/api/menu/index'
 
 interface Data {
   name: string
@@ -32,68 +42,96 @@ interface Data {
   address: string
 }
 
-const data = ref<Data[]>([{ name: 'linzheng', age: 18, address: 'china' }])
+interface MenuInfo {
+  id: number
+  p
+  meta: {
+    title: string
+    icon: string
+  }
+  path: string
+  name: string
+  component: string
+  redirect: string
+}
+const handleMenuModalRef = ref<InstanceType<typeof HandleMenuModal>>()
+const data = ref<Data[]>([])
+const editMenu = ref<TableBasicRecordRow<MenuInfo>>()
+const type = ref<'add' | 'edit'>('add')
 const columns = reactive<TableBasicColumn[]>([
   {
-    title: '序号',
-    align: 'center',
-    key: 'index',
-    width: 60,
-    fixed: 'left',
-    render: (_, index) => `${index + 1}`,
+    title: '菜单名称',
+    key: 'meta',
+    width: 250,
+    ellipsis: { tooltip: true },
+    render(rowData: { meta?: { title: string, icon: string } }) {
+      return rowData.meta?.title
+    },
   },
   {
-    title: '姓名',
-    key: 'name',
-    align: 'center',
+    title: '菜单图标',
+    key: 'meta',
+    width: 250,
+    ellipsis: { tooltip: true },
+    render(rowData: { meta?: { title: string, icon: string } }) {
+      return rowData.meta?.icon
+    },
+  },
+  {
+    title: '菜单地址',
+    key: 'path',
     width: 250,
     ellipsis: { tooltip: true },
   },
   {
-    title: '年龄',
+    title: '路由名称',
     key: 'name',
-    align: 'center',
     width: 250,
     ellipsis: { tooltip: true },
   },
   {
-    title: '地址',
-    key: 'address',
-    align: 'center',
+    title: '路由组件 / 组件地址',
+    key: 'component',
+    width: 250,
+    ellipsis: { tooltip: true },
+  },
+  {
+    title: '路由重定向',
+    key: 'redirect',
     width: 250,
     ellipsis: { tooltip: true },
   },
 ])
-
 const actionColumn = reactive<TableBasicActionColumn>({
   key: '_action',
   title: '操作',
   align: 'center',
   fixed: 'right',
   width: 260,
-  actions: record => actionBtns(record),
+  actions: () => actionBtns(),
 })
-async function handleAction(item: ActionValues) {
-  const { record, title } = item
-  console.log(record, title)
-  // switch (title) {
-  //   case '编辑':
-  //     await record.onEdit?.(true)
-  //     break
-  //   case '保存':
-  //     await record.onSubmitEdit?.()
-  //     break
-  //   case '取消':
-  //     record.onCancelEdit?.()
-  //     break
 
-  //   default:
-  //     break
-  // }
+async function handleAction(item: ActionValues) {
+  const { title, record } = item
+  editMenu.value = record
+  switch (title) {
+    case '新增':
+      type.value = 'add'
+      handleMenuModalRef.value?.toggleModal()
+      break
+    case '编辑':
+      handleEditMenu()
+      break
+    case '删除':
+      handleDeleteMenu(record.id)
+      break
+
+    default:
+      break
+  }
 }
 
-function actionBtns(record: TableBasicRecordRow): Actions[] {
-  console.log(record)
+function actionBtns(): Actions[] {
   return [
     {
       iconConfig: { icon: 'ep-plus' },
@@ -104,7 +142,7 @@ function actionBtns(record: TableBasicRecordRow): Actions[] {
       title: '编辑',
     },
     {
-      iconConfig: { icon: 'ep-search' },
+      iconConfig: { icon: 'ep-delete' },
       title: '删除',
       componentProps: {
         type: 'error',
@@ -112,6 +150,30 @@ function actionBtns(record: TableBasicRecordRow): Actions[] {
     },
   ]
 }
+
+function handleAddMenu() {
+  type.value = 'add'
+  editMenu.value = {}
+  handleMenuModalRef.value?.toggleModal()
+}
+
+function handleEditMenu() {
+  type.value = 'edit'
+  handleMenuModalRef.value?.toggleModal()
+}
+
+async function handleDeleteMenu(id: number) {
+  await deleteMenuApi(id)
+  window.$message?.success('删除成功')
+  await getMenuList()
+}
+
+async function getMenuList() {
+  data.value = await getMenuListApi()
+}
+onMounted(async () => {
+  await getMenuList()
+})
 </script>
 
 <style lang="scss" scoped></style>

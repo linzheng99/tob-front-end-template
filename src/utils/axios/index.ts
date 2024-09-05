@@ -1,6 +1,6 @@
 import type { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { deepMerge, setObjToUrlParams } from '../index'
-import { isString } from '../is'
+import { isObject, isString } from '../is'
 import { InitAxios } from './initAxios'
 import type { AxiosTransform, CreateAxiosOptions } from './axiosTypes'
 import { getCookieToken } from '@/utils/cookie'
@@ -11,7 +11,7 @@ import type { RequestOptions, Result } from '@/typings/axios'
 
 const { apiUrl, urlPrefix } = globalConfig()
 
-const { createWindowErrorMsg } = useCreateMessage()
+const { createWindowMsg } = useCreateMessage()
 
 /** 数据处理 */
 const transform: AxiosTransform = {
@@ -34,13 +34,13 @@ const transform: AxiosTransform = {
     // 直接在处理请求数据的时候统一返回字段
     const { code, data, message } = result
     // 判断后端接口是否与前端定义参数统一
-    const hasSuccess = data && Reflect.has(result, 'code') && code === ResultEnum.SUCCESS
+    const hasSuccess = Reflect.has(result, 'code') && code === ResultEnum.SUCCESS
     if (hasSuccess) {
       return data
     }
     else {
       // TODO 判断接口登录凭证（cookie）是否过期
-      createWindowErrorMsg(`${code}: ${message}`)
+      createWindowMsg('error', `${code}: ${message}`)
       return { code, message }
     }
   },
@@ -74,14 +74,13 @@ const transform: AxiosTransform = {
     switch (method) {
       case RequestEnum.GET:
       case RequestEnum.DELETE:
-        if (!isString(params))
+        if (isObject(params))
           config.params = Object.assign(params || {})
         else
           paramsIsString(config, params)
 
         break
       case RequestEnum.POST:
-      case RequestEnum.PUT:
         if (!isString(params)) {
           if (Reflect.has(config, 'data') && config.data && Object.keys(config.data).length > 0) {
             config.data = data
@@ -102,6 +101,14 @@ const transform: AxiosTransform = {
         else {
           paramsIsString(config, params)
         }
+        break
+      case RequestEnum.PUT:
+        if (Reflect.has(config, 'data') && config.data && Object.keys(config.data).length > 0)
+          config.data = data
+
+        if (!isObject(params))
+          paramsIsString(config, params)
+
         break
       default:
         break
@@ -135,7 +142,7 @@ const transform: AxiosTransform = {
   },
 }
 
-function paramsIsString(config: AxiosRequestConfig, params: string) {
+function paramsIsString(config: AxiosRequestConfig, params: string | number) {
   config.url = `${config.url}/${params}`
   config.params = undefined
 }
