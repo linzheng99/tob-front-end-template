@@ -27,7 +27,7 @@ const emit = defineEmits<Emits>()
 const showModal = ref(false)
 const menuInfo = ref<Recordable>({})
 
-const [register, { setFieldsValue }] = useForm({
+const [register, { setFieldsValue, validate }] = useForm({
   schemas: initSchemas(),
 })
 
@@ -110,28 +110,34 @@ async function setMenuInfo() {
 }
 
 async function formSubmit(values: Recordable) {
-  extend(menuInfo.value, values)
-  delete menuInfo.value.id
-  const { title, icon, ...res } = menuInfo.value
-  const response = {
-    ...res,
-    meta: {
-      title,
-      icon,
-    },
+  await validate()
+  try {
+    extend(menuInfo.value, values)
+    delete menuInfo.value.id
+    const { title, icon, ...res } = menuInfo.value
+    const response = {
+      ...res,
+      meta: {
+        title,
+        icon,
+      },
+    }
+    if (props.type === 'add') {
+      if (props.id !== undefined)
+        await createMenuApi(extend({ parentId: props.id }, response))
+      else await createMenuApi(response)
+    }
+    else {
+      if (props.id !== undefined)
+        await updateMenuApi(props.id, response)
+    }
+    window.$message?.success('操作成功')
+    emit('success')
+    toggleModal()
   }
-  if (props.type === 'add') {
-    if (props.id !== undefined)
-      await createMenuApi(extend({ parentId: props.id }, response))
-    else await createMenuApi(response)
+  catch (error) {
+    console.error('捕获到的错误:', error)
   }
-  else {
-    if (props.id !== undefined)
-      await updateMenuApi(props.id, response)
-  }
-  window.$message?.success('操作成功')
-  emit('success')
-  toggleModal()
 }
 
 function toggleModal() {

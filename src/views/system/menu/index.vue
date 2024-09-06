@@ -35,16 +35,10 @@ import type {
 } from '@/components/TableRender/types'
 import type { Actions } from '@/components/TableRender/components/actionColumn/types'
 import { deleteMenuApi, getMenuListApi } from '@/api/menu/index'
-
-interface Data {
-  name: string
-  age: number
-  address: string
-}
+import { createDialog } from '@/utils/dialog'
 
 interface MenuInfo {
   id: number
-  p
   meta: {
     title: string
     icon: string
@@ -55,7 +49,7 @@ interface MenuInfo {
   redirect: string
 }
 const handleMenuModalRef = ref<InstanceType<typeof HandleMenuModal>>()
-const data = ref<Data[]>([])
+const data = ref<MenuInfo[]>([])
 const editMenu = ref<TableBasicRecordRow<MenuInfo>>()
 const type = ref<'add' | 'edit'>('add')
 const columns = reactive<TableBasicColumn[]>([
@@ -163,9 +157,16 @@ function handleEditMenu() {
 }
 
 async function handleDeleteMenu(id: number) {
-  await deleteMenuApi(id)
-  window.$message?.success('删除成功')
-  await getMenuList()
+  createDialog({
+    content: {
+      type: 'warning',
+    },
+    onPositiveClick: async () => {
+      await deleteMenuApi(id)
+      window.$message?.success('删除成功')
+      await getMenuList()
+    },
+  })
 }
 
 async function getMenuList() {
