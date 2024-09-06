@@ -140,6 +140,15 @@ const transform: AxiosTransform = {
   responseInterceptorsCatch: (error: any) => {
     return Promise.reject(error)
   },
+  requestCatchHook: (error: any) => {
+    const { response } = error
+    if (response) {
+      const { data } = response
+      const { code, message } = data
+      createWindowMsg('error', `${code}: ${message}`)
+    }
+    throw new Error(error)
+  },
 }
 
 function paramsIsString(config: AxiosRequestConfig, params: string | number) {
