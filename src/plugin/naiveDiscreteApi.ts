@@ -1,4 +1,4 @@
-import * as NaiveUI from 'naive-ui';
+import * as NaiveUI from 'naive-ui'
 
 /**
  * 挂载 Naive-ui 脱离上下文的 API
@@ -9,10 +9,10 @@ import * as NaiveUI from 'naive-ui';
 export function setupNaiveDiscreteApi() {
   const { message, dialog, notification, loadingBar } = NaiveUI.createDiscreteApi(
     ['message', 'dialog', 'notification', 'loadingBar'],
-  );
+  )
 
-  window['$message'] = message;
-  window['$dialog'] = dialog;
-  window['$notification'] = notification;
-  window['$loading'] = loadingBar;
+  window.$message = message
+  window.$dialog = dialog
+  window.$notification = notification
+  window.$loadingBar = loadingBar
 }

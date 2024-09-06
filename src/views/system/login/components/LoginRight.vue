@@ -53,7 +53,7 @@ const formRef = ref<FormInst | null>(null)
 const size = 'small'
 const userForm = ref({
   user: {
-    username: 'linzheng99',
+    username: 'linzheng',
     password: '123456',
   },
 })

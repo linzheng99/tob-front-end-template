@@ -24,6 +24,10 @@ export const basicProps = {
     type: [Number, String] as PropType<number | string | 'auto'>,
     default: 100,
   },
+  labelAlign: {
+    type: String as PropType<'left' | 'right'>,
+    default: 'right',
+  },
   // 表单配置规则
   schemas: {
     type: [Array] as PropType<FormSchema[]>,

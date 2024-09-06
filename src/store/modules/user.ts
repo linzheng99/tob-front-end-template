@@ -50,8 +50,9 @@ export const useUserStore = defineStore({
     },
     // 登录
     async login(params: ILogin) {
-      const { accessToken } = await loginApi(params)
+      const { user, accessToken } = await loginApi(params)
       this.setToken(accessToken)
+      localStorage.setItem('userInfo', JSON.stringify(user))
       appStore.setAppLocalConfig({ siderCollapse: false })
       return this.afterLoginAction()
     },
@@ -67,7 +68,8 @@ export const useUserStore = defineStore({
     async getUserInfoAction() {
       if (!this.getToken)
         return
-      const data = await getUserInfoApi({ token: this.getToken })
+      const localUserInfo = localStorage.getItem('userInfo')
+      const data = await getUserInfoApi(JSON.parse(localUserInfo || '{}').id)
       this.setUserInfo(data)
       return data
     },

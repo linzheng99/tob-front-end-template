@@ -1,17 +1,14 @@
-import type { ILogin, ILoginResponse, IUserList } from './type'
+import type { ICommonPage } from '../types'
+import type { ILogin, ILoginResponse, IUser } from './type'
+import type { ResponseApi } from '@/components/TableRender/types'
 import { request } from '@/utils/axios/index'
 
 enum Api {
   Login = '/auth/login',
+  RegisterUser = '/auth/register',
+  User = '/user',
   GetUserInfo = '/getUserInfo',
   GetUserList = '/user/list',
-}
-
-export function getUserInfoApi(params) {
-  return request.get({
-    url: Api.GetUserInfo,
-    params,
-  })
 }
 
 export function loginApi(data: ILogin) {
@@ -21,8 +18,38 @@ export function loginApi(data: ILogin) {
   })
 }
 
-export function getUserListApi() {
-  return request.get<IUserList>({
+export function getUserListApi(params: ICommonPage) {
+  return request.get<ResponseApi<IUser>>({
     url: Api.GetUserList,
+    params,
+  })
+}
+
+export function getUserInfoApi(id: number) {
+  return request.get<IUser>({
+    url: Api.User,
+    params: id,
+  })
+}
+
+export function createUserApi(data: IUser) {
+  return request.post<IUser>({
+    url: Api.RegisterUser,
+    data,
+  })
+}
+
+export function updateUserApi(id: number, data: IUser) {
+  return request.put<IUser>({
+    url: Api.User,
+    params: id,
+    data,
+  })
+}
+
+export function deleteUserApi(id: number) {
+  return request.delete<IUser>({
+    url: Api.User,
+    params: id,
   })
 }

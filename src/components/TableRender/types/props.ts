@@ -11,16 +11,14 @@ export interface TableBasicProps {
   flexHeight?: boolean
   showPagination?: boolean
   pagination?: object | false
-  requestApi?: (params?: any) => Promise<ResponseApi>
+  requestApi?: (params?: any) => Promise<ResponseApi<any>>
   requestParams?: (() => Recordable) | Recordable
 }
 
-export interface ResponseApi {
+export interface ResponseApi<T = Recordable> {
   // 定义你期望的 API 响应的数据结构
-  code: number
-  data: {
-    items: Recordable[]
-    total: number
-  }
-  msg: string
+  items: T[]
+  currentPage: number
+  totalItems: number
+  totalPages: number
 }

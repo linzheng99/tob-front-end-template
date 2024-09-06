@@ -6,16 +6,15 @@ export interface ILogin {
 export interface ILoginResponse {
   accessToken: string
   refreshToken: string
-  user: any
+  user: IUser
 }
 
-export interface IUserList {
-  totalItems: number // 当前页的项目数
-  items?: {
-    id: number
-    nickName: string
-    username: string
-  }
-  totalPages?: number // 总页数（可选）
-  currentPage: number // 当前页码
+export interface IUser {
+  id: number
+  nickName: string
+  username: string
+  isFrozen: boolean
+  email: string
+  updateTime: string
+  createTime: string
 }
