@@ -3,7 +3,7 @@
     <n-button
       v-for="(item, index) in actions"
       :key="`${index}-${item.title}`"
-      v-bind="extend(defaultConfig, item.componentProps)"
+      v-bind="extend({}, defaultConfig, item.componentProps)"
       :render-icon="iconRender(item.iconConfig || {})"
       @click="handleAction(item.title)"
     >
