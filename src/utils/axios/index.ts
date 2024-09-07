@@ -8,10 +8,13 @@ import { ContentTypeEnum, RequestEnum, ResultEnum } from '@/enums/httpEnum'
 import { globalConfig } from '@/utils/env'
 import { useCreateMessage } from '@/hooks/web/useMessage'
 import type { RequestOptions, Result } from '@/typings/axios'
+import { useUserStoreWithOut } from '@/store/modules/user'
 
 const { apiUrl, urlPrefix } = globalConfig()
 
 const { createWindowMsg } = useCreateMessage()
+
+const userStore = useUserStoreWithOut()
 
 /** 数据处理 */
 const transform: AxiosTransform = {
@@ -41,6 +44,11 @@ const transform: AxiosTransform = {
     else {
       // TODO 判断接口登录凭证（cookie）是否过期
       createWindowMsg('error', `${code}: ${message}`)
+      if (code === 1101) {
+        userStore.logout()
+        throw new Error(message)
+      }
+
       return { code, message }
     }
   },
