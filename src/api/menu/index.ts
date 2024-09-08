@@ -1,3 +1,4 @@
+import type { MenuItem } from './type'
 import { request } from '@/utils/axios/index'
 
 enum Api {
@@ -29,7 +30,7 @@ export function getMenuInfoApi(id: number) {
 }
 
 export function getMenuListApi() {
-  return request.get({
+  return request.get<MenuItem[]>({
     url: Api.GetMenuList,
   })
 }

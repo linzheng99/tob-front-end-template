@@ -1,4 +1,4 @@
-import type { ICommonPage } from '../types'
+import type { ICommonQueryPage } from '../commonTypes'
 import type { ILogin, ILoginResponse, IUser } from './type'
 import type { ResponseApi } from '@/components/TableRender/types'
 import { request } from '@/utils/axios/index'
@@ -18,7 +18,11 @@ export function loginApi(data: ILogin) {
   })
 }
 
-export function getUserListApi(params: ICommonPage) {
+export function getUserListApi(params: ICommonQueryPage & {
+  username?: string
+  nickNick?: string
+  email?: string
+}) {
   return request.get<ResponseApi<IUser>>({
     url: Api.GetUserList,
     params,
