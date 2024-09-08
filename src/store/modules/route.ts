@@ -1,6 +1,5 @@
-import { defineStore } from 'pinia';
-import { nextTick } from 'vue';
-
+import { defineStore } from 'pinia'
+import { nextTick } from 'vue'
 
 interface RouteState {
   /** 路由缓存 */
@@ -13,25 +12,27 @@ export const useRouteStore = defineStore({
   id: 'app-route',
   state: (): RouteState => ({
     cacheRoutes: [],
-    reloadFlag: true
+    reloadFlag: true,
   }),
   actions: {
     addCacheRoute(name: string) {
-      this.cacheRoutes.push(name)
+      const exist = this.cacheRoutes.includes(name)
+      !exist && this.cacheRoutes.push(name)
     },
     removeCacheRoute(name: string) {
       this.cacheRoutes = this.cacheRoutes.filter(route => route !== name)
     },
     reloadPage(name: string) {
       const isCache = this.cacheRoutes.includes(name)
-      if (isCache) this.removeCacheRoute(name)
+      if (isCache)
+        this.removeCacheRoute(name)
       this.reloadFlag = false
       nextTick().then(() => {
         this.addCacheRoute(name)
         this.reloadFlag = true
       })
-    }
-  }
+    },
+  },
 })
 
 export function useRouteStoreWithout() {

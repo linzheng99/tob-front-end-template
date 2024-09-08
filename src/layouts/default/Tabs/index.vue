@@ -21,14 +21,14 @@
 </template>
 
 <script lang="ts" setup>
-import { watch, computed, reactive, nextTick } from 'vue'
+import { computed, nextTick, reactive, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import { extend } from '../../../utils/share'
+import Tab from './components/Tab.vue'
+import TabContextMenu from './components/TabContextMenu.vue'
 import { useTabsStoreWithOut } from '@/store/modules/tabs'
 import { useRouterPush } from '@/hooks/router/useRouterPush'
 import { useRouteStoreWithout } from '@/store/modules/route'
-import Tab from './components/Tab.vue'
-import TabContextMenu from './components/TabContextMenu.vue'
-import { extend } from '../../../utils/share'
 
 interface DropdownConfig {
   visible: boolean
@@ -49,10 +49,10 @@ const dropdownConfig: DropdownConfig = reactive({
   visible: false,
   x: 0,
   y: 0,
-  currentPath: ''
+  currentPath: '',
 })
 
-const handleContextMenu = (e: MouseEvent, currentPath: string) => {
+function handleContextMenu(e: MouseEvent, currentPath: string) {
   e.preventDefault()
   updateVisible(false)
   dropdownConfig.currentPath = currentPath
@@ -60,19 +60,19 @@ const handleContextMenu = (e: MouseEvent, currentPath: string) => {
     extend(dropdownConfig, {
       visible: true,
       x: e.clientX,
-      y: e.clientY
+      y: e.clientY,
     })
   })
 }
 
-const updateVisible = (visible: boolean) => {
+function updateVisible(visible: boolean) {
   extend(dropdownConfig, { visible })
 }
 
-const go = (fullPath: string) => {
+function go(fullPath: string) {
   routerPush(fullPath)
 }
-const close = (tab) => {
+function close(tab) {
   tabsStore.deleteTab(tab)
   routeStore.removeCacheRoute(tab.name)
 }
@@ -84,11 +84,11 @@ watch(
     tabsStore.addTabs({
       fullPath: route.fullPath,
       title: route.meta.title,
-      name: route.name as string
+      name: route.name as string,
     })
     routeStore.addCacheRoute(route.name as string)
   },
-  { immediate: true }
+  { immediate: true },
 )
 </script>
 
