@@ -1,5 +1,11 @@
 <template>
-  <ModalCardRender ref="modalRef" :title="title" :footer="false" @closed="handleClosed">
+  <ModalCardRender
+    ref="modalRef"
+    :title="title"
+    :footer="false"
+    :show="showModal"
+    @cancel="toggleModal"
+  >
     <FormRender @register="register" @submit="formSubmit" />
   </ModalCardRender>
 </template>
@@ -92,9 +98,8 @@ async function formSubmit(values: IUser) {
   await validate()
   try {
     if (props.type === 'edit')
-      props.id && await updateUserApi(props.id, values)
-    else
-      await createUserApi(values)
+      props.id && (await updateUserApi(props.id, values))
+    else await createUserApi(values)
     toggleModal()
     emit('success')
   }
@@ -103,14 +108,8 @@ async function formSubmit(values: IUser) {
   }
 }
 
-function handleClosed(value: boolean) {
-  if (!value)
-    showModal.value = false
-}
-
 function toggleModal() {
   showModal.value = !showModal.value
-  modalRef.value?.toggleModal()
 }
 defineExpose({
   toggleModal,

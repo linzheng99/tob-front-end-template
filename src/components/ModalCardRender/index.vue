@@ -1,6 +1,6 @@
 <template>
   <n-modal
-    v-model:show="modalState"
+    :show="show"
     transform-origin="center"
     class="custom-card"
     :mask-closable="false"
@@ -12,6 +12,7 @@
     :title="title"
     :size="size"
     :segmented="segmented"
+    :on-close="cancelCallback"
     :on-after-leave="closedCallback"
   >
     <template #header-extra>
@@ -42,16 +43,17 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { reactive } from 'vue'
 import { extend } from '@/utils'
 
 type SizeType = 'small' | 'medium' | 'large' | 'huge'
 interface Emit {
-  (e: 'closed', value: boolean): void
+  (e: 'closed'): void
   (e: 'cancel'): void
   (e: 'confirm'): void
 }
 interface Props {
+  show: boolean
   bodyStyle: object
   segmented: object
   size: SizeType
@@ -71,8 +73,6 @@ const emit = defineEmits<Emit>()
 
 extend(props.bodyStyle)
 
-const modalState = ref(false)
-
 const headerStyle = reactive({
   padding: '10px',
 })
@@ -83,23 +83,16 @@ const footerStyle = reactive({
   padding: '10px',
 })
 
-function toggleModal() {
-  modalState.value = !modalState.value
-}
-
 function closedCallback() {
-  emit('closed', modalState.value)
+  emit('closed')
 }
 
 function cancelCallback() {
-  toggleModal()
   emit('cancel')
 }
 function confirmCallback() {
   emit('confirm')
 }
-
-defineExpose({ toggleModal })
 </script>
 
 <style scoped lang="scss">

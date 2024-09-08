@@ -1,5 +1,11 @@
 <template>
-  <ModalCardRender ref="modalRef" :title="title" :footer="false">
+  <ModalCardRender
+    ref="modalRef"
+    :title="title"
+    :footer="false"
+    :show="showModal"
+    @cancel="toggleModal"
+  >
     <FormRender @register="register" @submit="formSubmit" />
   </ModalCardRender>
 </template>
@@ -36,8 +42,7 @@ watch(
   async (value) => {
     if (value)
       await setMenuInfo()
-    else
-      menuInfo.value = {}
+    else menuInfo.value = {}
   },
 )
 
@@ -142,7 +147,6 @@ async function formSubmit(values: Recordable) {
 
 function toggleModal() {
   showModal.value = !showModal.value
-  modalRef.value?.toggleModal()
 }
 
 defineExpose({
