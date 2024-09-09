@@ -7,6 +7,8 @@ enum Api {
   Login = '/auth/login',
   RegisterUser = '/auth/register',
   User = '/user',
+  CreateUser = '/user/create',
+  UserMenus = '/user/menus',
   GetUserInfo = '/getUserInfo',
   GetUserList = '/user/list',
 }
@@ -38,7 +40,7 @@ export function getUserInfoApi(id: number) {
 
 export function createUserApi(data: IUser) {
   return request.post<IUser>({
-    url: Api.RegisterUser,
+    url: Api.CreateUser,
     data,
   })
 }
@@ -55,5 +57,11 @@ export function deleteUserApi(id: number) {
   return request.delete<IUser>({
     url: Api.User,
     params: id,
+  })
+}
+
+export function getUserMenus() {
+  return request.get({
+    url: Api.UserMenus,
   })
 }

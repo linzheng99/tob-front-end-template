@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import type { AppRouteRecordRaw, Menu } from '@/router/routeTypes'
 import { store } from '@/store/index'
 import { transformAuthRouteToVueRoutes } from '@/utils/helper/routerHelper'
-import { getMenuListApi } from '@/api/menu/index.ts'
+import { getUserMenus } from '@/api/user'
 
 interface PermissionState {
   // 后台路由
@@ -47,7 +47,7 @@ export const usePermissionStore = defineStore({
       let authMenuList: AppRouteRecordRaw[] = []
 
       try {
-        const data = await getMenuListApi()
+        const data = await getUserMenus()
         authMenuList = data
       }
       catch (error) {

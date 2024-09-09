@@ -1,6 +1,6 @@
-import type { Router, RouteRecordRaw } from 'vue-router'
-import { PageEnum } from '@/enums/pageEnum'
+import type { RouteRecordRaw, Router } from 'vue-router'
 import { WHITE_PATH_LIST } from '../index'
+import { PageEnum, PermissionFirstPage } from '@/enums/pageEnum'
 import { usePermissionStoreWithOut } from '@/store/modules/permission'
 import { useUserStoreWithOut } from '@/store/modules/user'
 import { searchRoute } from '@/utils/helper/routerHelper'
@@ -37,8 +37,10 @@ export function createPermissionGuard(router: Router) {
       if (to.path === LOGIN_PATH && token) {
         try {
           await userStore.afterLoginAction()
+          next({ path: PermissionFirstPage.First_Page })
           return
-        } catch { }
+        }
+        catch { }
       }
       next()
       return
@@ -55,7 +57,8 @@ export function createPermissionGuard(router: Router) {
       try {
         permissionStore.setDynamicAddedRoute(false)
         await userStore.getUserInfoAction()
-      } catch (error) {
+      }
+      catch (error) {
         next()
         return
       }
@@ -65,11 +68,11 @@ export function createPermissionGuard(router: Router) {
     if (permissionStore.getIsDynamicAddedRoute) {
       // 判断路由是否存在 / 是否有权限
       const isExist = searchRoute(permissionStore.backMenuList, to.path)
-      if (!isExist) {
+      if (!isExist)
         next('/404')
-      } else {
+      else
         next()
-      }
+
       return
     }
 
@@ -83,8 +86,7 @@ export function createPermissionGuard(router: Router) {
     next({ ...to, replace: true })
 
     // 跳转路由
-    if (to.path === LOGIN_PATH) {
-      next('/')
-    }
+    if (to.path === LOGIN_PATH)
+      next({ path: PermissionFirstPage.First_Page })
   })
 }

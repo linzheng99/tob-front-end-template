@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { store } from '../index'
+import { usePermissionStoreWithOut } from './permission'
 import { getCookieToken, removeCookieToken, setCookieToken } from '@/utils/cookie/index'
 import { getUserInfoApi, loginApi } from '@/api/user/index'
 import { router } from '@/router'
@@ -61,7 +62,8 @@ export const useUserStore = defineStore({
       if (!this.token)
         return
       const info = await this.getUserInfoAction()
-      // TODO 判断接口登录凭证（cookie）是否过期
+      const permissionStore = usePermissionStoreWithOut()
+      permissionStore.setDynamicAddedRoute(false) // 重置动态路由状态
       router.replace('/')
       return info
     },

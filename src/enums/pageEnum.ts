@@ -7,5 +7,5 @@ export enum PageEnum {
 // 需要登录凭证
 export enum PermissionFirstPage {
   // 首次页面路径
-  First_Page = '/components',
+  First_Page = '/system',
 }

@@ -4,6 +4,7 @@ import { request } from '@/utils/axios/index'
 enum Api {
   Role = '/role',
   GetRoleList = '/role/list',
+  AllRole = '/role/all',
   CreateRole = '/role/create',
 }
 
@@ -40,5 +41,11 @@ export function deleteRoleApi(id: number) {
   return request.delete({
     url: Api.Role,
     params: id,
+  })
+}
+
+export function getAllRoleApi() {
+  return request.get({
+    url: Api.AllRole,
   })
 }
