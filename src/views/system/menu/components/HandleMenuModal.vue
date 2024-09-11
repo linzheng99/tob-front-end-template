@@ -67,9 +67,9 @@ async function fetchMenuInfo() {
     menuInfo.value = { parentId: id }
   }
   else {
-    const { meta, type, ...res } = await getMenuInfoApi(id)
-    menuInfo.value = { ...res, type, title: meta.title, icon: meta.icon }
-    updateAndSetSchemas(type)
+    const { meta, type: menuType, ...res } = await getMenuInfoApi(id)
+    menuInfo.value = { ...res, type: menuType, title: meta.title, icon: meta.icon }
+    updateAndSetSchemas(menuType)
     setFieldsValue(menuInfo.value)
   }
 }
@@ -80,16 +80,13 @@ function updateAndSetSchemas(value: number) {
 }
 
 function configureSchemas() {
-  let componentProps = menuTypeSchemas[0].componentProps
-
-  componentProps
-  && (componentProps = {
-    ...componentProps,
+  menuTypeSchemas[0].componentProps = {
+    ...menuTypeSchemas[0].componentProps,
     onUpdateValue: (value) => {
       updateAndSetSchemas(value)
       restoreValidation()
     },
-  })
+  }
 }
 
 async function formSubmit(values: Recordable) {

@@ -26,6 +26,14 @@ export function getMenuTypeSchemas(): FormSchema[] {
       },
       rules: [{ type: 'number', required: true, message: '请选择菜单类型', trigger: ['blur'] }],
     },
+    {
+      field: 'orderNo',
+      component: 'NInputNumber',
+      label: '排序号',
+      componentProps: {
+        showButton: false,
+      },
+    },
   ]
 }
 
