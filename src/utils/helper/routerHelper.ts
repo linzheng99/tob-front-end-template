@@ -46,10 +46,10 @@ export function transformAuthRouteToVueRoute(item: AppRouteRecordRaw) {
   // 存在子路由递归转换
   if (hasChildren(item)) {
     const routeChildren: AppRouteRecordRaw[] = []
-    children?.map((i) => {
-      routeChildren.push(transformAuthRouteToVueRoute(i))
-    })
-    extend(route, { children: routeChildren })
+    children?.map(i =>
+      i.component && routeChildren.push(transformAuthRouteToVueRoute(i)),
+    )
+    extend(route, { children: routeChildren.length ? routeChildren : false })
   }
 
   return route

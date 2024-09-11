@@ -26,7 +26,7 @@ export function createDialog({ content: {
     onPositiveClick: async () => {
       dialog.loading = true
       try {
-        return await onPositiveClick()
+        await onPositiveClick()
       }
       catch (error) {
         return false
