@@ -118,7 +118,8 @@ async function formSubmit(values: Role) {
     const { id } = props
     if (id)
       await updateRoleApi(id, values)
-    else await createRoleApi(values)
+    else
+      await createRoleApi(values)
     emit('success')
     toggleModal()
   }

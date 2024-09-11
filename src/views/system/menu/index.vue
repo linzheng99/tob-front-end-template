@@ -36,27 +36,16 @@ import type {
 import type { Actions } from '@/components/TableRender/components/actionColumn/types'
 import { deleteMenuApi, getMenuListApi } from '@/api/menu/index'
 import { createDialog } from '@/utils/dialog'
+import type { MenuItem } from '@/api/menu/type'
 
-interface MenuInfo {
-  id: number
-  meta: {
-    title: string
-    icon: string
-  }
-  path: string
-  name: string
-  component: string
-  redirect: string
-}
 const handleMenuModalRef = ref<InstanceType<typeof HandleMenuModal>>()
-const data = ref<MenuInfo[]>([])
-const editMenu = ref<TableBasicRecordRow<MenuInfo>>()
+const data = ref<MenuItem[]>([])
+const editMenu = ref<TableBasicRecordRow<MenuItem>>()
 const type = ref<'add' | 'edit'>('add')
 const columns = reactive<TableBasicColumn[]>([
   {
     title: '菜单名称',
     key: 'meta',
-    width: 250,
     ellipsis: { tooltip: true },
     render(rowData: { meta?: { title: string, icon: string } }) {
       return rowData.meta?.title
@@ -65,7 +54,6 @@ const columns = reactive<TableBasicColumn[]>([
   {
     title: '菜单图标',
     key: 'meta',
-    width: 250,
     ellipsis: { tooltip: true },
     render(rowData: { meta?: { title: string, icon: string } }) {
       return rowData.meta?.icon
@@ -74,25 +62,26 @@ const columns = reactive<TableBasicColumn[]>([
   {
     title: '菜单地址',
     key: 'path',
-    width: 250,
+    ellipsis: { tooltip: true },
+  },
+  {
+    title: '权限标识',
+    key: 'permission',
     ellipsis: { tooltip: true },
   },
   {
     title: '路由名称',
     key: 'name',
-    width: 250,
     ellipsis: { tooltip: true },
   },
   {
     title: '路由组件 / 组件地址',
     key: 'component',
-    width: 250,
     ellipsis: { tooltip: true },
   },
   {
     title: '路由重定向',
     key: 'redirect',
-    width: 250,
     ellipsis: { tooltip: true },
   },
 ])
