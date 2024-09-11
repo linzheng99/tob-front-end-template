@@ -48,8 +48,7 @@ const transform: AxiosTransform = {
         userStore.logout()
         throw new Error(message)
       }
-
-      return { code, message }
+      throw new Error(`${message}`)
     }
   },
   beforeRequestHook: (config, options) => {
@@ -155,7 +154,7 @@ const transform: AxiosTransform = {
       const { code, message } = data
       createWindowMsg('error', `${code}: ${message}`)
     }
-    throw new Error(error)
+    return Promise.reject(error)
   },
 }
 
