@@ -4,6 +4,7 @@ import { PageEnum, PermissionFirstPage } from '@/enums/pageEnum'
 import { usePermissionStoreWithOut } from '@/store/modules/permission'
 import { useUserStoreWithOut } from '@/store/modules/user'
 import { searchRoute } from '@/utils/helper/routerHelper'
+import { useUserAuth } from '@/store/modules/auth'
 
 const LOGIN_PATH = PageEnum.Login_page
 
@@ -21,6 +22,7 @@ export function createPermissionGuard(router: Router) {
   router.beforeEach(async (to, _from, next) => {
     const token = userStore.getToken
     const permissionStore = usePermissionStoreWithOut()
+    const authStore = useUserAuth()
     /**
      * router逻辑顺序
      * 判断是否是白名单
@@ -82,6 +84,7 @@ export function createPermissionGuard(router: Router) {
       router.addRoute(route as RouteRecordRaw)
     })
     permissionStore.setDynamicAddedRoute(true)
+    await authStore.getPermission()
 
     next({ ...to, replace: true })
 

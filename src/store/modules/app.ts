@@ -1,13 +1,13 @@
-import { AppLocalConfig, getLocalKey } from '@/utils/cache/appLocal'
 import { defineStore } from 'pinia'
 import { store } from '../index'
+import type { AppLocalConfig } from '@/utils/cache/appLocal'
+import { clearLocalKey, getLocalKey, setLocalkey } from '@/utils/cache/appLocal'
 import { LOCAL_CONFIG } from '@/enums/cacheEnum'
-import { setLocalkey, clearLocalKey } from '@/utils/cache/appLocal'
 import { deepMerge } from '@/utils/index'
 
 interface AppState {
   appLocalConfig: AppLocalConfig
-  configDrawerVisible: Boolean
+  configDrawerVisible: boolean
 }
 
 export const useAppStore = defineStore({
@@ -20,7 +20,7 @@ export const useAppStore = defineStore({
     getAppLocalConfig(): AppLocalConfig {
       return this.appLocalConfig
     },
-    getConfigDrawerVisible(): Boolean {
+    getConfigDrawerVisible(): boolean {
       return this.configDrawerVisible
     },
   },

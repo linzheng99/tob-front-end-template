@@ -5,6 +5,7 @@ enum Api {
   Menu = '/menu',
   GetMenuList = '/menu/list',
   CreateMenu = '/menu/create',
+  Permission = '/menu/permissions',
 }
 
 export function createMenuApi(data: Recordable) {
@@ -39,5 +40,11 @@ export function deleteMenuApi(id: number) {
   return request.delete({
     url: Api.Menu,
     params: id,
+  })
+}
+
+export function getPermissionApi() {
+  return request.get({
+    url: Api.Permission,
   })
 }

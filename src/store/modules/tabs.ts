@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { store } from '../index'
-import { Tab, TabsState } from '@/layouts/default/Tabs/TabsType'
+import type { Tab, TabsState } from '@/layouts/default/Tabs/TabsType'
 import { getIndexInTabs } from '@/layouts/default/Tabs/util'
 import { useRouterPush } from '@/hooks/router/useRouterPush'
 
@@ -24,9 +24,8 @@ export const useTabsStore = defineStore({
     },
     addTabs(tab: Tab) {
       const index = getIndexInTabs(this.tabs, this.activeTab)
-      if (index === -1) {
+      if (index === -1)
         this.tabs.push(tab)
-      }
     },
     setActiveTab(value: any) {
       this.activeTab = value
@@ -34,7 +33,7 @@ export const useTabsStore = defineStore({
     deleteTab(tab: Tab) {
       const { routerPush } = useRouterPush(false)
 
-      const updateTabs = this.tabs.filter((item) => item.fullPath !== tab.fullPath)
+      const updateTabs = this.tabs.filter(item => item.fullPath !== tab.fullPath)
       this.tabs = updateTabs
       const isActive = this.activeTab === tab.title
       if (isActive) {
