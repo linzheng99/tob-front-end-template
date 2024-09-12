@@ -17,6 +17,7 @@ import { useDataSource } from './hooks/useDataSource'
 import { useColumns } from './hooks/useColumns'
 import type { ActionValues, TableBasicRecordRow } from './types/column'
 import type { TableActionType } from './types/tableActionType'
+import { isFunction } from '@/utils/is'
 
 const props = withDefaults(defineProps<TableBasicProps>(), {
   remote: false,
@@ -92,17 +93,25 @@ async function reloadData(params?: any) {
     throw new Error(`${error}`)
   }
 }
+const getRequestParams = computed(() => {
+  const { requestParams } = props
+  if (!requestParams)
+    return {}
+  if (isFunction(requestParams))
+    return requestParams()
+  return requestParams
+})
 
 // 页码切换
 async function updatePage(page: number) {
   setPagination({ page })
-  await reloadData()
+  await reloadData(getRequestParams.value)
 }
 
 // 分页数量切换
 async function updatePageSize(size: number) {
   setPagination({ page: 1, pageSize: size })
-  await reloadData()
+  await reloadData(getRequestParams.value)
 }
 
 const tableAction: TableActionType = {

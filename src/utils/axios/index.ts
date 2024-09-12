@@ -42,7 +42,6 @@ const transform: AxiosTransform = {
       return data
     }
     else {
-      // TODO 判断接口登录凭证（cookie）是否过期
       createWindowMsg('error', `${code}: ${message}`)
       if (code === 1101) {
         userStore.logout()

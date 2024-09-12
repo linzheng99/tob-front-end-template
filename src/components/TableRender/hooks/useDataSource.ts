@@ -1,8 +1,6 @@
 import type { PaginationProps } from 'naive-ui'
-import { computed } from 'vue'
 import type { EmitType, ResponseApi } from '../types'
 import { extend } from '@/utils'
-import { isFunction } from '@/utils/is'
 
 interface DataSourceOptions {
   emit: EmitType
@@ -15,15 +13,7 @@ interface DataSourceOptions {
 }
 
 export function useDataSource(options: DataSourceOptions) {
-  const { requestApi, setLoading, setPagination, getPagination, emit, requestParams } = options
-
-  const getRequestParams = computed(() => {
-    if (!requestParams)
-      return {}
-    if (isFunction(requestParams))
-      return requestParams()
-    return requestParams
-  })
+  const { requestApi, setLoading, setPagination, getPagination, emit } = options
 
   async function requestData(opt: any) {
     if (!requestApi)
@@ -34,15 +24,13 @@ export function useDataSource(options: DataSourceOptions) {
 
     if (pagination) {
       const { page, pageSize } = pagination
-      extend(pageParams, { page, pageSize }, getRequestParams.value)
+      extend(pageParams, { page, pageSize })
     }
-
-    extend(pageParams, { ...opt }, getRequestParams.value)
 
     try {
       setLoading(true)
       // 自定义修改与后端规定好的数据结构
-      const data = await requestApi(pageParams)
+      const data = await requestApi({ ...pageParams, ...opt })
       const { items, totalItems } = data
       setPagination({ itemCount: totalItems })
       emit('request-success', items)
