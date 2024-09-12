@@ -19,7 +19,7 @@ import { useForm } from '@/components/FormRender'
 import { createUserApi, getUserInfoApi, updateUserApi } from '@/api/user'
 import type { IUser } from '@/api/user/type'
 import { getAllRoleApi } from '@/api/role'
-import { extend } from '@/utils'
+import { extend, md5 } from '@/utils'
 
 interface Props {
   type: 'edit' | 'add'
@@ -70,7 +70,6 @@ const schemas = ref<FormSchema[]>([
     componentProps: {
       placeholder: '请输入邮箱',
     },
-    rules: [{ required: true, message: '请输入邮箱', trigger: ['blur'] }],
   },
   {
     field: 'roleIds',
@@ -111,7 +110,7 @@ async function formSubmit(values: IUser) {
   try {
     if (props.type === 'edit')
       props.id && (await updateUserApi(props.id, values))
-    else await createUserApi(values)
+    else await createUserApi({ ...values, password: md5(values.password) })
     toggleModal()
     emit('success')
   }

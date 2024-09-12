@@ -70,6 +70,11 @@ const columns = reactive<TableBasicColumn[]>([
     ellipsis: { tooltip: true },
   },
   {
+    title: '排序',
+    key: 'orderNo',
+    ellipsis: { tooltip: true },
+  },
+  {
     title: '路由名称',
     key: 'name',
     ellipsis: { tooltip: true },

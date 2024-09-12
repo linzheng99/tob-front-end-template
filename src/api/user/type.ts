@@ -17,4 +17,5 @@ export interface IUser {
   email: string
   updateTime: string
   createTime: string
+  password: string
 }

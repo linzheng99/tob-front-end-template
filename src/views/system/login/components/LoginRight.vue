@@ -40,6 +40,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import type { FormInst } from 'naive-ui'
+import { md5 } from '@/utils/index'
 import { useUserStore } from '@/store/modules/user'
 import { useAppInfo } from '@/hooks/app/system'
 import { useThemeStoreWithOut } from '@/store/modules/theme'
@@ -53,7 +54,7 @@ const formRef = ref<FormInst | null>(null)
 const size = 'small'
 const userForm = ref({
   user: {
-    username: 'linzheng',
+    username: 'root',
     password: '123456',
   },
 })
@@ -78,7 +79,7 @@ function handleValidateClick(e: MouseEvent) {
     if (!errors) {
       await userStore.login({
         username: userForm.value.user.username,
-        password: userForm.value.user.password,
+        password: md5(userForm.value.user.password),
       })
     }
     else { console.error(errors) }
