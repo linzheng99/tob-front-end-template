@@ -5,6 +5,7 @@ import { usePermissionStoreWithOut } from '@/store/modules/permission'
 import { useUserStoreWithOut } from '@/store/modules/user'
 import { searchRoute } from '@/utils/helper/routerHelper'
 import { useUserAuth } from '@/store/modules/auth'
+import { findFirstRoute } from '@/utils/helper/menuHelper'
 
 const LOGIN_PATH = PageEnum.Login_page
 
@@ -70,10 +71,11 @@ export function createPermissionGuard(router: Router) {
     if (permissionStore.getIsDynamicAddedRoute) {
       // 判断路由是否存在 / 是否有权限
       const isExist = searchRoute(permissionStore.backMenuList, to.path)
-      if (!isExist)
-        next('/404')
-      else
-        next()
+      if (!isExist) {
+        const firstRoute = findFirstRoute(permissionStore.backMenuList)
+        next({ path: firstRoute || '/404' })
+      }
+      else { next() }
 
       return
     }

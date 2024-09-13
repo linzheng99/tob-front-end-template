@@ -1,4 +1,4 @@
-import type { AppRouteRecordRaw } from '@/router/routeTypes'
+import type { AppRouteRecordRaw, Menu } from '@/router/routeTypes'
 import type { BackMenuOption } from '@/router/menuTypes'
 import { useIconRender } from '@/hooks/component/useIconRender'
 import { extend } from '@/utils'
@@ -62,4 +62,20 @@ function addPartialProps(config: {
     extend(item, { children })
 
   return item
+}
+
+// 寻找第一个子菜单
+export function findFirstRoute(menuList: Menu[]): string | null {
+  for (const menu of menuList) {
+    // 如果有子菜单，递归查找
+    if (menu.children && menu.children.length > 0) {
+      const childRoute = findFirstRoute(menu.children)
+      if (childRoute)
+        return childRoute // 找到第一个有效的子路由
+    }
+    // 如果没有子菜单，返回当前菜单的路径
+    if (menu.path)
+      return menu.path
+  }
+  return null // 如果没有找到有效路径，返回 null
 }

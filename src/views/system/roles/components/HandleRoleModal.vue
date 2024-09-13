@@ -13,7 +13,6 @@
             key-field="id"
             block-line
             checkable
-            cascade
             expand-on-click
             default-expand-all
             :data="menuList"
