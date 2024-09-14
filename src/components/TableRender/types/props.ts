@@ -15,9 +15,9 @@ export interface TableBasicProps {
   requestParams?: (() => Recordable) | Recordable
 }
 
-export interface ResponseApi<T = Recordable> {
+export interface ResponseApi<T = any> {
   // 定义你期望的 API 响应的数据结构
-  items: T[]
+  items: T
   currentPage: number
   totalItems: number
   totalPages: number
