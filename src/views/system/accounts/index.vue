@@ -187,7 +187,7 @@ async function handleAction(item: ActionValues) {
   }
 }
 
-function requestSuccess(res: IUser[]) {
+function requestSuccess(res) {
   data.value = res
 }
 

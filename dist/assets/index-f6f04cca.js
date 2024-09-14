@@ -1,0 +1,1 @@
+import{_ as e}from"./BarChart.vue_vue_type_script_setup_true_lang-9fb4d1d1.js";import{e as t,Y as o,Z as n,$ as a}from"./index-d0818fe1.js";const _={id:"app_content"},m=t({__name:"index",setup(s){return(c,r)=>(o(),n("div",_,[a(e)]))}});export{m as default};

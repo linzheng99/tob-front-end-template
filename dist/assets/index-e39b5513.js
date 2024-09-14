@@ -1,0 +1,1 @@
+import o from"./LoginLeft-321058bf.js";import t from"./LoginRight-30be3b20.js";import{e as _,Y as n,Z as s,$ as e,a0 as c}from"./index-d0818fe1.js";import"./index-1ef2f010.js";const a={class:"login"},i=_({__name:"index",setup(r){return(p,d)=>(n(),s("div",a,[e(o),e(t)]))}});const u=c(i,[["__scopeId","data-v-535c37b6"]]);export{u as default};

@@ -21,9 +21,9 @@ export type TableBasicActionColumn = TableBaseColumn & Partial<ActionColumnProps
 
 export type EmitType = ReturnType<typeof defineEmits>
 
-export interface ActionValues {
+export interface ActionValues<T = any> {
   title: string
-  record: TableBasicRecordRow
+  record: TableBasicRecordRow<T>
   index: number
 }
 

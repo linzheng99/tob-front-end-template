@@ -48,7 +48,7 @@ import { createDialog } from '@/utils/dialog'
 import { useForm } from '@/components/FormRender'
 
 const tableElRef = ref<InstanceType<typeof TableRender>>()
-const handleRoleModalRef = ref<InstanceType<typeof handleRoleModalRef>>()
+const handleRoleModalRef = ref<InstanceType<typeof HandleRoleModal>>()
 const searchParams = ref<RoleQueryPage>({
   page: 1,
   pageSize: 10,
@@ -157,7 +157,7 @@ async function handleAction(item: ActionValues) {
   }
 }
 
-function requestSuccess(res: IUser[]) {
+function requestSuccess(res) {
   data.value = res
 }
 

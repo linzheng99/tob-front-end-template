@@ -10,13 +10,13 @@ const serviceEnv: ServiceEnv = {
   test: [
     {
       prefix: '/api',
-      target: 'http://localhost:3100',
+      target: `http://localhost:3000/`,
     },
   ],
   production: [
     {
       prefix: '/api',
-      target: 'http://localhost:3100',
+      target: `http://118.31.0.102:3000/`,
     },
   ],
 }

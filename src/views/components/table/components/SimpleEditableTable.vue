@@ -161,9 +161,10 @@ function requestDataSource() {
         address: `address - ${index}`,
       }))
       resolve({
-        data: { items: apiResponse, total: apiResponse.length },
-        code: 200,
-        msg: 'success',
+        items: apiResponse,
+        totalItems: apiResponse.length,
+        totalPages: 1,
+        currentPage: 1,
       })
     }, 1000) // 模拟异步操作的延迟
   })

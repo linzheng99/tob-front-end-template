@@ -211,9 +211,10 @@ function requestDataSource() {
         date: ['2024-02-09', '2024-02-10'],
       }))
       resolve({
-        data: { items: apiResponse, total: apiResponse.length },
-        code: 200,
-        msg: 'success',
+        items: apiResponse,
+        currentPage: 1,
+        totalItems: apiResponse.length,
+        totalPages: apiResponse.length / 10,
       })
     }, 1000) // 模拟异步操作的延迟
   })
