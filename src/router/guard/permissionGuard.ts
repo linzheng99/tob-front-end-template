@@ -63,6 +63,7 @@ export function createPermissionGuard(router: Router) {
       }
       catch (error) {
         next()
+        console.error(error)
         return
       }
     }

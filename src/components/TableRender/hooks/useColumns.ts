@@ -9,10 +9,12 @@ export function useColumns(props: ComputedRef<TableBasicProps>, emit: EmitType) 
     return unref(actionColumn)
   })
 
+  // TODO Fix: 放在计算属性里面会造成渲染次数过多
+  // 操作列
+  addActionColumn(columns, unref(actionColumnRef), emit)
+
   // setup table columns
   const getColumns = computed(() => {
-    // 操作列
-    addActionColumn(columns, unref(actionColumnRef), emit)
     // 每一列
     transformColumns(columns, emit)
 

@@ -1,0 +1,1 @@
+import{_ as o}from"./SimpleEditableTable.vue_vue_type_script_setup_true_lang-19245257.js";import"./index.vue_vue_type_script_setup_true_lang-b24b64bc.js";import"./index-bf5d60c1.js";import"./createPlaceholder-c9a6ecf0.js";export{o as default};

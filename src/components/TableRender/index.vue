@@ -53,10 +53,9 @@ const { getColumns } = useColumns(getProps, emit)
 const { requestData } = useDataSource({
   emit,
   setLoading,
-  requestApi: props.requestApi,
+  requestApi: unref(getProps).requestApi,
   setPagination,
   getPagination,
-  requestParams: props.requestParams,
 })
 
 // 横向滚动宽度

@@ -68,6 +68,12 @@ export function addActionColumn(columns: TableBasicColumn[], actionColumn: Table
   // 操作列
   if (tableAction) {
     const actionIdx = columns.findIndex(i => i.key === '_action')
-    actionIdx !== -1 ? columns.splice(actionIdx, 1, tableAction) : columns.push(tableAction)
+    //   // 检查是否已经存在操作列
+    if (actionIdx === -1) {
+      columns.push(tableAction) // 仅在不存在时添加
+    }
+    else {
+      columns.splice(actionIdx, 1, tableAction) // 更新已存在的操作列
+    }
   }
 }
