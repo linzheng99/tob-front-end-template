@@ -1,0 +1,1 @@
+import{_ as e}from"./SimpleEditableTable.vue_vue_type_script_setup_true_lang-6e9ffc29.js";import{e as o,Y as t,Z as s,$ as a}from"./index-7b7dfb38.js";import"./index.vue_vue_type_script_setup_true_lang-3e5308f3.js";import"./createPlaceholder-6fcd5da5.js";const r={class:"h-full"},l=o({__name:"index",setup(n){return(_,c)=>(t(),s("div",r,[a(e)]))}});export{l as default};

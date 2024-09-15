@@ -53,10 +53,10 @@ function tabStyle(path, activePath) {
     flex-shrink: 0;
     flex-grow: 0;
     margin-right: 10px;
+    overflow-y: hidden;
     &:last-child {
       margin-right: 0px;
     }
-    overflow-y: hidden;
   }
   &-content {
     display: flex;

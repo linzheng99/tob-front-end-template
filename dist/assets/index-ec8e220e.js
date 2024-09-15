@@ -1,1 +1,0 @@
-import{a0 as t,Y as _,Z as n,$ as c,aG as s}from"./index-d0818fe1.js";const o={},a={class:"w-100vw h-100vh flex-center layer-theme"};function r(d,i){const e=s;return _(),n("div",a,[c(e,{status:"404",title:"404 路径不存在",description:"检查你输入的地址"})])}const p=t(o,[["render",r],["__scopeId","data-v-7c6ee581"]]);export{p as default};
