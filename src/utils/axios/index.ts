@@ -152,6 +152,9 @@ const transform: AxiosTransform = {
       const { data } = response
       const { code, message } = data
       createWindowMsg('error', `${code}: ${message}`)
+      if (message.startsWith('invalid signature')) {
+        userStore.logout()
+      }
     }
     return Promise.reject(error)
   },
