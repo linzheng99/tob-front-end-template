@@ -21,7 +21,6 @@ export function transformAuthRouteToVueRoutes(routes: AppRouteRecordRaw[] | unde
 
 /**
  * 单个权限路由 转换 Vue路由
- * TODO 考虑是否在这里做权限auth
  */
 export function transformAuthRouteToVueRoute(item: AppRouteRecordRaw) {
   const dynamicViewsModules = import.meta.glob('../../views/**/*.{vue,tsx}')

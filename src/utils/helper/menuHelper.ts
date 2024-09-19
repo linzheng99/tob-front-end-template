@@ -10,7 +10,7 @@ import { extend } from '@/utils'
 export function transformAuthRouteToMenu(routes: AppRouteRecordRaw[]): BackMenuOption[] {
   const Menu: BackMenuOption[] = []
   routes.forEach((route) => {
-    const { name, path, meta } = route
+    const { name, path, meta, external } = route
 
     let menuChildren: BackMenuOption[] | undefined
     if (route.children)
@@ -22,6 +22,7 @@ export function transformAuthRouteToMenu(routes: AppRouteRecordRaw[]): BackMenuO
         key: name,
         routeName: name,
         routePath: path,
+        external,
       },
       localIcon: meta.localIcon as string,
       icon: meta.icon as string,

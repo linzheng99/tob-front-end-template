@@ -54,11 +54,11 @@ interface Emit {
 }
 interface Props {
   show: boolean
-  bodyStyle: object
-  segmented: object
-  size: SizeType
-  title: any
-  footer: boolean
+  bodyStyle?: object
+  segmented?: object
+  size?: SizeType
+  title?: any
+  footer?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {

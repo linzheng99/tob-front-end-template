@@ -46,6 +46,7 @@ const columns = reactive<TableBasicColumn[]>([
   {
     title: '菜单名称',
     key: 'meta',
+    width: 200,
     ellipsis: { tooltip: true },
     render(rowData: { meta?: { title: string, icon: string } }) {
       return rowData.meta?.title
@@ -62,6 +63,11 @@ const columns = reactive<TableBasicColumn[]>([
   {
     title: '菜单地址',
     key: 'path',
+    ellipsis: { tooltip: true },
+  },
+  {
+    title: '外链地址',
+    key: 'external',
     ellipsis: { tooltip: true },
   },
   {

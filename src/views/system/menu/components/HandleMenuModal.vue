@@ -61,10 +61,11 @@ const title = computed(() => (props.type === 'edit' ? '编辑菜单' : '新增�
 
 async function fetchMenuInfo() {
   const { id, type } = props
-  if (id === undefined)
-    return
-  if (type === 'add') {
-    menuInfo.value = { parentId: id }
+  if (!id || type === 'add') {
+    menuInfo.value = { parentId: id, type: 0, orderNo: 0 }
+    setTimeout(() => {
+      setFieldsValue(menuInfo.value)
+    })
   }
   else {
     const { meta, type: menuType, ...res } = await getMenuInfoApi(id)

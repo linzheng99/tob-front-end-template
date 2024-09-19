@@ -107,10 +107,15 @@ watch(
 
 async function formSubmit(values: IUser) {
   await validate()
+  const { id, type } = props
   try {
-    if (props.type === 'edit')
-      props.id && (await updateUserApi(props.id, values))
-    else await createUserApi({ ...values, password: md5(values.password) })
+    if (type === 'edit') {
+      if (id)
+        await updateUserApi(id, values)
+    }
+    else {
+      await createUserApi({ ...values, password: md5(values.password) })
+    }
     toggleModal()
     emit('success')
   }

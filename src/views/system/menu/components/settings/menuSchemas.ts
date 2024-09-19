@@ -62,6 +62,11 @@ export const permissionSchemas: FormSchema[] = [
 // type 0
 export const catalogueSchemas: FormSchema[] = [
   {
+    field: 'external',
+    component: 'NInput',
+    label: '外链地址',
+  },
+  {
     field: 'name',
     component: 'NInput',
     label: '路由名称',
@@ -117,6 +122,11 @@ export const catalogueSchemas: FormSchema[] = [
 
 // type 1
 export const menuSchemas: FormSchema[] = [
+  {
+    field: 'external',
+    component: 'NInput',
+    label: '外链地址',
+  },
   {
     field: 'name',
     component: 'NInput',

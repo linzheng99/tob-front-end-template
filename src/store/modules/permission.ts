@@ -34,7 +34,8 @@ export const usePermissionStore = defineStore({
   actions: {
     setBackMenuList(list: Menu[]) {
       this.backMenuList = list
-      list?.length > 0 && this.setLastBuildMenuTime()
+      if (list?.length > 0)
+        this.setLastBuildMenuTime()
     },
     setLastBuildMenuTime() {
       this.lastBuildMenuTime = new Date().getTime()

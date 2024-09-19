@@ -16,6 +16,7 @@ export interface AppRouteRecordRaw {
   children?: AppRouteRecordRaw[]
   props?: Recordable
   fullPath?: string
+  external?: string
 }
 
 export interface Menu {

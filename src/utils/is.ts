@@ -62,3 +62,10 @@ export function isNullAndUnDef(val: unknown): val is null | undefined {
 export function isNullOrUnDef(val: unknown): val is null | undefined {
   return isUnDef(val) || isNull(val)
 }
+
+/**
+ * 判断是否 url
+ */
+export function isUrl(url: string) {
+  return /^(?:http|https):\/\//.test(url)
+}

@@ -17,6 +17,7 @@ import { transformAuthRouteToMenu } from '@/utils/helper/menuHelper'
 import type { AppRouteRecordRaw } from '@/router/routeTypes'
 import { useRouterPush } from '@/hooks/router/useRouterPush'
 import { useAppLocalConfig } from '@/hooks/setting/useAppLocalConfig'
+import type { BackMenuOption } from '@/router/menuTypes'
 
 const permissionStore = usePermissionStoreWithOut()
 const backMenuList = permissionStore.getBackMenuList
@@ -29,8 +30,14 @@ const option = transformAuthRouteToMenu(backMenuList as AppRouteRecordRaw[])
 
 const activeKey = computed(() => route.name)
 
-function handleUpdateMenu(_key, item) {
-  routerPush(item.routePath)
+function handleUpdateMenu(_key: string, item: BackMenuOption) {
+  const { routePath, external } = item
+  if (external) {
+    routerPush(external, true)
+  }
+  else {
+    routerPush(routePath)
+  }
 }
 </script>
 
